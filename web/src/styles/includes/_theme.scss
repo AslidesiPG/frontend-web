@@ -1,0 +1,197 @@
+@import '~@angular/material/theming';
+
+$config: mat-typography-config(
+    $font-family: var(--font),
+    $display-4:
+        mat-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+    $display-3: mat-typography-level(48px, 52px, 400, $letter-spacing: -0.02em),
+    $display-2: mat-typography-level(42px, 46px, 400, $letter-spacing: -0.005em),
+    $display-1: mat-typography-level(36px, 40px, 400),
+    $headline: mat-typography-level(30px, 36px, 400),
+    $title: mat-typography-level(24px, 26px, 500),
+    $subheading-2: mat-typography-level(18px, 28px, 400),
+    $subheading-1: mat-typography-level(20px, 24px, 400),
+    $body-2: mat-typography-level(18px, 26px, 400),
+    $body-1: mat-typography-level(16px, 24px, 400),
+    $caption: mat-typography-level(14px, 21px, 400),
+    $button: mat-typography-level(14px, 14px, 500),
+    $input: mat-typography-level(12px, 18px, 400),
+) !default;
+
+
+$configLarge: mat-typography-config(
+    $font-family: var(--font),
+    $display-4:
+        mat-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+    $display-3: mat-typography-level(36px, 54px, 400, $letter-spacing: -0.02em),
+    $display-2: mat-typography-level(30px, 45px, 400, $letter-spacing: -0.005em),
+    $display-1: mat-typography-level(26px, 38px, 400),
+    $headline: mat-typography-level(20px, 26px, 400),
+    $subheading-2: mat-typography-level(18px, 28px, 400),
+    $subheading-1: mat-typography-level(20px, 24px, 400),
+    $title: mat-typography-level(18px, 24px, 500),
+    $body-2: mat-typography-level(16px, 24px, 400),
+    $body-1: mat-typography-level(14px, 21px, 400),
+    $caption: mat-typography-level(14px, 21px, 400),
+    $button: mat-typography-level(14px, 14px, 500),
+    $input: mat-typography-level(12px, 18px, 400)
+) !default;
+
+
+$configMobile: mat-typography-config(
+    $font-family: var(--font),
+    $display-4:
+        mat-typography-level(80px, 80px, 300, $letter-spacing: -0.05em),
+    $display-3: mat-typography-level(46px, 46px, 400, $letter-spacing: -0.02em),
+    $display-2: mat-typography-level(36px, 38px, 400, $letter-spacing: -0.005em),
+    $display-1: mat-typography-level(26px, 30px, 400),
+    $headline: mat-typography-level(20px, 26px, 400),
+    $title: mat-typography-level(16px, 24px, 500),
+    $subheading-2: mat-typography-level(16px, 24px, 400),
+    $subheading-1: mat-typography-level(14px, 22px, 400),
+    $body-2: mat-typography-level(16px, 24px, 400),
+    $body-1: mat-typography-level(14px, 21px, 400),
+    $caption: mat-typography-level(12px, 20px, 400),
+    $button: mat-typography-level(14px, 14px, 500),
+    $input: mat-typography-level(14px, 1.125, 400)
+) !default;
+
+$app-primary: mat-palette(
+  (
+     50 : #fdebe5,
+    100 : #fbcebe,
+    200 : #f8ad93,
+    300 : #f58c68,
+    400 : #f37347,
+    500 : #f15a27,
+    600 : #ef5223,
+    700 : #ed481d,
+    800 : #eb3f17,
+    900 : #e72e0e,
+    A100 : #ffffff,
+    A200 : #ffe2df,
+    A400 : #ffb5ac,
+    A700 : #ff9f92,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    ),
+  )
+) !default;
+
+$app-accent: (
+    50 : #e6f0fd,
+    100 : #c1d9fa,
+    200 : #97c0f6,
+    300 : #6da6f2,
+    400 : #4e93f0,
+    500 : #2f80ed,
+    600 : #2a78eb,
+    700 : #236de8,
+    800 : #1d63e5,
+    900 : #1250e0,
+    A100 : #ffffff,
+    A200 : #dbe5ff,
+    A400 : #a8bfff,
+    A700 : #8facff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$app-green: (
+    50 : #e4f2ea,
+    100 : #bce0cb,
+    200 : #90cba9,
+    300 : #64b687,
+    400 : #42a66d,
+    500 : #219653,
+    600 : #1d8e4c,
+    700 : #188342,
+    800 : #147939,
+    900 : #0b6829,
+    A100 : #9bffb6,
+    A200 : #68ff91,
+    A400 : #35ff6c,
+    A700 : #1bff5a,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat-palette($mat-red) !default;
+
+$app-theme-foreground: (
+  text: black,
+  elevation: $mat-elevation-color,
+  divider: rgba(82, 63, 105, 0.06),
+) !default;
+
+$app-theme-background: (
+  app-bar: #ebebee,
+) !default;
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: (
+  primary: $app-primary,
+  accent: $app-accent,
+  warn: $app-warn,
+  success: $app-green,
+  is-dark: false,
+  foreground: map_merge($mat-light-theme-foreground, $app-theme-foreground),
+  background: map_merge($mat-light-theme-background, $app-theme-background),
+) !default;
+
+$app-dark-theme-background: (
+  
+) !default;
+
+$app-dark-theme: (
+  primary: $app-primary,
+  accent: $app-accent,
+  warn: $app-warn,
+  success: $app-green,
+  is-dark: true,
+  foreground: $mat-dark-theme-foreground,
+  background: map_merge($mat-dark-theme-background, $app-dark-theme-background),
+) !default;

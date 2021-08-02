@@ -1,0 +1,33 @@
+:host {
+    .process {
+        .center-line {
+            margin-left: 76px;
+            width: 54px;
+            position: relative;
+            .active {
+                background-color: theme('colors.blue.500');
+            }
+            &:first-child {
+                margin-left: 0px;
+                &:before {
+                    display: none;
+                }
+            }
+            &::before {
+                content: "";
+                border: 1px solid theme('colors.gray.500');
+                width: 60px;
+                position: absolute;
+                left: -68px;
+                bottom: 70%;
+            }
+            p {
+                font-size: 12px;
+            }
+        }
+        .process-step {
+            @apply h-8 w-8 bg-blue-200 mx-auto text-white rounded-full flex justify-center items-center;
+            font-size: 16px;
+        }
+    }
+}

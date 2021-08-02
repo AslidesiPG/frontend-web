@@ -1,0 +1,16 @@
+<div class="container">
+    <app-loading *ngIf="loading; else contentEL"></app-loading>
+    <ng-template #contentEL>
+        <div class="flex justify-center">
+            <div class="section text-center">
+                <h1>Thank you</h1>
+                <p>Your payment has been successfully done</p>
+                <p>Order Id : #{{order.id}}</p>
+                <p>Amount : #{{order.total | currency}}</p>
+                <div class="section flex justify-center">
+                    <a mat-flat-button color="primary" class="" [routerLink]="['/order-details', order.id]">View Info</a>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

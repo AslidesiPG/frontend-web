@@ -1,0 +1,17 @@
+<h2 mat-dialog-title *ngIf="data?.title">{{data.title}}</h2>
+<mat-dialog-content class=" mb-4">
+  	<ng-template
+		[ngTemplateOutlet]="data?.template || defaultTemplate"
+		[ngTemplateOutletContext]="{data: data}">
+	</ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="data?.buttons?.length > 0">
+	<div class="buttons buttons-right">
+		<span  *ngFor="let button of data?.buttons">
+			<button [type]="button?.type || 'submit'" class="outline-button" mat-flat-button (click)="callback(button)" color="{{ button?.color || 'default' }}" >{{button?.label}}</button>
+		</span>
+	</div>
+</mat-dialog-actions>
+
+<ng-template #defaultTemplate let-data="data"> </ng-template>

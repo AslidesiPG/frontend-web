@@ -1,0 +1,17 @@
+@import "common";
+:host {
+    .product-image {
+        height: 150px;
+        width: 150px;
+        object-fit: cover;
+        @include respond(md) {
+            height: 120px;
+            width: 120px;
+        }
+    }
+    .order-subtitle {
+        @include respond(md) {
+            font-size: 16px;
+        }
+    }
+}

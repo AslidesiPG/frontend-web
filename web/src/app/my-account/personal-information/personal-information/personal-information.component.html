@@ -1,0 +1,136 @@
+<div class="personal">
+    <h1 class="text-center text-primary-500 font-semibold mb-4">Personal Information</h1>
+    <h4 class="text-center personal-subtitle text-primary-500">Hey there ! fill in your details for a personalized Desi
+        Shopping</h4>
+    <div class="form mt-8 mx-auto">
+        <div class="profile">
+            <label class="hoverable" for="fileInput">
+                <img type="user" [src]="user?.photo_urls?.sm" [alt]="user?.name || 'User logo'">
+                <div class="hover-text">Choose file</div>
+                <div class="background"></div>
+            </label>
+            <br />
+            <input id="fileInput" type='file' class="hidden" (change)="onSelectFile($event, 'photo')">
+        </div>
+
+        <div class="user-info" *ngIf="!isEdit">
+            <div class="info-item card " *ngIf="user.phone">
+                <span class="label text-primary-500">Phone </span>
+                <span class="value"> + {{ user.phone_country_code}} {{ user.phone }}</span>
+                <span class="action">
+                    <button mat-icon-button (click)="editPhone()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </span>
+            </div>
+            <!-- <div class="md:hidden">
+                <div class="info-item card  " *ngIf="user.phone">
+                    <div class="flex justify-between">
+                        <span class="label text-primary-500">Phone </span>
+                        <span class="action">
+                            <button mat-icon-button (click)="editPhone()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="value"> + {{ user.phone_country_code}} {{ user.phone }}</span>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="card mt-4">
+                <p class="info-item">
+                    <span class="label text-primary-500">Name </span>
+                    <span class="value">{{ user?.name }}</span>
+                    <span class="action">
+                        <button mat-icon-button (click)="isEdit = true">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </span>
+                </p>
+                <p class="info-item">
+                    <span class="label text-primary-500">Email </span>
+                    <span class="value">{{ user?.email }}</span>
+                </p>
+                <p class="info-item">
+                    <span class="label text-primary-500">Gst Number </span>
+                    <span class="value">{{ user?.gst_number }}</span>
+                </p>
+
+                <div class="hidden md:block">
+                    <p class="info-item">
+                        <span class="label text-primary-500">Date Of Birth </span>
+                        <span class="value">{{ user?.dob | date }}</span>
+                    </p>
+                </div>
+
+                <div class="md:hidden">
+                    <p class="info-item">
+                        <span class="label text-primary-500">DOB </span>
+                        <span class="value">{{ user?.dob | date }}</span>
+                    </p>
+                </div>
+                <p class="info-item">
+                    <span class="label text-primary-500">Gender</span>
+                    <span class="value">{{ user?.gender | titlecase }}</span>
+                </p>
+            </div>
+        </div>
+        <form (ngSubmit)="send()" [formGroup]="form" #f="ngForm" *ngIf="isEdit">
+            <http-message [data]="httpError" type="error"></http-message>
+            <div class="md:flex ">
+                <div class="form-group mb-4 md:mr-4">
+                    <input type="text" class="about-form" formControlName="first_name" placeholder="First Name"
+                        required>
+                    <p class="form-error block" *ngIf="f.submitted && form?.get('first_name').hasError('required')">
+                        Please enter your first name</p>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="about-form" formControlName="last_name" placeholder="Last Name" required>
+                    <p class="form-error block" *ngIf="f.submitted && form?.get('last_name').hasError('required')">
+                        Please enter your last name</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="about-form" formControlName="gst_number" placeholder="Gst Number">
+            </div>
+
+            <div class="form-group">
+                <input (focus)="dobPicker.open()" [matDatepicker]="dobPicker" class="about-form"
+                    formControlName="dob" placeholder="Date Of Birth" readonly required>
+                <mat-datepicker #dobPicker></mat-datepicker>
+                <!-- <p class="form-error block" *ngIf="f.submitted && form?.get('dob').hasError('required')">Please enter
+                    your date of birth</p> -->
+                    <p class="form-error block" *ngIf="f.submitted && form?.get('dob').hasError('matDatepickerParse')">Please enter your
+                        you date of birth</p>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="about-form" formControlName="email" placeholder="Email Address" required>
+                <p class="form-error block" *ngIf="f.submitted && form?.get('email').hasError('required')">Please enter your email</p>
+            </div>
+            <div class="form-group mat-radio">
+                <div class="md:flex md:mb-3">
+                    <label class="radio-button mr-4">Gender</label>
+                    <mat-radio-group formControlName="gender" class=" flex justify-between" required>
+                        <mat-radio-button mat-primary class="radio-button" value="male">Male</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="female">Female</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="others">Others</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <p class="form-error block" *ngIf="f.submitted && form?.get('gender').hasError('required')">Please
+                    select gender</p>
+
+            </div>
+            <div class="flex justify-center mt-6">
+                <button mat-flat-button color="primary" type="submit">Update Details <span
+                        class="icon-arrow title ml-4 align-middle"></span></button>
+
+                <button class="ml-3" mat-flat-button color="accent" type="button"
+                    (click)="isEdit = false">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div>
+    <h1 class="text-center text-primary-500 mb-3 font-semibold">My Orders</h1>
+    <h4 class="text-center mb-8 order-subtitle">Track your open orders & view the summary of your past orders</h4>
+    <app-loading *ngIf="loading; else orderList"></app-loading>
+    <ng-template #orderList>
+        <div class="orderlist" *ngIf="orders.length > 0; else noFound">
+            <div *ngFor="let order of orders">
+                <div class="text-primary-500 my-2">Order Id - <span class="text-black">#{{order?.order_display_id}}</span> </div>
+                <a [routerLink]="['/order-details', order?.id]" class="card flex flex-col md:flex-row justify-between">
+                    <div class="product-image mx-auto md:flex-shrink-0">
+                        <img class="product-image" [src]="order.order_item?.product?.image?.image_urls?.sm" [alt]="order.order_item?.product?.name || 'Product image'">
+                    </div>
+                    <div class="flex-shrink w-full pl-6 my-4 md:mx-4">
+                        <p>{{order?.status | titlecase}}</p>
+                        <p class="caption"><strong>Total : </strong> {{order?.total | currency}}</p>
+                        <p class="caption"><strong>Order Date : </strong> {{order?.created_at | date}}</p>
+                        <p class="caption" *ngIf="order?.delivery_date">Will be delivered by {{order?.delivery_date | date}}
+                        </p>
+                    </div>
+                    <div class="items-center justify-end flex-shrink-0 hidden md:flex">
+                        <mat-icon class="text-primary-500">keyboard_arrow_right</mat-icon>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #noFound>
+        <div class="py-6">
+            <h3>No Order placed yet</h3>
+        </div>
+    </ng-template>
+
+</div>

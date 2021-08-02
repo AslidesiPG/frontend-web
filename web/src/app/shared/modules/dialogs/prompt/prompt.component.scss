@@ -1,0 +1,14 @@
+//@import 'dialog.scss';
+
+.form-group {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+:host {
+    .dialog-from {
+        min-width: 300px;
+    }
+    .mat-form-field {
+        width: 100%;
+    }
+}

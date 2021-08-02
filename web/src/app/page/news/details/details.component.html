@@ -1,0 +1,33 @@
+<!-- <vex-page-header [title]="page?.title" [description]="page?.extras?.short_description"
+    [image]="fileUrl(page?.extras?.featured_image)"></vex-page-header> -->
+<!-- <div vexContainer class="mt-4 mb-8 sm:mt-6 sm:mb-16">
+    <div class="card grid gap-4">
+        <div class="fetaure-avatar p-4">
+            <img class="w-100 mx-auto" [src]="fileUrl(news.image)">
+        </div>
+        <div class="info p-4">
+            <h3 class="mb-3 headline">{{news.title}}</h3>
+            <div class="date caption mb-3">{{news.date}}</div>
+            <div class="html-content mb-3 body-2" [innerHTML]="news.content"></div>
+        </div>
+    </div>
+</div> -->
+
+<div class="bg-image" [style]="'background-image: url('+ fileUrl(news?.image)+ ');'">
+</div>
+<div class="container my-8">
+    <div class="bg-text">
+        <div class="text-center"><span class="p-2 bg-black">{{news?.category?.name}}</span> </div>
+        <h1 class="my-6 text-center font-semibold">{{news?.title}}</h1>
+        <div class="text-center">
+            <!-- <span>By Admin - </span> -->
+            <span>{{news?.date | date:'MMM d, y'}} </span>
+            <!-- <span>- 5 mins read </span> -->
+        </div>
+    </div>
+    <div class="lg:w-2/3">
+        <div class="html-content mb-3 body-2 " [innerHTML]="news?.content | nl2br"></div>
+
+        <app-share-buttons class="mt-6 block"></app-share-buttons>
+    </div>
+</div>

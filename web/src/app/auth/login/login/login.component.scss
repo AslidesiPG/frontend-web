@@ -1,0 +1,78 @@
+@import "common";
+:host {
+    .vendor-bg {
+        background-image: url($assetPath + "/vendor-bg.png");
+        background-size: cover;
+        min-height: 400px;
+        margin-top: -20px;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+    .main-container {
+        margin-top: -280px;
+        @include respond(md) {
+            margin-top: -300px;
+        }
+        @include respond(sm) {
+            margin-top: -350px;
+        }
+        .heading {
+            max-width: 800px;
+            padding-top: 0px;
+            margin: 0 auto;
+        }
+
+        .from-vendor {
+            @apply w-full p-2 rounded-lg border border-blue-200;
+        }
+
+        .form-lable {
+            @apply text-primary-500 mb-2 block font-medium;
+        }
+    }
+
+    .login-container {
+        margin-top: 70px;
+        max-width: 700px;
+        @include respond(md) {
+            max-width: 600px;
+            margin-top: 40px;
+        }
+        .form {
+            ::placeholder {
+                color: theme("colors.primary.500");
+                font-weight: 400;
+                opacity: 1;
+            }
+            .about-form {
+                width: 100%;
+                font-size: 16px;
+                padding: 10px 0;
+                color: theme("colors.primary.500");
+                background-color: theme("colors.white");
+                border-bottom: 1px solid rgba(241, 90, 39, 0.24);
+            }
+        }
+    }
+    .visible-icon {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        color: theme("colors.gray.400");
+        font-size: 20px;
+        cursor: pointer;
+    }
+    .btn-google {
+        background: #ea4336;
+        color: #fff;
+        margin-right: 5px;
+    }
+    .btn-facebook {
+        background: #4285f4;
+        color: #fff;
+    }
+    .social-login-block {
+        text-align: center;
+    }
+}

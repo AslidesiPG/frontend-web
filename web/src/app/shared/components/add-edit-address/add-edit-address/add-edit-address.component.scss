@@ -1,0 +1,10 @@
+:host {
+     ::ng-deep {
+        .cdk-overlay-container {
+            z-index: 999999;
+        }
+        .cdk-overlay-pane {
+            padding-top: 50px;
+        }
+    }
+}

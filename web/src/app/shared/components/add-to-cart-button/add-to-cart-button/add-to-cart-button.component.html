@@ -1,0 +1,27 @@
+<div  *ngIf="!product?.contact_for_price; else ContactPrice">
+    <div *ngIf="product?.quantity; else empty_quantity">
+        <ng-template [ngIf]="product?.cart_qty" [ngIfElse]="addToCardEl">
+            <app-quantity-update [disabled]="loading" (quantityChange)="updateCart(product?.cart_qty)"
+                [(ngModel)]="product.cart_qty">
+            </app-quantity-update>
+        </ng-template>
+        <ng-template #addToCardEl>
+            <a mat-flat-button color="primary" (click)="addCart(product?.id) " class="caption flex items-center">
+                <span class="icon-basket body-2 cart-icon mr-1 text-white"></span>Add To Cart</a>
+        </ng-template>
+    </div>
+</div>
+
+<ng-template #empty_quantity>
+    <span class="text-primary-300 button font-semibold mt-2">Out of Stock</span>
+</ng-template>
+<ng-template #ContactPrice>
+    <div class="">
+        <button mat-flat-button color="primary" disabled *ngIf="product?.contact_price && product?.contact_price.status == 'Pending'" (click)="contactForPrice(product?.id)"
+                            class="mt-4">Awaiting for price</button>
+                        
+        <button mat-flat-button color="primary" *ngIf=" product?.contact_price == null"  (click)="contactForPrice(product?.id)"
+        class="mt-4">Contact for price</button>
+    </div>
+    
+</ng-template>

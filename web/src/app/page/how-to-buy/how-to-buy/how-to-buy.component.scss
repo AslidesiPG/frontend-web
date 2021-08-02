@@ -1,0 +1,146 @@
+@import "common";
+:host {
+    .vendor-bg {
+        background-image: url($assetPath + "/vendor-bg.png");
+        background-size: cover;
+        margin-top: -20px;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+    .main-container {
+        padding-top: 100px;
+        padding-bottom: 100px;
+        @include respond(md) {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+        @include respond(sm) {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+        h1 {
+            font-size: 60px;
+            @include respond(md) {
+                font-size: 48px;
+            }
+            @include respond(sm) {
+                font-size: 32px;
+            }
+        }
+    }
+    .bannertitle {
+        font-size: 60px;
+        font-weight: 500;
+
+        @include respond(lg) {
+            font-size: 48px;
+        }
+        @include respond(md) {
+            font-size: 32px;
+        }
+        @include respond(sm) {
+            font-size: 24px;
+        }
+    }
+    .bannershrot {
+        font-size: 24px;
+        font-weight: 600;
+
+        @include respond(md) {
+            font-size: 20px;
+        }
+        @include respond(sm) {
+            font-size: 18px;
+        }
+    }
+    .heading {
+        font-size: 36px;
+        font-weight: 600;
+
+        @include respond(lg) {
+            font-size: 28px;
+            line-height: 1.3;
+        }
+        @include respond(md) {
+            font-size: 22px;
+        }
+        @include respond(sm) {
+            font-size: 18px;
+        }
+    }
+    .occasion-img {
+        width: 160px;
+        height: 200px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .plus-minus {
+        padding: 4px;
+        border: 1px solid #000;
+        margin-right: 10px;
+        display: table;
+    }
+    .myStyle {
+        flex-direction: row-reverse;
+        text-align: right;
+        @include respond(md) {
+            flex-direction: column-reverse;
+            text-align: left;
+        }
+        .img-decripion {
+            padding-left: 0 !important;
+            padding-right: 48px !important;
+            @include respond(lg) {
+                padding-right: 24px !important;
+            }
+            @include respond(md) {
+                padding-right: 0px !important;
+            }
+        }
+        .custom {
+            margin-left: auto;
+            @include respond(md) {
+                width: 100%;
+            }
+        }
+    }
+    .img-title {
+        max-width: 450px;
+    }
+    .steps {
+        .path {
+            position: relative;
+            padding-bottom: 230px;
+            @include respond(md) {
+                padding-bottom: 30px;
+            }
+
+            &::after {
+                background-image: url($assetPath + "/path.png");
+                content: "";
+                background-repeat: no-repeat;
+                position: absolute;
+                left: 50%;
+                bottom: 35px;
+                height: 215px;
+                width: 220px;
+                transform: translateX(-50%);
+                @include respond(md) {
+                    display: none;
+                }
+            }
+            &.myStyle::after {
+                transform: translateX(-50%) rotateY(180deg);
+            }
+        }
+    }
+
+    .steps {
+        .path:last-child {
+            padding-bottom: 0px !important;
+        }
+        .path:last-child::after {
+            display: none;
+        }
+    }
+}

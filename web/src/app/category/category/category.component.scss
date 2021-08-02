@@ -1,0 +1,9 @@
+@import "common";
+:host {
+    .occasion-img {
+        width: 160px;
+        height: 200px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+}

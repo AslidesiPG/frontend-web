@@ -1,0 +1,75 @@
+@import "common";
+:host {
+  display: block;
+  position: relative;
+  .full-search-box {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    @apply shadow rounded-full text-gray-700 leading-tight;
+    @include respond(sm) {
+     // max-width: 240px;
+    }
+
+    .search-box {
+      appearance: none;
+      position: relative;
+      flex-shrink: 1;
+      width: 100%;
+      @apply text-gray-700;
+      input {
+        @include respond(sm) {
+          border-radius: 50px;
+        }
+      }
+    }
+    .search-btn {
+      max-width: 120px;
+      width: 100%;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      line-height: 37px;
+      @include respond(lg) {
+        max-width: 80px;
+      }
+      @include respond(sm) {
+        display: none;
+      }
+    }
+    .select {
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+      flex-shrink: 0;
+      padding: 10px 20px;
+      max-width: 120px;
+      font-size: 14px;
+      width: 100%;
+      display: block;
+      background-color: theme("colors.green.500");
+      border-right: 1px solid theme("colors.gray.500");
+      ::ng-deep {
+        .mat-select-value-text {
+          color: #fff;
+        }
+        .mat-select-arrow {
+          color: #fff;
+        }
+      }
+      @include respond(lg) {
+        max-width: 120px;
+      }
+      @include respond(sm) {
+        display: none;
+      }
+    }
+  }
+
+  .positon-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: #000;
+    transform: translateY(-50%);
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,32 @@
+
+:host {
+    .alert {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        &.alert-danger {
+            color: theme('colors.red.500');
+            background-color: theme('colors.red.50');
+        }
+        &.alert-success {
+            color: theme('colors.green.500');
+            background-color: theme('colors.green.50');
+        }
+    }
+    .messages {
+        flex-shrink: 1;
+        width: 100%;
+    }
+    .close-buttion {
+        flex-shrink: 0;
+    }
+    .alert.active {
+        display: block;
+    }
+    .material-icons {
+        vertical-align: text-bottom;
+        font-size: 1em;
+    }
+}

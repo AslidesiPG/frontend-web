@@ -1,0 +1,10 @@
+<h2 mat-dialog-title *ngIf="data?.title">{{data?.title || "Alert"}}</h2>
+<mat-dialog-content class=" mb-4">
+  {{ data?.message }}
+</mat-dialog-content>
+<mat-dialog-actions>
+	<div class="buttons buttons-right">
+  		<button class="outline-button" mat-flat-button color="info" mat-dialog-close>{{data?.close || 'Ok'}}</button>
+  	</div>
+</mat-dialog-actions>
+

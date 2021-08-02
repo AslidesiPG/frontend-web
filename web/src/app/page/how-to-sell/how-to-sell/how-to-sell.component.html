@@ -1,0 +1,178 @@
+<div class="vendor-bg">
+    <div class="container main-container">
+        <h2 class="bannertitle font-semibold block text-center text-white title leading-normal">
+            {{page?.extras?.banner_title}} </h2>
+        <p class="bannershrot font-semibold block text-center text-white leading-normal title mt-8"
+            [innerHtml]="page?.extras?.banner_description | nl2br">
+        </p>
+    </div>
+</div>
+<div class="container">
+
+    <div class="titel text-primary-500 text-center pt-9 pb-6">
+        {{page?.extras?.help_title}}
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  dsk:grid-cols-5 gap-5">
+        <div class="custom-card" *ngFor="let item of page?.extras?.help_step">
+            <div><img class="mx-auto" [src]="fileUrl(item?.image)" [alt]="item?.image_title || 'Item title'"></div>
+            <div class=" py-3 text-xl text-center text-primary-500 ">{{item?.image_title}}</div>
+            <div class=" text-sm text-center">{{item?.image_description}}</div>
+        </div>
+    </div>
+
+    <div class="titel  text-center text-primary-500 pt-6">{{page?.extras?.category_title}}
+    </div>
+    <div class="pb-0 section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 dsk:grid-cols-5 gap-5">
+        <a [routerLink]=" item.children_count > 0 ? ['/category/', item.slug] : ['/product/category/', item.slug]"
+            class="slider-category-item" *ngFor="let item of page?.extras?.selected_category">
+            <div class="h-full w-100">
+                <div class="image-container">
+                    <img class="occasion-img mx-auto" [src]="item.image || 'assets/image/category-icon.svg'" [alt]="item?.name || 'Occasion categories' " />
+                </div>
+                <p class="text-center text-primary-500 font-semibold mt-4">{{item?.name || 'Occasion categories' }}
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="steps">
+        <div class="titel  text-center text-primary-500 pt-6">{{page?.extras?.step_title}}
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 my-8 lg:my-0 lg:mb-8 lg:gap-16">
+            <div class="title font-semibold img-title text-center flex justify-center items-center text-primary-500"
+                [innerHtml]="page?.extras?.step_description |nl2br">
+            </div>
+            <div>
+                <div *ngIf="page?.extras?.video_link" class="flex p-4 mt-6"
+                    [innerHtml]="page?.extras?.video_link | safe">
+                    <!-- <video class="video-box" controls [src]="page?.extras?.video_link"></video> -->
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col-reverse lg:flex-row path" *ngFor="let step of page?.extras?.step; let index = index"
+            [ngClass]="{'myStyle': 0 != index % 2}">
+            <div class="w-100 lg:w-1/2"><img [src]="fileUrl(step?.image)" [alt]="step?.image_name || 'Step image'"></div>
+            <div class="pl-0 mb-6 lg:mb-0 lg:pl-16 img-decripion  flex  items-center w-100 lg:w-1/2">
+                <div class="custom">
+                    <div class="pb-8 "><span class="p-4 bg-primary-500 rounded-sm text-white">0{{index + 1}}</span>
+                    </div>
+                    <div class="pb-3 text-primary-500 img-title title font-semibold">{{step?.image_name}}</div>
+                    <div>
+                        <div class="img-decription" [innerHtml]="step?.image_description | safe"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="titel heading text-center text-primary-500 pt-12 pb-6">Questions and Answers related to Selling on
+            Aslidesi
+        </div>
+        <app-faq [faqs]="faqs" [divided]="true"></app-faq>
+    </div>
+
+    <div class=" pt-12 grid grid-cols-1 lg:grid-cols-3  gap-4 mb-8">
+        <div class=" md:pr-8 lg:col-span-2">
+            <div class="">
+                <div class="text-blue-500 mb-5 font-semibold title leading-8"
+                    [innerHTML]="page?.extras?.become_a_vendor_title"></div>
+                <div class="body-2 mb-4 leading-6 text-justify wp-content"
+                    [innerHTML]="page?.extras?.become_a_vendor_description | safe">
+                </div>
+                <div class="mt-5 md:mt-12">
+                    <a mat-flat-button color="success" routerLink="/vendor-faq" class="desk:px-12 lg:px-8 ">Learn
+                        More</a>
+                    <a mat-stroked-button color="success" (click)="addPhoneNumber($event)" class="ml-5">Request a
+                        Call
+                        Back</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="vendor-form-table">
+            <div class="form-card mx-auto p-4 md:p-8">
+                <p class=" text-primary-500 text-center mb-4 text-white font-semibold"
+                    [innerHTML]="page?.extras?.become_a_vendor_form_title"></p>
+                <form action="/vendor-register" method="get">
+                    <div class="form-group vendor-form">
+                        <input class="form-control placeholder-red-500" type="text" name="phone"
+                            placeholder="Phone No.">
+                        <div class="vender-from-icon"><span class="icon-phone"></span></div>
+                    </div>
+                    <div class="form-group vendor-form">
+                        <input class="form-control placeholder-red-500" type="text" name="name" placeholder="Name">
+                    </div>
+                    <!-- <div class="form-group vendor-form">
+                                        <input class="form-control" type="text" name="city" placeholder="City">
+                                    </div> -->
+                    <div class="form-group vendor-form">
+                        <input class="form-control placeholder-red-500" type="text" name="business_name"
+                            placeholder="Company Name">
+                    </div>
+                    <div class="form-group">
+                        <input class="h-6 w-6 align-middle placeholder-red-500" type="checkbox" name="term_condition">
+                        <a routerLink="/vendor-agreement" target="_blank" class="button text-primary-500 mr-2">
+                            I agree Terms and Conditions
+                        </a>
+                    </div>
+                    <button mat-flat-button color="success" class="my-2 py-1 md:py-2 w-full">Start Selling<span
+                            class="icon-arrow ml-3 align-middle text-white title"></span></button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <div class="pt-6 pb-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-2 gap-4 lg:gap-6">
+            <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                <h2 class="titel text-primary-500">{{page?.extras?.application_title}}</h2>
+                <p class="text-md lg:text-lg  pt-3" [innerHtml]="page?.extras?.application_description | nl2br"></p>
+            </div>
+
+            <div class="">
+                <div class="flex md:flex-col flex-row lg:flex-row justify-center md:justify-end">
+                    <div class="md:ml-auto lg:ml-0 mr-4 md:mr-0 mb-4 lg:mb-0 lg:mr-4">
+                        <a *ngIf="settings?.aslidesi_app_link?.vendor_play_store"
+                            [href]="settings?.aslidesi_app_link?.vendor_play_store" target="_blank" mat-flat-button
+                            color="black" class="input px-2 lg:px-4 py-1"><img
+                                class="inline-block  mr-1 md:mr-2 h-4 w-4"
+                                src="assets/image/play-store.svg" alt="play store logo">
+                            Google Playstore</a>
+                    </div>
+                    <div class="md:ml-auto lg:ml-0">
+                        <a *ngIf="settings?.aslidesi_app_link?.vendor_app_store"
+                            [href]="settings?.aslidesi_app_link?.vendor_app_store" target="_blank" mat-flat-button
+                            color="black" class="input px-2 lg:px-4 py-1"><img
+                                class="inline-block mr-1 md:mr-2 h-4 w-4"
+                                src="assets/image/appstore.svg" alt="App store logo"> Apple
+                            Appstore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <img [src]="fileUrl(page?.extras?.application_image)" alt="Application logo">
+        </div>
+    </div>
+
+    <div class="text-primary-500 text-lg pb-4 pt-9 font-semibold ">Meet Our Reputated Sellers</div>
+    <div class="slider mb-10 " *ngIf="page?.extras?.vendors">
+        <owl-carousel-o [options]="customOptions">
+            <ng-container *ngFor="let slide of page?.extras?.vendors">
+                <ng-template carouselSlide>
+                    <a [routerLink]="'/vendor-profile/'+slide.id">
+                        <img class="vender-img mx-auto" type="user" [src]="slide?.photo_urls?.sm" [alt]="slide?.name || 'Slide image'" />
+                        <p class="text-center text-white font-semibold mt-2 truncate">{{slide?.name}}</p>
+                    </a>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
+
+
+
+</div>

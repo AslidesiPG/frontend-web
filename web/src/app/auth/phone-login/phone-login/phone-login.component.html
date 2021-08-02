@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="flex justify-center section bg-image">
+        <div class="card p-0 login-card">
+            <div class="top-banner bg-primary-500 py-6"><img class="mx-auto" src="assets/image/logo-head.png" alt="heading logo"></div>
+            <div class="px-4 pb-4 md:px-6 md:pb-6 lg:px-9 lg:pb-9">
+                <p class="text-primary-500 font-semibold title mt-9 mb-6">Login or Sign Up</p>
+                <form class="w-full" #f="ngForm" (ngSubmit)="submit()" [formGroup]="form">
+                    <http-message [data]="loginMessage" type="error"></http-message>
+                    <div class="phone-input">
+                        <ngx-intl-tel-input class="from-group w-100" cssClass="form-control border flex w-full border-blue-500 rounded" [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                            [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.India" [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true" [separateDialCode]="separateDialCode" name="phone" formControlName="phone">
+                        </ngx-intl-tel-input>
+                    </div>
+
+                    <p class="form-error" *ngIf="formSubmited && form?.get('phone').hasError('required')">Please enter phone number</p>
+                    <p class="form-error" *ngIf="formSubmited && form?.get('phone').hasError('validatePhoneNumber')">
+                        Please enter valid phone number</p>
+
+                    <button [ngClass]="{'disable' : form.value.phone}" mat-flat-button color="primary" [disabled]="!form.value.phone" class="continue-button">CONTINUE <span class="icon-arrow ml-2 text-white body-2"></span></button>
+                </form>
+
+                <div class="flex justify-center mt-5">
+                    <a class="social-login d-block mr-4" [href]="environment.apiUrl+'/auth/redirect/google'" mat-raised-button><img
+                            src="assets/image/google-logo.png" alt="google logo" /></a>
+                    <a class="social-login d-block" [href]="environment.apiUrl+'/auth/redirect/facebook'" mat-raised-button><img
+                            src="assets/image/facebook-logo.png" alt="facebook logo" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

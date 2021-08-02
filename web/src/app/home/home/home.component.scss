@@ -1,0 +1,144 @@
+@import "common";
+:host {
+    @include respond(md) {
+        display: block;
+        margin-top: 30px;
+    }
+    .slider-dot {
+        height: 12px;
+        width: 12px;
+    }
+    .highlight {
+        ::ng-deep {
+            .marker {
+                color: theme("colors.green.500");
+            }
+        }
+        .active:hover {
+            border: 1px solid theme("colors.primary.500");
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+        }
+    }
+    .category {
+        @include respond(md) {
+            min-height: 200px;
+        }
+        min-height: 240px;
+    }
+    .occasion-img {
+        /* @include respond(lg) {
+            height: 270px !important;
+        }
+        @include respond(md) {
+            height: 240px !important;
+        } */
+        width: 100%;
+        height: 250px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .seller-app {
+        .app-title {
+            ::ng-deep {
+                @apply text-blue-500;
+            }
+        }
+    }
+    .vendor {
+        .vendor-form-table {
+            max-width: 415px;
+            margin: 0 auto;
+        }
+        .vendor-form {
+            position: relative;
+            margin-bottom: 12px;
+            input {
+                @apply bg-white border text-primary-500 m-0 pl-12;
+            }
+        }
+        .vender-from-icon {
+            color: theme("colors.primary.500");
+            position: absolute;
+            display: flex;
+            left: 15px;
+            top: 50%;
+            transform: translatey(-50%);
+        }
+        .vender-img {
+            height: 120px !important;
+            width: 120px !important;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .slider {
+            @apply py-3 px-5 bg-primary-500;
+            border-radius: 20px;
+        }
+    }
+    .banner {
+        .banner-image-container {
+            height: 480px;
+            width: 480px;
+            @include respond(lg) {
+                // height: 200px;
+                // height: 100%;
+                width: auto;
+            }
+        }
+        .banner-image {
+            height: 250px;
+            width: auto;
+            object-fit: contain;
+            /* @include respond(lg) {
+                height: 200px;
+            }
+            @include respond(md) {
+                height: 180px;
+            } */
+        }
+        .brand-image {
+            @include respond(md) {}
+            @include respond(sm) {
+                position: unset; // height: 200px;
+            }
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-position: center;
+        }
+        /*  ::ng-deep {
+            .owl-dots {
+                position: absolute;
+                top: 25px;
+                left: 300px;
+                .owl-dot {
+                    display: inline-block;
+                    border-radius: 50%;
+                    border-width: 1px;
+                    margin: 5px;
+                    span {
+                        background-color: theme("colors.primary.500");
+                    }
+                }
+                .owl-dot:hover {
+                    border-color: theme("colors.primary.500");
+                }
+            }
+        } */
+    }
+    .product {
+        ::ng-deep {
+            .mat-tab-link {
+                color: theme("colors.primary.400");
+                font-weight: 600;
+            }
+        }
+    }
+}

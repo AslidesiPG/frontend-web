@@ -1,0 +1,69 @@
+@import "common";
+:host {
+    .order-title-image img {
+        @include respond(lg) {
+            height: 120px;
+            width: 120px;
+        }
+        @include respond(md) {
+            height: 100px;
+            width: 100px;
+        }
+        height: 150px;
+        width: 150px;
+        object-fit: contain;
+    }
+    .order-product-image img {
+        @include respond(lg) {
+            height: 120px;
+            width: 120px;
+        }
+
+        height: 150px;
+        width: 150px;
+        object-fit: contain;
+    }
+    .product-name {
+        @include respond(lg) {
+            font-size: 18px;
+            max-width: 370px;
+        }
+    }
+    .details-title {
+        @include respond(md) {
+            font-size: 18px;
+            line-height: 1;
+        }
+    }
+    .details-headline {
+        @include respond(md) {
+            font-size: 16px;
+            line-height: 1;
+        }
+    }
+    .quation {
+        @apply w-6 h-6 rounded-full border-blue-300 border flex justify-center items-center;
+    }
+    .faq-icon {
+        @apply h-6 w-6 flex justify-center items-center bg-primary-500 text-white;
+    }
+    .slider-product-item {
+        @include respond(lg) {
+            max-width: 300px;
+        }
+        @include respond(md) {
+            max-width: none;
+        }
+        margin: 0 auto;
+        min-height: 310px;
+        display: flex;
+        padding: 0 8px;
+        align-items: stretch;
+        width: 100%;
+        max-width: 254px;
+        ::ng-deep .product-item {
+            height: auto !important;
+            width: 100%;
+        }
+    }
+}

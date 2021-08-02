@@ -1,0 +1,101 @@
+@import "common";
+:host {
+  @include respond(sm) {
+    .backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+  }
+  .filters {
+    @include respond(lg) {
+      max-width: 280 px;
+
+    }
+    @include respond(sm) {
+      height: 100vh;
+      position: fixed !important;
+      box-shadow: 0 0 13px 0px rgba(0, 0, 0, 0.3);
+      overflow: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      max-width: 270px;
+      background-color: #fff;
+    }
+    .close-icon {
+      right: 20px;
+      position: absolute;
+      top: 20px;
+    }
+  }
+
+  ::ng-deep {
+    app-tree-select .tree-continer {
+      max-height: 300px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .product {
+      .mat-tab-link {
+        color: theme("colors.primary.400");
+        font-weight: 600;
+      }
+
+      .product-header {
+        margin-bottom: -40px;
+      }
+    }
+
+    .line-border {
+      border-top: 1px solid theme("colors.gray.400");
+      border-bottom: 1px solid theme("colors.gray.400");
+
+      .mat-form-field-infix {
+        border: 1px solid theme("colors.blue.200");
+        padding: 10px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+      .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+      .mat-form-field-appearance-legacy .mat-form-field-underline {
+        height: 0px;
+      }
+      .mat-form-field-underline {
+        width: 0;
+      }
+    }
+  }
+  .product-slider {
+    ::ng-deep {
+      .product-item {
+        @apply mr-4;
+      }
+    }
+  }
+
+  ::ng-deep {
+    mat-tree-node {
+      padding-right: 10px;
+    }
+    .ng5-slider {
+      .ng5-slider-span {
+        &:focus {
+          outline: none !important;
+        }
+      }
+      .ng5-slider-selection,
+      .ng5-slider-pointer {
+        background-color: theme("colors.primary.500");
+      }
+    }
+  }
+}

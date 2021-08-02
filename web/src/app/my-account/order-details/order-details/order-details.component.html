@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="card flex flex-col md:flex-row">
+        <div class="order-title-image mb-4 md:mb-0 md:mr-6"><img class="mx-auto" src="assets/image/order-details.png"
+                alt="Order details"></div>
+        <div class="my-auto">
+            <h1 class="font-semibold mb-3 details-title text-primary-500 text-center md:text-left">Order placed for
+                {{ order?.total | currency}}</h1>
+            <h4 class="details-headline text-center md:text-left">Your {{order?.order_items.length}} items will be
+                delivered by <strong
+                    class="font-medium text-primary-500">{{ order?.deliverDate | date:'EEEE, MMM d, y'}}</strong> </h4>
+        </div>
+    </div>
+    <div class="card grid grid-cols-1 md:grid-cols-3 p-0 my-6 md">
+        <div class="col-span-2 md:border-r p-6 border-gray-200">
+            <h4 class="text-primary-500 font-medium mb-4">Delivery Address</h4>
+            <p class="text-primary-500 body-2 font-medium mb-4">Shipping Address</p>
+            <p class="body-2 font-medium my-4">{{address?.name}}</p>
+            <p class="my-3">{{address?.address}}</p>
+            <h4 class="text-primary-500 font-medium">Phone Number</h4>
+            <p class="my-3">{{address?.phone_number}}</p>
+        </div>
+        <div class="px-6 md:p-6">
+            <h4 class="text-primary-500 font-medium mb-4">More actions</h4>
+            <p *ngIf="order?.status ==='pending'" class="mb-3">
+                <a (click)="addEditAddress($event, 'phone', address)" class="cursor-pointer flex items-center">
+                    <span class="icon-phone text-primary-500 mr-4"></span>Change Phone Number
+                </a>
+            </p>
+            <p *ngIf="order?.status ==='pending'" class="mb-3">
+                <a (click)="addEditAddress($event, 'address', address)" class="cursor-pointer flex items-center">
+                    <span class="icon-map-pin text-primary-500 mr-4"></span> Change Address
+                </a>
+            </p>
+            <p class="mb-4 md:mb-0"><a class="cursor-pointer flex items-center" target="blank_" [download]="order?.order_display_id+'-invoice.pdf'" [href]="environment.apiUrl+'/storage/order-invoice/'+order?.id | safe:'url'" ><span class="icon-download mr-4 text-primary-500"></span>Download Invoice</a></p> 
+        </div>
+    </div>
+    <div class="card mb-6">
+        <div *ngFor="let orderItem of orderItems" class="card my-4 border-gray-300">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="flex flex-col md:flex-row mb-4 md:mb-0 md:mr-8 ">
+                    <div class="order-product-image flex-shrink-0 mb-6 md:mb-0 md:mr-6">
+                        <a [routerLink]="['/product', orderItem?.product?.slug]">
+                            <img class="mx-auto md:m-0" [src]="orderItem?.product?.image?.image_urls?.xs" [alt]="orderItem?.product?.name || 'Product image'">
+                        </a>
+                    </div>
+                    <div class="mb-4 md:mb-0 md:mr-6">
+                        <div class="col-span-2 flex flex-col  my-auto">
+                            <h4 class="font-medium product-name mb-1 lg:mb-2">{{orderItem?.product?.name}}</h4>
+                            <p class="text-blue-500 mb-1 lg:mb-2">Product Detail</p>
+                            <p class="text-primary-500 mb-1 lg:mb-2">Quantity:
+                                <span class="text-black">{{orderItem?.quantity}}
+                                    {{orderItem?.product?.unit}}</span>
+                            </p>
+                            <p class="text-primary-500 md:hidden mb-1 lg:mb-2">Price:
+                                <span class="text-black">{{orderItem?.quantity}}
+                                    {{orderItem?.product?.unit}}</span>
+                            </p>
+                            <p class="text-primary-500">Seller Name :
+                                <a [routerLink]="'/vendor-profile/'+orderItem?.product?.user?.id"
+                                    class="text-black">{{orderItem?.product?.user?.name}}
+                                </a>
+                            </p>
+                        </div>
+                        <div *ngIf="orderItem?.attributes">
+                            <app-attributes [attributes]="orderItem?.attributes"></app-attributes>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 hidden dsk:block ">
+                        <span class="icon-delivery-truck text-primary-500 mr-2 align-middle body-2"></span>Delivery
+                        expecter by
+                        <strong
+                            class="font-medium text-primary-500">{{orderItem?.delivery_date | date:'EEEE, MMM d, y'}}
+                        </strong>
+                    </div>
+                </div>
+                <div class="lg:flex-shrink-0">
+                    <div class="dsk:hidden mb-2">
+                        <span class="icon-delivery-truck text-primary-500 mr-2 align-middle body-2"></span>Delivery
+                        expecter by
+                        <strong
+                            class="font-medium text-primary-500">{{orderItem?.delivery_date | date:'EEEE, MMM d, y'}}
+                        </strong>
+                    </div>
+                    <div class="mr-4 flex flex-col">
+                        <!-- <div class="flex mb-3 gap-1">
+                            <span class="text-primary-500">{{orderItem?.amount | currency}}</span>
+                             <span class="text-blue-500 flex-shrink-0">1 coupon applied</span>
+                            <span class="quation flex-shrink-0 ">?</span>
+                        </div> -->
+                        <div class="text-primary-500 hidden md:block mb-3">{{orderItem?.amount | currency}}</div>
+                        <!--  <div class="mb-3 "><a class="flex gap-2"><span class="icon-close  faq-icon  caption"></span>CANCEL ITEM</a></div> -->
+                        <div class="flex-shrink-0"><a routerLink="/faqs" class="flex"><span
+                                    class="faq-icon body-2 mr-2">?</span>FAQs ABOUT ORDER</a>
+                        </div>
+                        <div *ngIf="orderItem?.status == 'delivered' || order?.status == 'delivered' ">
+                            <div class="flex-shrink-0 mt-4" *ngIf="!orderItem?.rating else rating">
+                                <a (click)="saveRating(orderItem)" class="flex cursor-pointer">
+                                    <mat-icon class="faq-icon mr-2">star</mat-icon> Give Rating
+                                </a>
+                            </div>
+                            <ng-template #rating>
+                                <app-star-rating class="mt-4 block" [number]="false" [rating]="orderItem?.rating?.rating">
+                                </app-star-rating>
+                            </ng-template>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="relative flex-auto mb-8 pb-2 border-b border-gray-300 ">
+            <span class="section-title ">ITEMS IN YOUR WISHLIST</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="productLoading; else wishlistProductEl "></app-loading>
+            <ng-template #wishlistProductEl>
+                <div class="section " *ngIf="wishlists.length> 0; else notFund">
+                    <owl-carousel-o [options]="occasionOptions" #Wishlist>
+                        <ng-container *ngFor="let wishlist of wishlists">
+                            <ng-template carouselSlide>
+                                <app-product-item class="slider-product-item" [product]="wishlist"></app-product-item>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="Wishlist.next()">
+                        <a><span class="icon-slider-right text-white"></span>
+                        </a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="Wishlist.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+        <ng-template #notFund>
+            <div class="text-center py-8">
+                <h3>No products found in your wishlist</h3>
+            </div>
+        </ng-template>
+    </div>
+
+</div>

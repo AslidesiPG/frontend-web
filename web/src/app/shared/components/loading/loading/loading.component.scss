@@ -1,0 +1,128 @@
+:host {
+
+    .loading {
+        clear: both;
+        position: relative;
+        min-height: 300px;
+        color: rgb(58, 156, 255);
+
+        .image {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .loading-inner {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translateY(-50%) translateX(-50%);
+            text-align: center;
+        }
+
+        &.inline {
+            background: transparent;
+            height: 100px;
+            width: 110px;
+            display: inline-block;
+            min-height: 0;
+        }
+    }
+    &.small{
+        .loading {
+            min-height: 200px;
+        }
+    }
+     &.tiny{
+        .loading {
+            min-height: 100px;
+        }
+    }
+    &.bg-white {
+        .loading {
+            background: #fff;
+        }
+    }
+
+    .loading-container {
+        position: relative;
+        -webkit-transform: translateY(-30px);
+        transform: translateY(-30px);
+    }
+
+    .ball-scale-multiple {
+        position: relative;
+    }
+
+    .loading-container .logo img {
+        margin: auto;
+    }
+    .loading-container .logo {
+        position: absolute;
+        width: 150px;
+        top: -30px;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .ball-scale-multiple > div:nth-child(2) {
+        -webkit-animation-delay: -0.4s;
+        animation-delay: -0.4s;
+    }
+
+    .ball-scale-multiple > div:nth-child(3) {
+        -webkit-animation-delay: -0.2s;
+        animation-delay: -0.2s;
+    }
+
+    .ball-scale-multiple > div {
+        background-color: theme('colors.primary.500');
+        border-radius: 100%;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        position: absolute;
+        left: -30px;
+        top: 0;
+        opacity: 0;
+        margin: 0;
+        width: 60px;
+        height: 60px;
+        -webkit-animation: ball-scale-multiple 1s 0s linear infinite;
+        animation: ball-scale-multiple 1s 0s linear infinite;
+    }
+}
+
+@-webkit-keyframes ball-scale-multiple {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes ball-scale-multiple {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0;
+    }
+}

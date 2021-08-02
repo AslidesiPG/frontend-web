@@ -1,0 +1,45 @@
+.btn {
+  @apply py-3 px-5 font-semibold;
+}
+
+.mat-flat-button {
+  @extend .btn;
+  &.mat-success {
+    @apply bg-green-500 text-white;
+  }
+  &.mat-black {
+    @apply bg-black text-white;
+  }
+}
+
+.mat-stroked-button {
+  background-color: transparent;
+  transition: all 0.5s;
+  @extend .btn;
+  &.mat-primary {
+    @apply text-primary-500;
+    border: 1px solid #f15a27 !important;
+    &:hover {
+      @apply bg-primary-500 text-white;
+    }
+  }
+  &.mat-accent {
+    @apply text-blue-500;
+    border: 1px solid #2f80ed !important;
+    &:hover {
+      @apply bg-blue-500 text-white;
+    }
+  }
+
+  &.mat-success {
+    @apply text-green-500;
+    border: 1px solid #219653 !important;
+    &:hover {
+      @apply bg-green-500 text-white;
+    }
+  }
+}
+
+.icon-btn {
+  @apply flex justify-center items-center h-12 w-12 text-base;
+}

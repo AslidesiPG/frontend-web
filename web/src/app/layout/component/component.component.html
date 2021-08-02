@@ -1,0 +1,390 @@
+<div class="relative">
+    <div class="header p-0">
+        <div class="top-header bg-primary-500">
+            <div class="container py-2  justify-between items-center flex">
+                <div class="flex-shrink-0 mr-3 md:mr-6">
+                    <a routerLink="/" class="logo-image"><img src="assets/image/logo.png" alt="aslidesi"></a>
+                </div>
+                <div class="flex-shrink relative hidden lg:block  w-full">
+                    <app-search [allowVendorSearch]="true" [allowVendorSearch]="true" class="search-box"></app-search>
+                </div>
+                <div class="md:flex-shrink-0 hidden md:block lg:hidden">
+                    <div class="md:flex ">
+                        <div *ngIf="settings?.contact?.contact_email" class="md:mr-2">
+                            <a class="p-0 md:nav-link flex" href="mailto:{{settings?.contact?.contact_email}}"><span
+                                    class="icon-mail pr-2  flex items-center"></span>{{settings?.contact?.contact_email}}</a>
+                        </div>
+                        <div *ngIf="settings?.contact?.contact_phone" >
+                            <a class=" p-0 md:nav-link flex"
+                                [href]="('whatsapp://send?phone='+settings?.contact?.contact_phone) | safe:'url'"><span
+                                    class="icon-whatsapp pr-2 flex items-center"></span>
+                                {{settings?.contact?.contact_phone}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-info flex-shrink-0 flex ">
+                    <div class="hidden lg:flex mx-3  items-center">
+                        <div class="flex items-center font-semibold body-2">{{cart?.total | currency}}</div>
+                    </div>
+
+                    <a mat-icon-button routerLink="/cart" class="icon-btn hidden mr-2 dsk:mr-4 lg:block">
+                        <app-icon [matBadge]="cartCount" matBadgeColor="success" matBadgeOverlap="false"
+                            class="icon-basket text-green-500"></app-icon>
+                    </a>
+                    <a mat-icon-button routerLink="/my-account/wishlist" class="icon-btn hidden lg:block">
+                        <app-icon [matBadge]="wishlistCounts" matBadgeColor="success" matBadgeOverlap="false" name="wishlist"></app-icon>
+                    </a>
+                    <div class="user-info flex items-center" *ngIf="isLogin; else logingAction">
+                        <button mat-button [matMenuTriggerFor]="menu" class="font-medium body-2">
+                            <span class="mr-2 lg:hidden dsk:inline-block">{{user?.name || 'Hello...'}}</span><img class="avatar inline-block"
+                                type="user" [src]="user?.photo_urls?.xs" [alt]="user?.name || 'User image'"><span
+                                class="icon-down-arrow text-white ml-2 caption"></span>
+
+                        </button>
+                    </div>
+                    <ng-template #logingAction>
+                        <div class="flex items-center ml-3">
+                            <a mat-flat-button class="btn btn-primary" routerLink="/login">Login/Register</a>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom bg-primary-500 hidden lg:block">
+            <div class="container flex">
+                <div class="flex-shrink-0 flex items-center mr-4">
+                    <a class="nav-link  items-center" (click)="toggleCategoriesDropdown()">
+                        <svg width="20" height="5" viewBox="0 0 20 5" fill="none">
+                            <line x1="0.5" y1="0.5" x2="15.5" y2="0.5" stroke="white" stroke-linecap="round" />
+                            <line x1="0.5" y1="4.5" x2="19.5" y2="4.5" stroke="white" stroke-linecap="round" />
+                        </svg> <span class="ml-4">Select Category</span>
+                    </a>
+                </div>
+                <div class="devider mr-4"></div>
+                <div class="flex-shrink flex w-full mr-4">
+                    <a class="nav-link mr-2 dsk:mr-3" routerLink="/product">New Products</a>
+                    <a class="nav-link mr-2 dsk:mr-3" routerLink="/product-most-view-selling">Most Viewed</a>
+                    <a class="nav-link mr-2 dsk:mr-3" routerLink="/product-discount">Sale</a>
+                    <a class="nav-link" routerLink="/vendor-login">Sell with Us</a>
+                </div>
+                <div class="flex-shrink-0 flex">
+                    <div class="currency-change">
+                        <a (click)="changeCurrency('rs')" [ngClass]="{'active' : activeCurrency==='rs'}" class="currency-btn">Rs.</a>
+                        <a (click)="changeCurrency('usd')"  [ngClass]="{'active' : activeCurrency==='usd'}" class="currency-btn">$ USD</a>
+                    </div>
+                    <div *ngIf="settings?.contact?.contact_email " class="hidden dsk:block">
+                        <a class="nav-link mr-1" href="mailto:{{settings?.contact?.contact_email}}"><span
+                                class="icon-mail pr-2 flex items-center"></span>{{settings?.contact?.contact_email}}</a>
+                    </div>
+                    <div *ngIf="settings?.contact?.contact_phone" class="hidden dsk:block" >
+                        <a class="nav-link "
+                            [href]="('whatsapp://send?phone='+settings?.contact?.contact_phone) | safe:'url'"><span
+                                class="icon-whatsapp pr-2 flex items-center"></span>
+                            {{settings?.contact?.contact_phone}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-primary-500 search-line py-2 lg:hidden">
+            <div class="container">
+                <div class="flex  items-center">
+                    <a class="cursor-pointer mr-4" (click)="menuOpen = true"><span
+                            class="icon-menu title text-white"></span></a>
+                    <div class="flex-shrink w-full mr-4">
+                        <div class="relative w-full">
+                            <app-search [allowVendorSearch]="true" class="search-box"></app-search>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex items-center mr-4">
+                        <div class="font-semibold body-2">{{cart?.total | currency}}</div>
+                    </div>
+                    <a mat-icon-button routerLink="/cart" class="bg-white text-blue-500 rounded-full icon-btn mr-4">
+                        <app-icon [matBadge]="cartCount" matBadgeColor="success" matBadgeOverlap="false"
+                            class="icon-basket text-green-500">
+                        </app-icon>
+                    </a>
+                    <a mat-icon-button routerLink="/my-account/wishlist"
+                        class="bg-white text-blue-500 rounded-full icon-btn hidden md:block">
+                        <app-icon [matBadge]="wishlistCounts" matBadgeColor="success" matBadgeOverlap="false" name="wishlist"></app-icon>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="menuOpen" class="side-menu-container">
+        <div class="backdrop" (click)="menuOpen = false"> </div>
+        <div class="menu-toggle bg-primary-500">
+            <button class="close-icon" (click)="menuOpen = false"><span class="icon-close text-white"></span></button>
+            <ul>
+               
+                <li><a class="nav-link" routerLink="/category">Categories</a></li>
+                <li><a class="nav-link" routerLink="/product">New Products</a></li>
+                <li><a class="nav-link" routerLink="/product-most-view-selling">Most Viewed</a></li>
+                <li><a class="nav-link" routerLink="/product-discount">Sale</a></li>
+                <li><a class="nav-link" routerLink="/vendor-login">Sell with Us</a></li>
+                
+                <li class="md:hidden block">
+                    <a class="nav-link flex" href="mailto:{{settings?.contact?.contact_email}}"><span
+                            class="icon-mail pr-2 flex items-center"></span>{{settings?.contact?.contact_email}}
+                    </a>
+                </li>
+                <li class="md:hidden block">
+                    <a class="nav-link flex"
+                        [href]="('whatsapp://send?phone='+settings?.contact?.contact_phone) | safe:'url'"><span
+                            class="icon-whatsapp pr-2 flex items-center"></span> {{settings?.contact?.contact_phone}}
+                    </a>
+                </li>
+                <li class="md:hidden block">
+                    <a class="nav-link flex" routerLink="/my-account/wishlist"><span
+                            class="icon-wishlist pr-2 flex items-center"></span> Wishlist
+                    </a>
+                </li>
+                <li>
+                    <div class="currency-change">
+                        <a (click)="changeCurrency('rs')" [ngClass]="{'active' : activeCurrency==='rs'}"
+                            class="currency-btn my-auto">Rs.</a>
+                        <a (click)="changeCurrency('usd')" [ngClass]="{'active' : activeCurrency==='usd'}"
+                            class="currency-btn my-auto">$
+                            USD</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="categories-dropdown" (click)="isOpenCategoriesDropdown = false" *ngIf="isOpenCategoriesDropdown">
+        <div class="container">
+            <div class="categories-dropdown-innder">
+                <app-loading *ngIf="categoriesLoading"></app-loading>
+                <div class="categories-list" (click)="$event.stopPropagation()">
+                    <div class="categories-items" *ngFor="let category of categories">
+                        <a class="parent-category block mt-8 mb-4 text-primary-500"
+                            [routerLink]="['/product/category',category.slug]">{{category.name}}</a>
+                        <div class="categories-items" *ngFor="let subcategory of category.children | slice:0:8">
+                            <a [routerLink]="['/product/category',subcategory.slug]">{{subcategory.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="body">
+    <div class="loading" *ngIf="loading; else notLoading">
+        <app-loading></app-loading>
+    </div>
+    <ng-template #notLoading>
+        <router-outlet></router-outlet>
+    </ng-template>
+</div>
+
+
+
+<div class="container">
+    <div class="footer">
+        <div class="footer-top">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-4 md:gap-10 lg:gap-6 dsk:gap-8  py-6 mx-4">
+                <div>
+                    <a class="flex mb-2" routerLink="/free-delivery">
+                        <div class="flex-shrink-0 footer-icon"><span class="icon-delivery-truck"></span></div>
+                        <div class="flex-shrink ml-4 lg:ml-2 dsk:ml-4 flex  items-center">
+                            <h3 class="step-header">Global<br> Delivery</h3>
+                        </div>
+                    </a>
+                    <p class="caption">{{ settings?.footer?.steps?.free_delivery}}</p>
+                </div>
+                <div>
+                    <a class="flex mb-2" routerLink="/quality-guarantee">
+                        <div class="flex-shrink-0 footer-icon"><span class="icon-delivery-insurance"></span></div>
+                        <div class="flex-shrink ml-4 lg:ml-2 dsk:ml-4 flex  items-center">
+                            <h3 class="step-header">Quality<br> Guarantee</h3>
+                        </div>
+                    </a>
+                    <p class="caption">{{ settings?.footer?.steps?.quality_guarantee}}</p>
+                </div>
+                <div>
+                    <a class="flex mb-2" routerLink="/guaranteed-savings">
+                        <div class="flex-shrink-0  footer-icon"><span class="icon-money"></span></div>
+                        <div class="flex-shrink ml-4 lg:ml-2 dsk:ml-4 flex  items-center">
+                            <h3 class="step-header ">Guaranteed <br> Savings</h3>
+                        </div>
+                    </a>
+                    <p class="caption">{{ settings?.footer?.steps?.guaranteed_saving}}</p>
+                </div>
+                <div>
+                    <a class="flex mb-2" routerLink="/easy-payment">
+                        <div class="flex-shrink-0 footer-icon"><span class="icon-wallet1"></span></div>
+                        <div class="flex-shrink ml-4 lg:ml-2 dsk:ml-4 flex  items-center">
+                            <h3 class="step-header">Easy <br>Payment</h3>
+                        </div>
+                    </a>
+                    <p class="caption">{{ settings?.footer?.steps?.easy_payment}}</p>
+                </div>
+                <div>
+                    <a class="flex mb-2" routerLink="/earn-real-rewards">
+                        <div class="flex-shrink-0 footer-icon"><span class="icon-gift-voucher"></span></div>
+                        <div class="flex-shrink ml-4 flex  items-center">
+                            <h3 class="step-header">Earn Real <br> Rewards</h3>
+                        </div>
+                    </a>
+                    <p class="caption">{{ settings?.footer?.steps?.earn_real_rewards}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="md:flex md:w-full">
+                <div class="border-right py-6 md:pr-4 mx-4 md:w-3/5 subscribe-element">
+                    <h3 class="text-primary-500 body-2 mb-2 font-semibold  ">Newsletter</h3>
+                    <p class="text-black-400 mb-4 font-medium">Don’t miss any promotion, get additional discounts.</p>
+                    <form (ngSubmit)="subscribers()" [formGroup]="form">
+                        <div class="form-group relative md:flex">
+                            <input
+                                class="border border-primary-500 m-0 pl-10 rounded-lg py-2 w-full md:3/2 lg:w-1/2 email-input"
+                                type="email" formControlName="email" placeholder="Enter Your Email">
+                            <span class="mail-icon text-gray-500 icon-mail md:ml-4"></span>
+                            <button mat-flat-button color="primary"
+                                class="lg:px-12 md:ml-4 flex-shrink-0 hidden md:block rounded-lg" type="submit"
+                                name="submit">Subscribe Now</button>
+                        </div>
+                        <div class="md:hidden">
+                            <button mat-flat-button color="primary" class="mx-auto block rounded-lg" type="submit"
+                                name="submit">Subscribe
+                                Now</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="md:w-2/5 p-4 my-auto">
+                    <h3 class="text-primary-500 flex md:justify-end body-2 mb-2 font-semibold">Mobile Application</h3>
+                    <p class="text-black-400 flex md:justify-end font-medium mb-4">Now order from your Phone</p>
+                    <div class="flex flex-col  dsk:flex-row sm:flex-row md:flex-col dsk:justify-end md:items-end">
+                        <div class="mx-auto md:m-0 md:mb-4 dsk:mb-0 dsk:mr-4">
+                            <a *ngIf="settings?.aslidesi_app_link?.app_store" [href]="settings?.aslidesi_app_link?.app_store"
+                                target="_blank" mat-flat-button color="black" class="input px-2 lg:px-4 py-1"><img
+                                    class="inline-block mr-1 md:mr-2 h-4 w-4" src="assets/image/appstore.svg" alt="AppStore logo"> Apple
+                                Appstore</a>
+                        </div>
+                        <div class="mx-auto mt-4 sm:mt-0 sm:m-0" >
+                            <a *ngIf="settings?.aslidesi_app_link?.play_store"
+                                [href]="settings?.aslidesi_app_link?.play_store" target="_blank" mat-flat-button
+                                color="black" class="input px-2 lg:px-4 py-1"><img
+                                    class="inline-block  mr-1 md:mr-2 h-4 w-4"
+                                    src="assets/image/play-store.svg" alt="play store logo">
+                                Google Playstore</a>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="bg-primary-500 footer-bottom px-8 lg:px-12 ">
+    <div class="container">
+        <div class="py-4">
+            <a routerLink="/" class="bloch"><img class="mx-auto footer-logo" src="assets/image/new-footer-logo.png"
+                    alt="Footer logo"></a>
+        </div>
+        <div class="market-details">
+            <p class="text-center text-yellow font-semibold subhading-1 mb-3">The Global Marketplace of India | India's
+                Own Online Desi Market Place </p>
+            <p class="text-center text-white font-medium">Welcome to the global desi marketplace of exclusively made in
+                India
+                products. Reach quality Indian manufacturer, wholesaler, distributor, buyer, exporter and retailer.</p>
+        </div>
+        <div class="mt-4 lg:mt-6">
+            <h2 class="text-yellow text-center font-semibold mb-4">Desi Market</h2>
+            <div class="flex flex-wrap justify-center">
+                <p class="" *ngFor="let category of categories">
+                    <a [routerLink]="['product/category', category?.slug]" *ngIf="category?.name != 'Occasion'"
+                        class="mx-4 mb-3 block  text-white">{{category?.name | titlecase}}</a>
+                </p>
+            </div>
+            <div class="flex justify-center items-center my-6 lg:my-8">
+                <a *ngIf="settings?.social?.facebook" [href]="settings?.social?.facebook" target="_blank"
+                    class="footer-social">
+                    <span class="icon-facebook"></span> <span class="hidden-text"> Facebook </span> </a>
+                <a *ngIf="settings?.social?.instagram" [href]="settings?.social?.instagram" target="_blank"
+                    class="footer-social"><span class="icon-instagram"></span> <span class="hidden-text"> Instagram </span> </a>
+                <a *ngIf="settings?.social?.twitter" [href]="settings?.social?.twitter" target="_blank"
+                    class="footer-social"><span class="icon-twitter"></span></a>
+                <a *ngIf="settings?.social?.linkedin" [href]="settings?.social?.linkedin" target="_blank"
+                    class="footer-social"><span class="icon-linkedin"></span> <span class="hidden-text"> Linkedin </span> </a>
+                <a *ngIf="settings?.social?.pinterest" [href]="settings?.social?.pinterest" target="_blank"
+                    class="footer-social"><span class="icon-pinterest"></span> <span class="hidden-text"> Pinterest </span> </a>
+                <a *ngIf="settings?.social?.youtube" [href]="settings?.social?.youtube" target="_blank"
+                    class="footer-social"><span class="icon-youtube"></span><span class="hidden-text"> YouTube </span></a>
+            </div>
+        </div>
+        <div class="market-details">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-6 lg:gap-12 dsk:gap-16">
+                <div class="">
+                    <h3 class="footer-link-title">Products</h3>
+                    <a class="footer-link" routerLink="/category">Categories</a>
+                    <a class="footer-link" routerLink="/product-most-view-selling">Most Viewed</a>
+                    <a class="footer-link" routerLink="/product">New Products</a>
+                    <a class="footer-link" routerLink="/product-discount">Promotions</a>
+                </div>
+                <div class="">
+                    <h3 class="footer-link-title">How Aslidesi works</h3>
+                    <a routerLink="/how-to-sell" class="footer-link">How to sell</a>
+                    <a routerLink="/how-to-buy" class="footer-link">How to buy</a>
+                    <a routerLink="/faqs" class="footer-link">FAQ</a>
+                </div>
+                <div class="">
+                    <h3 class="footer-link-title">My Account</h3>
+                    <a routerLink="/my-account/my-orders" class="footer-link">My Orders</a>
+                    <a routerLink="/my-account" class="footer-link">Account Details</a>
+                    <a routerLink="/my-account/wishlist" class="footer-link">Shopping Lists</a>
+
+                </div>
+                <div class="">
+                    <h3 class="footer-link-title">About Aslidesi</h3>
+                    <a routerLink="/about" class="footer-link">Our History</a>
+                    <a routerLink="/about" class="footer-link">Contact Us</a>
+                    <a routerLink="/blog" class="footer-link">Blogs</a>
+                    <a routerLink="/social-responsibility" class="footer-link">Social Responsibility</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-white flex flex-col md:flex-row items-center justify-between pt-4 lg:pt-8 pb-6 lg:pb-10">
+            <div class="flex flex-col md:flex-row my-auto  items-center">
+                <p class="hidden md:block"><a routerLink="/terms-conditions">Our Terms & Conditions</a></p>
+                <ul class="flex flex-col md:flex-row  mb-4 lg:ml-4 md:mb-0">
+                    <!-- <li class="list-disc my-2 md:my-0 dsk:mx-4"><a routerLink="/terms-conditions">Terms & Conditions</a></li> -->
+                    <li class="list-disc my-2 md:my-0 dsk:mx-4"><a routerLink="/privacy-policy">Privacy Policy</a></li>
+                    <li class="list-disc my-2 md:my-0 dsk:mx-4"><a routerLink="/vendor-agreement">Seller Policy</a></li>
+                    <li class="list-disc my-2 md:my-0 dsk:mx-4">2020 All Rights Reserved Aslidesi</li>
+                </ul>
+            </div>
+
+            <div class="flex">
+                <div class="mr-2 lg:mr-4"><img src="assets/image/makeinindia.png" class="make-india-logo" alt="Make in india logo"></div>
+                <div class="mr-2 lg:mr-4"><img src="assets/image/paypal.svg" alt="Paypal logo"></div>
+                <div class="mr-2 lg:mr-4"><img src="assets/image/master.svg" alt="MaterCard logo"></div>
+                <div class="mr-2 lg:mr-4"><img src="assets/image/visa.svg" alt="Visa logo"></div>
+                <div class="mr-2 lg:mr-4"><img src="assets/image/discovar.svg" alt="Discovar logo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<mat-menu #menu="matMenu">
+    <a routerLink="/my-account" mat-menu-item>
+        <mat-icon>account_circle</mat-icon>
+        <span>My Account</span>
+    </a>
+    <a class="md:hidden" routerLink="/my-account/wishlist" mat-menu-item>
+        <mat-icon><span class="icon-wishlist"></span></mat-icon>
+        <span>Wishlist</span>
+    </a>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-menu>

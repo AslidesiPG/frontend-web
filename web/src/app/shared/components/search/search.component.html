@@ -1,0 +1,46 @@
+<form (ngSubmit)="searchProduct()">
+    <div class="full-search-box">
+
+        <div class="select hidden sm:block" *ngIf="allowVendorSearch">
+            <mat-select class="" name="search" (change)="filter()" [(ngModel)]="searchType">
+                <mat-option value="product">Product</mat-option>
+                <mat-option value="vendor">Vendor</mat-option>
+            </mat-select>
+        </div>
+
+
+        <div class="search-box">
+            <input name="search" class="py-1 px-5 caption w-full" type="text" [matAutocomplete]="auto"
+                placeholder="Search Aslidesi product" #searchInput="ngModel" [(ngModel)]="search">
+            <span *ngIf="!allowVendorSearch" class="positon-search-icon icon-search"></span>
+
+            <mat-autocomplete (optionSelected)="onOptionSelected($event)" [displayWith]="displayFn"
+                #auto="matAutocomplete" classList="product-search-autocomplete" (optionsScroll)="onScroll($event)">
+                <mat-option class="h-auto py-2" *ngFor="let product of filteredProduct" [value]="product">
+                    <div class="grid grid-cols-6 gap-4 items-center" *ngIf="searchType == 'product' ; else userItemEl">
+                        <div class="col-span-2 md:col-span-1">
+                            <img class="w-14 m-auto" [src]="product?.image?.image_urls?.xs" [alt]="product?.name || 'product image'">
+                        </div>
+                        <div class="col-span-4 md:col-span-5">
+                            <p class="body-1">{{product?.name}}</p>
+                            <p class="caption">in <span class="font-bold text-primary-500">{{product?.name}}</span></p>
+                        </div>
+                    </div>
+                    <ng-template #userItemEl>
+                        <div class="grid  grid-cols-6 gap-4 items-center">
+                            <div class="col-span-2 md:col-span-1">
+                                <img class="w-14 rounded-full m-auto" [src]="product?.photo_urls?.xs" [alt]="product?.name || 'product image'">
+                            </div>
+                            <div class="col-span-4 md:col-span-5">
+                                <p class="body-1">{{product?.name}}</p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-option>
+            </mat-autocomplete>
+            <button class="hidden"></button>
+        </div>
+        <button mat-flat-button color="success" class="search-btn" *ngIf="allowVendorSearch"
+            type="submit">Search</button>
+    </div>
+</form>

@@ -1,0 +1,134 @@
+<div class="container">
+    <nav class="text-gray-500 font-medium my-4">
+        <ol class="list-none p-0 inline-flex">
+            <li class="flex items-center">
+                <a routerLink="/"><span class="fill-current w-3 h-3 mx-2 caption icon-home"></span></a>
+                <span class="w-3 mx-2 caption">/</span>
+            </li>
+            <li class="flex items-center" *ngIf="type == 'category' && category?.parent">
+                <a [routerLink]="['/category', category?.parent?.slug]"><span
+            class="fill-current w-3 h-3 mx-3 caption">{{category?.parent?.name}}</span></a>
+                <span class="w-3 mx-3 caption">/</span>
+            </li>
+            <li class="flex items-center">
+                <span class="caption">{{title}}</span>
+            </li>
+        </ol>
+    </nav>
+    <div [ngClass]="{'backdrop': showFilter}" class="" (click)="showFilter = true"> </div>
+    <div class="flex dsk:grid dsk:grid-cols-5 dsk:gap-6">
+        <div *ngIf="showFilter" class="filters md:mr-6 dsk:mr-0  mb-8">
+            <div class="card px-0 py-8 ">
+                <button  class="close-icon lg:hidden" (click)="showFilter = false"><span class="icon-close"></span></button>
+                <h2 class="font-semibold px-4 mb-6">Filter By</h2>
+                <ng-template [ngIf]="categories?.length > 0">
+                    <div class="filter-item mb-8">
+                        <h4 class="font-medium px-4 my-2">Category</h4>
+                        <app-tree-select class="px-3" (change)="applyFilter('category')" [(ngModel)]="request.category_ids" [data]='categories'>
+                        </app-tree-select>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="brands?.length > 0">
+                    <div class="filter-item  mb-8">
+                        <h4 class="font-medium px-4 mb-2">Brands</h4>
+                        <app-tree-select class="px-3" (change)="applyFilter('brand')" [(ngModel)]="request.brand_ids" [hasSearch]="true" [data]='brands'>
+                        </app-tree-select>
+                    </div>
+                </ng-template>
+
+
+                <div class="filter-item mb-8" *ngIf="options.ceil > 0">
+                    <h4 class="font-medium px-4 mb-2">Price</h4>
+                    <div class="product-filter px-4" *ngIf="isBrowser">
+                        <ng5-slider  [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="filters hidden lg:block  mr-6 dsk:mr-0 mb-8">
+            <div class="card px-0 py-8 ">
+                <button  class="close-icon lg:hidden" (click)="showFilter = false"><span class="icon-close"></span></button>
+                <h2 class="font-semibold px-4 mb-6">Filter By</h2>
+                <ng-template [ngIf]="categories?.length > 0">
+                    <div class="filter-item mb-8">
+                        <h4 class="font-medium px-4 my-2">Category</h4>
+                        <app-tree-select class="px-3" (change)="applyFilter('category')" [(ngModel)]="request.category_ids" [data]='categories'>
+                        </app-tree-select>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="brands?.length > 0">
+                    <div class="filter-item  mb-8">
+                        <h4 class="font-medium px-4 mb-2">Brands</h4>
+                        <app-tree-select class="px-3" (change)="applyFilter('brand')" [(ngModel)]="request.brand_ids" [hasSearch]="true" [data]='brands'>
+                        </app-tree-select>
+                    </div>
+                </ng-template>
+
+
+                <div class="filter-item mb-8" *ngIf="options.ceil > 0">
+                    <h4 class="font-medium px-4 mb-2">Price</h4>
+                    <div class="product-filter px-4">
+                        <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-shrink w-full  md:mr-6 dsk:mr-0 dsk:col-span-4">
+            <app-loading *ngIf="loading; else productListEl"></app-loading>
+        </div>
+
+        <ng-template #productListEl class=" md:mr-6 dsk:mr-0">
+            <h1 class="text-center mb-4" *ngIf="title">{{title}}</h1>
+            <div class="flex justify-between items-center py-3 line-border">
+                <div class="page-info hidden lg:block">
+                    <p *ngIf="products.length > 0">{{pageMeta?.from}}-{{pageMeta?.to}} of {{pageMeta?.total}} results for <span class="text-primary-500">{{title}}</span></p>
+                </div>
+                <div class="lg:hidden mr-2">
+                    <a mat-flat-button color="primary" (click)="showFilter = !showFilter" class="lg:hidden">Filter</a>
+                </div>
+                <div class="flex-shrink-0 short-action">
+                    <span class="font-semibold pr-1 md:pr-4">SORT BY</span>
+                    <mat-form-field>
+                        <mat-select (selectionChange)="shortProduct()" [(value)]="shortBy">
+                            <mat-option value="price_asc">Price (Low to High)</mat-option>
+                            <mat-option value="price_desc">Price (High to Low)</mat-option>
+                            <mat-option value="name_asc">Name (A to Z)</mat-option>
+                            <mat-option value="name_desc">Name (Z to A)</mat-option>
+                            <!-- <mat-option value="rating" selected>Rating</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                    <!--  <p>You selected: {{selected}}</p> -->
+                </div>
+            </div>
+            <ng-template [ngIf]="products?.length > 0" [ngIfElse]="productNotFoundEl">
+                <div [ngClass]="{'md:grid-cols-2':!showFilter}" class="grid grid-cols-1  lg:grid-cols-2 dsk:grid-cols-4 gap-4 my-10 search-results"
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="600"
+                (scrolled)="onScroll()"
+                [scrollWindow]="true">
+                    <app-product-item class="product-slider" *ngFor="let product of products" [product]="product"></app-product-item>
+                </div>
+                <!-- <div>
+                    <div class="grid grid-cols-1 md:hidden gap-y-4 my-10">
+                        <app-product-item class="product-slider" *ngFor="let product of products" [product]="product"></app-product-item>
+                    </div>
+                </div> -->
+
+                <!-- <div class="load-more text-center pt-3 pb-10">
+                    <mat-paginator color="primary" [pageIndex]="(pageMeta.current_page - 1)" (page)="loadeMoreProducts($event)" [length]="pageMeta?.total || 1" [pageSize]="pageMeta?.per_page || 12" [pageSizeOptions]="[12, 24, 36]">
+                    </mat-paginator>
+                </div> -->
+            </ng-template>
+        </ng-template>
+
+        <ng-template #productNotFoundEl>
+            <div class="text-center py-8">
+                <h3> No Products found</h3>
+            </div>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+    <div class="flex items-center" mat-dialog-title>
+        <h2 *ngIf="addressType === 'product'" class="title m-0 flex-auto">
+            {{ isUpdateMode() ? 'Edit Address' : 'Add New Address' }}
+        </h2>
+        <h2 *ngIf="(addressType === 'order') && (type === 'phone')" class="title m-0 flex-auto">
+            Edit Phone Number
+        </h2>
+        <h2 *ngIf="(addressType === 'order') && (type === 'address')" class="title m-0 flex-auto">
+            Edit Address
+        </h2>
+        <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content class="mt-6" fxLayout="column">
+        <http-message [data]="httpError" type="error"></http-message>
+
+        <div *ngIf="(type === 'all') || (type === 'phone') " class=" form-group flex">
+            <mat-form-field class="w-1/4 mr-4">
+                <mat-label>Country Code</mat-label>
+                <input matInput placeholder="Country Code" formControlName="phone_country_code" required>
+                <mat-error *ngIf="form?.get('phone_country_code').hasError('required')">Please select country code</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Phone</mat-label>
+                <input formControlName="phone" type="number" required matInput>
+                <mat-error *ngIf="form?.get('phone').hasError('required')">Please enter phone number</mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="(type === 'all') || (type === 'address') ">
+            <div class="form-group flex flex-col md:flex-row">
+                <mat-form-field class="w-full mb-4 md:mb-0 md:mr-4">
+                    <mat-label>First Name</mat-label>
+                    <input cdkFocusInitial formControlName="first_name" required matInput>
+                    <mat-error *ngIf="form?.get('first_name').hasError('required')">Please enter you first name</mat-error>
+                </mat-form-field>
+            
+                <mat-form-field class="w-full">
+                    <mat-label>Last Name</mat-label>
+                    <input formControlName="last_name" required matInput>
+                    <mat-error *ngIf="form?.get('last_name').hasError('required')">Please enter you last name</mat-error>
+                </mat-form-field>
+            </div>
+            
+            <mat-form-field class="form-group">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" formControlName="email" required>
+                <mat-error *ngIf="form?.get('email').hasError('required')">Please enter email</mat-error>
+            </mat-form-field>
+        
+
+            <mat-form-field class="form-group">
+                <mat-label>Address line 1</mat-label>
+                <input formControlName="addressline1" required matInput>
+                <mat-error *ngIf="form?.get('addressline1').hasError('required')">Please enter address line 1</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-group">
+                <mat-label>Address line 2</mat-label>
+                <input formControlName="addressline2" matInput>
+                <mat-error *ngIf="form?.get('addressline2').hasError('required')">Please enter address line 2</mat-error>
+            </mat-form-field>
+
+            <div class=" form-group flex flex-col md:flex-row">
+                <mat-form-field class="w-full mb-4 md:mb-0 md:mr-4">
+                    <mat-label>Country</mat-label>
+                    <mat-select formControlName="country_id" required>
+                        <mat-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form?.get('country_id').hasError('required')">Please select country</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="state_id" required>
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form?.get('state_id').hasError('required')">Please select state</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group flex flex-col md:flex-row">
+                <mat-form-field class="w-full mb-4 md:mb-0 md:mr-4">
+                    <mat-label>City</mat-label>
+                    <mat-select formControlName="city_id" required>
+                        <mat-option *ngFor="let city of cites" [value]="city.id">{{city.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form?.get('city_id').hasError('required')">Please select city</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Zip Code</mat-label>
+                    <input formControlName="zip_code" required matInput>
+                    <mat-error *ngIf="form?.get('zip_code').hasError('required')">Please enter zip code</mat-error>
+                </mat-form-field>
+            </div>
+        </div>        
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button class="mr-2" mat-flat-button mat-dialog-close type="button">Cancel</button>
+        <button *ngIf="isCreateMode()" color="primary" mat-flat-button type="submit">Add</button>
+        <button *ngIf="isUpdateMode()" color="primary" mat-flat-button type="submit">Update</button>
+    </mat-dialog-actions>
+</form>

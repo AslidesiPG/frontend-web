@@ -1,0 +1,76 @@
+<form (ngSubmit)="save()" [formGroup]="form" *ngIf="!isOTP">
+    <div class="flex items-center" mat-dialog-title>
+        <h4 class="m-0 flex-auto heading">
+            New Phone Number
+        </h4>
+        <!-- <h3 class="m-0 flex-auto md:hidden">
+            New Phone Number
+        </h3> -->
+        <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content class="my-6">
+        <http-message [data]="httpError" type="error"></http-message>
+
+        <div class="phone-input">
+            <ngx-intl-tel-input #phoneInput class="from-group w-100"
+                cssClass="form-control border flex w-full border-blue-500 rounded"
+                [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.India" [maxLength]="15"
+                [tooltipField]="TooltipLabel.Name" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                name="phone" formControlName="phone">
+            </ngx-intl-tel-input>
+        </div>
+        <p class="form-error" *ngIf="formSubmited && form?.get('phone').hasError('required')">Please enter phone number
+        </p>
+        <p class="form-error" *ngIf="formSubmited && form?.get('phone').hasError('validatePhoneNumber')">Please enter
+            valid
+            phone number</p>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="py-6" align="end">
+        <button color="primary" [disabled]="loading" mat-flat-button type="submit">Update</button>
+        <button class="mr-2" mat-flat-button mat-dialog-close type="button">Cancel</button>
+    </mat-dialog-actions>
+</form>
+
+<form (ngSubmit)="verifyPhoneOtp()" *ngIf="isOTP">
+    <div class="flex items-center" mat-dialog-title>
+        <h2 class="title m-0 flex-auto">
+            Verify OTP
+        </h2>
+        <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content class="grid pt-4">
+        <p class="title text-primary-500 font-semibold">Verify with OTP</p>
+        <p class="button mt-4 mb-12">Sent to +{{phone.phone_country_id}}-{{phone.phone}}
+            <a mat-icon-button (click)="isOTP = false" class="icon-pencil ml-4 button text-gray-500"></a>
+        </p>
+
+        <http-message [data]="httpError" type="error"></http-message>
+
+        <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length:6}"></ng-otp-input>
+
+        <p *ngIf="timeLeft > 0 ; else resendEl" class="text-right mt-2">Resend OTP in 0:{{timeLeft}}</p>
+        <ng-template #resendEl>
+            <p class="text-right mt-2 text-blue-500"><a class="cursor-pointer" (click)="resend()">Resend</a></p>
+        </ng-template>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="py-6" align="end">
+        <button color="primary" [disabled]="loading" mat-flat-button type="submit">Verify</button>
+        <button class="mr-2" mat-flat-button mat-dialog-close type="button">Cancel</button>
+    </mat-dialog-actions>
+</form>

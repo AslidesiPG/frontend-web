@@ -1,0 +1,22 @@
+<div class="process flex mr-4">
+    <div class="center-line">
+        <div class="process-step" [ngClass]="{ 'active' : activeStep==='cart' }">
+            <span class="icon-cart1"></span>
+        </div>
+        <p class="text-center">Cart</p>
+    </div>
+
+    <div class="center-line  ">
+        <div class="process-step" [ngClass]="{'active' : activeStep==='shipping'}">
+            <span class="icon-shipping"></span>
+        </div>
+        <p class="text-center">Shipping</p>
+    </div>
+
+    <div class="center-line  ">
+        <div class="process-step" [ngClass]="{'active' : activeStep === 'payment'}">
+            <span class="icon-payment"></span>
+        </div>
+        <p class="text-center">Payment</p>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+:host {
+  .fab-button {
+    @apply mr-4;
+    width: 36px;
+    height: 36px;
+  }
+  ::ng-deep {
+    .mat-fab .mat-button-wrapper {
+      line-height: 36px !important;
+      padding: 0 !important;
+    }
+  }
+}

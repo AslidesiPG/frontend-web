@@ -1,0 +1,69 @@
+<div class="mat-datatable-conteainer">
+	<!-- <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+		<div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+			API rate limit has been reached. It will be reset in one minute.
+		</div>
+	</div> -->
+	<div class="row" *ngIf="allowFilter">
+		<div class="col-sm-6">
+			<mat-form-field> <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+			</mat-form-field>
+		</div>
+		<div class="col-sm-6"> </div>
+	</div>
+
+	<table mat-table [dataSource]="dataSource" matSort matSortDisableClear
+		[ngClass]='{ loading : isLoadingResults }' loading [matSortActive]="defaultSort" [matSortDirection]="defaultSortDir">
+		<ng-template [ngIf]="select">
+			<ng-container matColumnDef="select">
+				<th class="checkbox" mat-header-cell *matHeaderCellDef>
+					<mat-checkbox (change)="$event ? masterToggle() : null"
+						[checked]="selection?.hasValue() && isAllSelected()"
+						[indeterminate]="selection?.hasValue() && !isAllSelected()">
+					</mat-checkbox>
+				</th>
+				<td class="checkbox" mat-cell *matCellDef="let row">
+					<mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+						[checked]="selection.isSelected(row)">
+					</mat-checkbox>
+				</td>
+			</ng-container>
+		</ng-template>
+
+		<!-- Position Column -->
+		<ng-container *ngFor="let col of cols; let index = index" [matColumnDef]="col.field">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header [id]="col.field" [disabled]="!col.sortable"> {{col.header}} </th>
+			<td mat-cell *matCellDef="let element">
+				<ng-template [ngIf]="col.bodyTemplate" [ngIfElse]="text">
+					<ng-container
+						*ngTemplateOutlet="col.bodyTemplate; context: {$implicit: col, rowData: element, datatable:_this}">
+					</ng-container>
+				</ng-template>
+				<ng-template #text>
+					{{ element[col.field] }}
+				</ng-template>
+			</td>
+
+		</ng-container>
+
+		<ng-template [ngIf]="select" [ngIfElse]="notSelect">
+			<tr mat-header-row *matHeaderRowDef="cols | displayedColumns:'select'"></tr>
+			<tr (click)="onRowClick(row)" [class]="rowClass(row)" mat-row *matRowDef="let row; columns: cols | displayedColumns:'select';"></tr>
+		</ng-template>
+		<ng-template #notSelect>
+			<tr mat-header-row *matHeaderRowDef="cols | displayedColumns"></tr>
+			<tr (click)="onRowClick(row)" [class]="rowClass(row)" mat-row *matRowDef="let row; columns: cols | displayedColumns;"></tr>
+		</ng-template>
+
+	</table>
+	<div *ngIf="displayNoRecords" class="padding-50" >
+		<h4 class="text-center">We couldn't find data for <span style="color:red">"{{dataSource.filter}}"</span>
+		</h4>
+	</div>
+	<div *ngIf="!isLoadingResults && resultsLength == 0" class="padding-50">
+		<h4 class="text-center">No records found </h4>
+	</div>
+	<mat-paginator  class="paginator" [length]="resultsLength"
+		[pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>

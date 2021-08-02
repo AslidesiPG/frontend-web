@@ -1,0 +1,228 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?dbg960');
+  src:  url('fonts/icomoon.eot?dbg960#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?dbg960') format('truetype'),
+    url('fonts/icomoon.woff?dbg960') format('woff'),
+    url('fonts/icomoon.svg?dbg960#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pinterest:before {
+  content: "\e941";
+}
+.icon-youtube:before {
+  content: "\e942";
+}
+.icon-slider-right:before {
+  content: "\e940";
+}
+.icon-menu:before {
+  content: "\e93d";
+}
+.icon-compare:before {
+  content: "\e93c";
+}
+.icon-map-pin:before {
+  content: "\e938";
+}
+.icon-share:before {
+  content: "\e937";
+}
+.icon-payment:before {
+  content: "\e939";
+}
+.icon-shipping:before {
+  content: "\e93a";
+}
+.icon-cart1:before {
+  content: "\e93b";
+}
+.icon-whatsapp:before {
+  content: "\e936";
+}
+.icon-facebook:before {
+  content: "\e90a";
+}
+.icon-twitter:before {
+  content: "\e917";
+}
+.icon-linkedin:before {
+  content: "\e92b";
+}
+.icon-google:before {
+  content: "\e933";
+}
+.icon-instagram:before {
+  content: "\e934";
+}
+.icon-mail:before {
+  content: "\e935";
+}
+.icon-phone:before {
+  content: "\e92a";
+}
+.icon-basket:before {
+  content: "\e92c";
+}
+.icon-search:before {
+  content: "\e92d";
+}
+.icon-gift-voucher:before {
+  content: "\e92e";
+}
+.icon-wallet1:before {
+  content: "\e92f";
+}
+.icon-money:before {
+  content: "\e930";
+}
+.icon-delivery-insurance:before {
+  content: "\e931";
+}
+.icon-delivery-truck:before {
+  content: "\e932";
+}
+.icon-home:before {
+  content: "\e928";
+}
+.icon-right-arrow-2:before {
+  content: "\e91e";
+}
+.icon-left-arrow-2:before {
+  content: "\e91f";
+}
+.icon-close:before {
+  content: "\e920";
+}
+.icon-spinner-of-dots:before {
+  content: "\e921";
+}
+.icon-fullscreen:before {
+  content: "\e922";
+}
+.icon-download:before {
+  content: "\e923";
+}
+.icon-rotating-right:before {
+  content: "\e924";
+}
+.icon-rotate-left:before {
+  content: "\e925";
+}
+.icon-zoom-in:before {
+  content: "\e926";
+}
+.icon-zoom-out:before {
+  content: "\e927";
+}
+.icon-left-arrow:before {
+  content: "\e919";
+}
+.icon-card:before {
+  content: "\e91a";
+}
+.icon-qr-code:before {
+  content: "\e91b";
+}
+.icon-wallet:before {
+  content: "\e91c";
+}
+.icon-cod-icon:before {
+  content: "\e91d";
+}
+.icon-edit:before {
+  content: "\e918";
+}
+.icon-minus:before {
+  content: "\e914";
+}
+.icon-plus:before {
+  content: "\e915";
+}
+.icon-pencil:before {
+  content: "\e916";
+}
+.icon-wishlist-fill:before {
+  content: "\e900";
+}
+.icon-arrow:before {
+  content: "\e901";
+}
+.icon-phone-handset:before {
+  content: "\e902";
+}
+.icon-crochet:before {
+  content: "\e903";
+}
+.icon-vase:before {
+  content: "\e904";
+}
+.icon-mobile:before {
+  content: "\e905";
+}
+.icon-air-conditioner:before {
+  content: "\e906";
+}
+.icon-washing-machine:before {
+  content: "\e907";
+}
+.icon-audio:before {
+  content: "\e908";
+}
+.icon-vaccine:before {
+  content: "\e909";
+}
+.icon-drug:before {
+  content: "\e929";
+}
+.icon-sewing-machine:before {
+  content: "\e90b";
+}
+.icon-handmade:before {
+  content: "\e90c";
+}
+.icon-milk:before {
+  content: "\e90d";
+}
+.icon-bread:before {
+  content: "\e90e";
+}
+.icon-nuts:before {
+  content: "\e90f";
+}
+.icon-fruits:before {
+  content: "\e910";
+}
+.icon-egg:before {
+  content: "\e911";
+}
+.icon-wishlist:before {
+  content: "\e912";
+}
+.icon-cart:before {
+  content: "\e913";
+}
+.icon-up-arrow:before {
+  content: "\e93f";
+}
+.icon-down-arrow:before {
+  content: "\e93e";
+}

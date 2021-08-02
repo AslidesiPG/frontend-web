@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "yarn workspace web start",
+    "start:app": "yarn workspace app ionic serve",
+    "build": "yarn workspace web ng build",
+    "dev:ssr": "yarn workspace web dev:ssr",
+    "build:dev:ssr": "yarn workspace web build:dev:ssr",
+    "serve:ssr": "node dist/aslidesi/server/main.js",
+    "build:ssr": "ng build --prod && ng run aslidesi:server:production",
+    "prerender": "ng run aslidesi:prerender"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "web",
+    "app",
+    "libs/*"
+  ],
+  "dependencies": {
+    "ngx-infinite-scroll": "^10.0.1"
+  }
+}

@@ -1,0 +1,9 @@
+<p class="attributes cpation my-1 py-1" *ngFor="let attribute of attributes">
+    <span class="text-green-500 block">{{attribute.title}}</span>
+    <span class="color-lable" *ngIf="attribute?.title == 'Color'; else attrValueEl">
+        <span class="w-8 h-8 rounded table" [style.backgroundColor]="attribute.value"></span>
+    </span>
+    <ng-template #attrValueEl>
+        {{attribute.value}}
+    </ng-template>
+</p>

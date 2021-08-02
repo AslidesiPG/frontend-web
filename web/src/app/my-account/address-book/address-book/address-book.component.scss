@@ -1,0 +1,23 @@
+@import 'common';
+:host {
+    .active {
+        border: 1px solid theme('colors.primary.500');
+        .address {
+            color: theme('colors.primary.500');
+        }
+    }
+    .delete-icon {
+        @apply absolute bottom-2 right-2 cursor-pointer;
+    }
+    .add-address{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include respond(md){
+            &.card{
+                 min-height: 130px;
+            }
+           
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<!-- <vex-page-header [title]="page?.title" [description]="page?.extras?.short_description" [image]="fileUrl(page?.extras?.featured_image)"></vex-page-header>
+<div vexContainer class="mt-2 mb-8 sm:mt-6 sm:mb-16">
+    <div class="grid gap-4">
+        <div *ngFor="let item of news" wmAnimate="fadeInUp">
+            <div class="card grid sm:grid-cols-4 gap-4 items-center">
+                <div class="fetaure-avatar p-4">
+                    <img [src]="fileUrl(item.image)">
+                </div>
+                <div class="info p-4 sm:col-span-3">
+                    <h3 class="mb-3 headline">{{item.title}}</h3>
+                    <div class="date caption mb-3">{{item.date | amDateFormat:'LL'}}</div>
+                    <div class="html-content mb-3 body-2" [innerHTML]="item.content | truncate:400"></div>
+                    <a color="primary" mat-flat-button type="button" (click)="loadMore()" [routerLink]="['/news', item.slug]">View info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-footer text-center" *ngIf="hasMoreNews">
+        <button color="primary" mat-button type="button" (click)="loadMore()">Load more</button>
+    </div>
+</div> -->
+<div class="container">
+    <div class="lg:w-2/3 mt-6" *ngFor="let item of news">
+        <div class="mb-4">
+            <a [routerLink]="['/blog', item.slug]"><img class="blog-image" [src]="fileUrl(item?.image)" [alt]="item?.title || 'Item title'" /></a>
+        </div>
+        <div class="my-6">
+            <div>
+                <span class="text-blue-500">{{item?.category?.name}} </span>
+                <span class="text-gray-500">- {{item?.date | date:'MMM d, y'}}</span>
+            </div>
+            <h2 class="my-4">{{item?.title}}</h2>
+            <div class="html-content mb-3 body-2 " [innerHTML]="item?.content | truncate:200 "></div>
+            <div class="mt-6 read-more">
+                <a class="cursor-pointer  py-2" [routerLink]="['/blog', item.slug]">Read More</a>
+                <div class="border-read-more"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

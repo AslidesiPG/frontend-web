@@ -1,0 +1,36 @@
+@import "common";
+:host {
+  .product-item {
+    flex-direction: column;
+    display: flex;
+    &.card {
+      height: 100%;
+      width: 100%;
+      // max-width: 256px;
+    }
+    .product-image-container {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-image {
+      /*  @include respond(lg) {
+        width: 100%;
+        height: auto;
+      } */
+      width: auto;
+      height: 175px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .wish-list-button {
+      background-color: #fff;
+      @apply border border-blue-400 h-6 w-6 flex justify-center items-center rounded-full;
+      .wishlist-icon {
+        @apply text-blue-500;
+        font-size: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+
+    <div class="container" >
+        <div class="flex justify-center section bg-image ">
+            <div class="card p-6">
+                <div class="flex justify-between">
+                    <div class="mr-6">
+                        <p class="title text-primary-500 font-semibold">Verify with OTP</p>
+                        <p class="button mt-4 mb-12">Sent to <span
+                                class="text-primary-500">+{{phone.phone_country_code}}-{{phone.phone}}</span>
+    
+                        </p>
+                    </div>
+                    <div class="otp-icon">
+                        <img src="assets/image/otp.svg" alt="otp logo">
+                    </div>
+                </div>
+                <http-message [data]="message" type="error"></http-message>
+    
+                <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length:6}"></ng-otp-input>
+                <p *ngIf="timeLeft > 0 ; else resendEl" class="text-right mt-2">Resend OTP in 0:{{timeLeft}}</p>
+                <ng-template #resendEl>
+                    <p class="text-right mt-2 text-blue-500"><a class="cursor-pointer" (click)="resend()">Resend</a></p>
+                </ng-template>
+                <button mat-flat-button (click)="otpSubmit()" [disabled]="loading" color="primary"
+                    class="mt-12 w-full text-center">Submit</button>
+            </div>
+        </div>
+    </div>

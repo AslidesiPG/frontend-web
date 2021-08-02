@@ -1,0 +1,35 @@
+<div class="container">
+  <nav class="text-gray-500 font-medium mt-6">
+    <ol class="list-none p-0 inline-flex">
+      <li class="flex items-center">
+        <a routerLink="/"><span class="fill-current w-3 h-3 mx-2 icon-home caption"></span></a>
+        <span class="w-3 mx-2 caption">/</span>
+      </li>
+
+      <li class="flex items-center" *ngIf="category">
+        <a routerLink="/category"> <span class="caption">Categories</span></a>
+        <span class="w-3 mx-2 caption">/</span>
+      </li>
+
+      <li class="flex items-center" *ngIf="category && category?.parent">
+        <a [routerLink]="['/category', category?.parent?.slug]"><span
+            class="fill-current w-3 h-3 mx-3 caption">{{category?.parent?.name}}</span></a>
+        <span class="w-3 mx-3 caption">/</span>
+      </li>
+      <li class="flex items-center">
+        <span class="caption">{{title}}</span>
+      </li>
+    </ol>
+  </nav>
+  <div class="section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 dsk:grid-cols-5 gap-5">
+    <a [routerLink]=" item.children_count > 0 ? ['/category/', item.slug] : ['/product/category/', item.slug]" class="slider-category-item" *ngFor="let item of categories">
+      <div class="card h-full w-full">
+        <div class="image-container">
+          <img class="occasion-img mx-auto" [src]="item.image || 'assets/image/category-icon.svg'" [alt]="item?.name || 'Occasion categories'" />
+        </div>
+        <p class="text-center font-semibold mt-4">{{item?.name || 'Occasion categories' }}
+        </p>
+      </div>
+    </a>
+  </div>
+</div>

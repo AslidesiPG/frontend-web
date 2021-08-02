@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="personal card mx-auto my-6">
+        <h1 class="text-center text-primary-500 font-semibold mb-4">Create your Profile</h1>
+        <div class="form mt-8 mx-auto">
+            <form (ngSubmit)="send()" [formGroup]="form" #s="ngForm">
+                <http-message [data]="registerMessage" type="error"></http-message>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-6 mb-4">
+                    <div class="from-group">
+                        <input type="text" class="about-form" formControlName="first_name" placeholder="First Name"
+                            required>
+                        <p class="form-error" *ngIf="s.submitted && form?.get('first_name')?.hasError('required')">Please enter you
+                            first
+                            name</p>
+                    </div>
+                    <div class="from-group">
+                        <input type="text" class="about-form" formControlName="last_name" placeholder="Last Name"
+                            required>
+                        <p class="form-error" *ngIf="s.submitted && form?.get('last_name').hasError('required')">Please enter you last
+                            name
+                        </p>
+                    </div>
+                </div>
+
+                <div class="from-group mb-4">
+                    <input type="email" class="about-form" formControlName="email" placeholder="Email Address"
+                        required>
+                    <p class="form-error" *ngIf="s.submitted && form?.get('email').hasError('required')">Please enter you email</p>
+                </div>
+               
+
+                <div class="form-group mb-4">
+                    <input type="text" class="about-form" formControlName="addressline1" placeholder="Address line 1"
+                        required>
+                    <p class="form-error" *ngIf="s.submitted && form?.get('addressline1').hasError('required')">Please enter address line 1</p>
+                </div>
+
+                <div class="form-group mb-4">
+                    <input type="text" class="about-form" formControlName="addressline2" placeholder="Address line 2">
+                </div>
+
+                <div class="form-group mb-4">
+                    <input type="text" class="about-form" formControlName="gst_number" placeholder="Gst Number">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-6 mb-4">
+                    <div class="form-group">
+                        <select class="about-form" id="country" formControlName="country_id">
+                            <option value="">Select country</option>
+                            <option *ngFor="let country of conutries " [value]="country.id">{{country.name}}</option>
+                        </select>
+                        <p class="form-error" *ngIf="s.submitted && form?.get('country_id')?.hasError('required')">Please enter country</p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <select class="about-form" id="state_id" formControlName="state_id">
+                            <option value="">Select State</option>
+                            <option *ngFor="let state of states " [value]="state.id">{{state.name}}</option>
+                        </select>
+                        <p class="form-error" *ngIf="s.submitted && form?.get('state_id')?.hasError('required')">Please enter state</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2  gap-y-4 md:gap-6 mb-4">
+                    <div class="form-group">
+                        <select class="about-form" id="city_id" formControlName="city_id">
+                            <option value="">Select City</option>
+                            <option *ngFor="let city of cites " [value]="city.id">{{city.name}}</option>
+                        </select>
+                        <p class="form-error" *ngIf="s.submitted && form?.get('city_id')?.hasError('required')">Please enter City.</p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input class="about-form" id="zip_code" formControlName="zip_code" type="text"
+                            placeholder="zip code">
+                        <p class="form-error " *ngIf="s.submitted && form?.get('zip_code')?.hasError('required')">Please
+                            enter zip code.</p>
+                    </div>
+                </div>
+
+                <div class="form-group flex flex-col  md:flex-row mat-radio mb-4">
+                    <label class="radio-button mb-b md:mb-0 md:mr-6">Gender</label>
+                    <mat-radio-group formControlName="gender" class="flex flex-row md:flex-row justify-between" required>
+                        <mat-radio-button mat-primary class="radio-button" value="male">Male</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="female">Female</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="others">Others</mat-radio-button>
+                    </mat-radio-group>
+                    <p class="form-error" *ngIf="s.submitted && form?.get('gender').hasError('required')">Please select gender</p>
+                </div>
+
+                <div class="form-group mb-4">
+                    <input type="file" class="about-form" formControlName="photo" accept="image/*" (change)="onFileChange($event, 'photo')" placeholder=" Photo">
+                </div>
+
+                <div class="flex justify-center mt-8">
+                    <button mat-flat-button color="primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

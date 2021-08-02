@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="flex justify-between items-center mt-6">
+        <nav class="text-gray-500 font-medium mr-6">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items-center">
+                    <a routerLink="/"><span class="fill-current w-3 h-3 mx-3 icon-home"></span></a>
+                    <span class="w-3 mx-3">/</span>
+                </li>
+                <li class="flex items-center">
+                    <span>My Account</span>
+                </li>
+            </ol>
+        </nav>
+        <div class="flex-shrink-0  overflow-hidden">
+            <button class="lg:hidden" mat-stroked-button color="primary" [matMenuTriggerFor]="my_account">
+                <span class="icon-menu title"></span>
+            </button>
+        </div>
+        
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-7 dsk:grid-cols-5 gap-6 dsk:gap-8 section">
+        <div class="card hidden lg:block self-start lg:col-span-2 dsk:col-span-1">
+            <h3 class="mb-6 font-semibold">My Account</h3>
+            <ul>
+                <li class="account-link"><a routerLink="/my-account" >Personal Information</a></li>
+                <li class="account-link"><a routerLink="/my-account/my-orders" >Orders</a></li>
+                <li class="account-link"><a routerLink="/my-account/address-book">Address Book</a></li>
+                <li class="account-link"><a routerLink="/my-account/wishlist">Wishlists</a></li>
+                <!-- <li class="account-link"><a routerLink="/my-account/payments">Payments</a></li> -->
+            </ul>
+        </div>
+        <div class="lg:col-span-5 dsk:col-span-4 card">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+<mat-menu #my_account="matMenu" class="lg:hidden">
+    <a routerLink="/my-account" mat-menu-item>
+        <span>Personal Information</span>
+    </a>
+    <a routerLink="/my-account/my-orders" mat-menu-item>
+        <span>Orders</span>
+    </a>
+    <a routerLink="/my-account/address-book" mat-menu-item>
+        <span>Address Book</span>
+    </a>
+    <a routerLink="/my-account/wishlist" mat-menu-item>
+        <span>Wishlists</span>
+    </a>
+</mat-menu>

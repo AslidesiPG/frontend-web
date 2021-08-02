@@ -1,0 +1,144 @@
+<div class="abs-loading-container" *ngIf="loading">
+    <app-loading></app-loading>
+</div>
+<div class="container">
+    <div class="flex mt-6 mb-2">
+        <a routerLink="/cart" class="flex flex-auto text-primary-500">
+            <span class="icon-left-arrow mr-3 align-middle title"></span>
+            <div class="">Go Back to cart</div>
+        </a>
+        <div class="hidden md:block">
+            <app-checkout-step [activeStep]="'shipping'"></app-checkout-step>
+        </div>
+    </div>
+    <div class="grid grid-cols-1  dsk:grid-cols-6 gap-y-4 dsk:gap-4">
+        <div class="col-span-4 flex flex-col">
+            <div class="relative">
+                <span class="section-title-2">Shipping</span>
+            </div>
+            <div *ngFor="let errorMessage of errorMessages">
+                <http-message [data]="errorMessage" type="error"></http-message>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-4 md:gap-4 section address">
+                <a (click)="addEditAddress($event)" class="card flex justify-center items-center">
+                    <div class="">
+                        <div
+                            class="h-24 w-24 rounded-full border border-blue-400 cursor-pointer flex justify-center mx-auto mb-4 items-center">
+                            <span class="icon-pencil text-primary-500  display-2 "></span>
+                        </div>
+                        <div class="text-primary-500 font-semibold">Add a New Address</div>
+                    </div>
+                </a>
+                <div *ngFor="let address of addresses" (click)="selectAddress(address)"
+                    [ngClass]="{'active': addressSelected?.id == address?.id}"
+                    class="card flex justify-center items-center">
+                    <a mat-icon-button (click)="addEditAddress($event, address)" class="absolute top-0 right-0">
+                        <span class="icon-pencil"></span>
+                    </a>
+                    <p class="address"><span class="text-primary-500 ">{{address?.name}}</span> <span class="caption">
+                            <br> {{address?.address}}</span></p>
+                </div>
+            </div>
+            <!-- <div class="relative">
+                <span class="section-title-2">Delivery Speed</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4 section">
+                <a class="card flex justify-center items-center cursor-pointer" (click)="selectDeliverySpeed('one-day')" [ngClass]="{'active': deliverySpeed === 'one-day'}">
+                    <div>
+                        <div class="delivery-speed ">
+                            <span class="icon-delivery-truck text-primary-500  display-3"></span>
+                        </div>
+                        <div class="text-primary-500 font-semibold mb-2 text-center"><a>One Day Delivey</a></div>
+                        <div class="text-blue-500 font-semibold caption text-center"><a>{{ getDeliveyDate('one-day') }} before 9:00 pm</a></div>
+                    </div>
+                </a>
+                <a class="card flex justify-center items-center cursor-pointer" (click)="selectDeliverySpeed('two-day')" [ngClass]="{'active': deliverySpeed === 'two-day'}">
+                    <div>
+                        <div class="delivery-speed">
+                            <span class="icon-delivery-truck text-primary-500 display-3"></span>
+                        </div>
+                        <div class="text-primary-500 font-semibold mb-2 text-center"><a>Two Day Delivery</a></div>
+                        <div class="text-blue-500 font-semibold caption text-center"><a>{{ getDeliveyDate('two-day') }}</a></div>
+                    </div>
+                </a>
+                <a class="card flex justify-center items-center cursor-pointer" (click)="selectDeliverySpeed('normal')" [ngClass]="{'active': deliverySpeed === 'normal'}">
+                    <div>
+                        <div class="delivery-speed">
+                            <span class="icon-delivery-truck text-primary-500 display-3"></span>
+                        </div>
+                        <div class="text-primary-500 font-semibold mb-2 text-center"><a>Normal Delivery</a></div>
+                        <div class="text-blue-500 font-semibold caption text-center"><a>{{ getDeliveyDate('normal') }}</a></div>
+                    </div>
+                </a>
+
+            </div> -->
+        </div>
+        <div class="col-span-2 card mb-6">
+            <div class=" flex justify-end mb-4">
+                <button mat-flat-button [disabled]="errorMessages?.length > 0" color="primary" (click)="goPayment()">Proceed to Payment
+                    <span class="icon-arrow ml-3 align-middle text-white title"></span>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 dsk:gap-6 dsk:grid-cols-1">
+                <div class="">
+                    <h2 class="text-primary-500 font-semibold mb-3 subheading-1 ">Address</h2>
+                    <p>
+                        {{addressSelected?.address}}
+                    </p>
+                </div>
+                <div class="py-4">
+                    <h2 class="text-primary-500 font-medium mb-2 subheading-1">Expected Delivery Date</h2>
+                    <p class="">{{cart?.delivery_date |date}}</p>
+                </div>
+                <div class="">
+                    <h4 class="text-primary-500 font-semibold mb-3">Order Summary</h4>
+                    <div class="border-b border-gray-500 pb-3">
+                        <div class="grid grid-cols-2 gap-4 leading-loose">
+                            <p>Sub Total</p>
+                            <p>{{cart.total | currency }}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 leading-loose">
+                            <p class="font-medium">Delivery</p>
+                            <p>{{cart.shipping | currency }}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4" *ngIf="cart?.coupon">
+                            <p>
+                                Discount Code
+                                <span class="caption block">
+                                    <span class=" text-primary-500">{{cart.coupon?.coupon?.code}} </span> Applied
+                                </span>
+                            </p>
+                            <p class="flex items-center content-between">
+                                <span>{{cart.coupon?.discount_amount | currency }}</span>
+                                <mat-icon class="ml-auto cursor-pointer" (click)="removeCoupon()">close</mat-icon>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-3 leading-loose">
+                        <p>Total</p>
+                        <p>{{ getCartTotal(cart) | currency}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <form (ngSubmit)="CouponSubmit()" [formGroup]="form">
+                    <p>Please Coupon Code listed below.</p>
+                    <div class="form-group">
+                        <label *ngFor="let coupon of coupons" style="display: block;">
+                            <input type="radio" name="coupon" (change)="applycoupanbyradio($event,coupon)" [checked]="(cart?.coupon.coupon && cart?.coupon.coupon.id == coupon.id)">{{coupon.name}}
+                        </label>
+                    </div>
+                    <!-- <div class="form-group"  *ngIf="!cart?.coupon"> 
+                        <label class="mb-2 block">Enter Your Coupon Code If You Have One.</label>
+                        <input type="text" class="border border-gray-500 rounded w-full p-2" formControlName="coupon"
+                            placeholder="Enter Your Coupon Code">
+                    </div> 
+                    <div class="form-group">
+                        <button mat-flat-button color="primary" class="mx-auto block"> Apply Coupon</button>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

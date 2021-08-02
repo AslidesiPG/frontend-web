@@ -1,0 +1,162 @@
+@import "common";
+:host {
+  .video-box {
+    height: 360px;
+    width: 540px;
+    margin: auto;
+    @include respond(lg) {
+      height: 300px;
+      width: 420px;
+    }
+    @include respond(md) {
+      height: 270px;
+      width: 380px;
+    }
+    @include respond(sm) {
+      height: 250px;
+      width: 270px;
+    }
+  }
+
+  ::ng-deep {
+    .content {
+      h3 {
+        @apply text-justify;
+        font-size: 36px;
+        @include respond(lg) {
+          font-size: 28px;
+        }
+        @include respond(md) {
+          font-size: 22px;
+        }
+      }
+
+      p {
+        @apply leading-normal text-justify;
+        font-size: 16px;
+        @include respond(md) {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .mission-content {
+      h3 {
+        text-align: center;
+        font-size: 36px;
+        @include respond(lg) {
+          font-size: 30px;
+        }
+        @include respond(md) {
+          font-size: 22px;
+        }
+      }
+
+      p {
+        @apply leading-normal text-justify;
+        font-size: 16px;
+        @include respond(md) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .contact_icon {
+    @apply h-12 w-12 rounded-full;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .owner-image {
+    height: 180px;
+    width: 180px;
+    object-fit: cover;
+    @include respond(lg) {
+      height: 120px;
+      width: 120px;
+    }
+    @include respond(md) {
+      height: 100px;
+      width: 100px;
+    }
+  }
+
+  .slider {
+    position: relative;
+    .vendor-title {
+      @include respond(md) {
+        font-size: 18px;
+        line-height: 1.2;
+      }
+    }
+
+    ::ng-deep {
+      .owl-nav {
+        position: absolute;
+        bottom: 25px;
+        left: 0;
+        display: none;
+      }
+    }
+
+    .slider-arrow {
+      display: flex;
+      position: absolute;
+      bottom: 10px;
+      /* @include respond(lg) {
+         bottom: 10px;
+      } */
+      @include respond(sm) {
+        bottom: -35px;
+        right: 10px;
+      }
+
+      .owl-nav-arrow {
+        height: 44px;
+        width: 44px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include respond(md) {
+          height: 30px;
+          width: 30px;
+        }
+
+        span {
+          font-size: 28px;
+          color: theme("colors.white");
+          @include respond(md) {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .about-form-box {
+    max-width: 540px;
+    border-radius: 10px;
+    padding: 36px 36px 28px;
+
+    &.card {
+      border-color: theme("colors.primary.500");
+    }
+
+    ::placeholder {
+      color: theme("colors.primary.500");
+      opacity: 1;
+    }
+
+    /*     .about-form {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      color: theme('colors.primary.500');
+      border-bottom: 1px solid rgba(241, 90, 39, 0.64);
+
+    } */
+  }
+}

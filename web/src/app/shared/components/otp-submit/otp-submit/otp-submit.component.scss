@@ -1,0 +1,22 @@
+@import "common";
+:host {
+    .otp-icon {
+        height: 75px;
+        width: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid theme("colors.blue.300");
+        border-radius: 50%;
+    }
+    ::ng-deep {
+        .otp-input:focus {
+            color: theme('colors.primary.500');
+            border-color: theme('colors.primary.500') !important;
+        }
+        .otp-input {
+            color: theme('colors.primary.500');
+             border-color: theme('colors.blue.200') !important;
+        }
+    }
+}

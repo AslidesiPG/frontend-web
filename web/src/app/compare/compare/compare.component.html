@@ -1,0 +1,66 @@
+<div class="page-content-outer">
+  <div class="container">
+    <h2 class="my-5 text-center">Compare Products</h2>
+
+    <div class="product_category_container" *ngIf="products && products[0]?.related_products?.length > 0">
+      <a class="product_category_box" *ngFor="let product of products[0]?.related_products"
+        (click)="setProduct(product, getBlankIndex())">
+        <div class="product_category_img"><img [src]="product?.photo?.image" alt="Product image"></div>
+        <div class="product_category_title">{{product.name}}</div>
+      </a>
+    </div>
+
+    <div class="pagecol-outer my-6">
+      <div class="product-wale-scroll"></div>
+      <div class="spec-tab-box-conitaner">
+        <div class="spec-tab-box scroll">
+          <div class="heading body-2 text-primary-500">Products </div>
+          <div class="spec-tab-item product-item compare-product-item"
+            *ngFor="let product of products; let product_index= index">
+            <div class="product-top-box">
+              <div class="compare-label">Compare With</div>
+              <button class="close-button" *ngIf="product.id != undefined" (click)="removeCompare(product.id)"> X
+              </button>
+              <app-search [categoryId]="getValue(products, '0.category_id')" [redirectToDetails]="false"
+                (optionSelected)="setProduct($event, product_index)" class="compare-search my-4"
+                *ngIf="data?.page != 'home'"></app-search>
+              <ng-template [ngIf]="product ">
+
+                <a [routerLink]="['/product' , product.slug]">
+                  <div class="product-image">
+                    <img *ngIf="product?.images && product?.images[0]?.image_urls?.md" [src]="product?.images[0]?.image_urls?.md"
+                      [alt]="product?.name || 'Product image'" />
+                  </div>
+                  <h5>{{ product?.name }}</h5>
+                </a>
+              </ng-template>
+            </div>
+          </div>
+
+        </div>
+        <div class="spec-tab-box scroll" *ngFor="let spac of headings">
+          <div class="heading body-2 text-primary-500">{{spac.title}}</div>
+          <div class="spec-tab-item product-item compare-product-item"
+            *ngFor="let product of products; let product_index= index">
+            <div class="product-data">
+              <div class="spc-item">
+                <span *ngIf="spac.type == 'amount'">{{ getValue(product, spac.key) | currency}}</span>
+                <span *ngIf="!spac.type">{{ getValue(product, spac.key) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="spec-tab-box scroll">
+          <div class="heading body-2 text-primary-500">Other</div>
+          <div class="spec-tab-item product-item compare-product-item"
+            *ngFor="let product of products; let product_index= index">
+            <div class="product-data">
+              <div class="spc-item" [innerHTML]="product.description">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

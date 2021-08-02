@@ -1,0 +1,18 @@
+@import "common";
+:host {
+    .product-quantity {
+        @apply border border-blue-200 rounded flex text-primary-500;
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+    ::ng-deep {
+        .mat-icon-button {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+        }
+    }
+}

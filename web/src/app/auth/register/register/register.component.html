@@ -1,0 +1,171 @@
+<div class="register-container">
+    <div class="card p-6 overflow-hidden w-full mb-8">
+        <div class="text-center my-4">
+            <h2 class="title m-0">Register</h2>
+            <h4 class="body-2 text-secondary m-0">register with your credentials below.</h4>
+        </div>
+
+        <div>
+            <form class="bg-primary-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full" (ngSubmit)="send()" [formGroup]="form">
+                <http-message [data]="registerMessage"></http-message>
+                <div class="flex gap-4">
+                    <div class="form-group">
+                        <label class="form-label text-white" for="firstName">
+                            First Name
+                        </label>
+                        <input class="form-control" id="first_name" formControlName="first_name" type="text" placeholder="First Name">
+                        <p class="form-error text-white" *ngIf="form?.get('first_name')?.hasError('required')">Please enter first name.</p>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <label class="form-label text-white" for="lastName">
+                            Last Name
+                        </label>
+                        <input class="form-control" id="last_name" type="text" placeholder="Last name" formControlName="last_name">
+                        <p class="form-error text-white" *ngIf="form?.get('last_name')?.hasError('required')">Please enter last name.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="form-group">
+                        <label class="form-label text-white" for="email">
+                            Email
+                        </label>
+                        <input class="form-control" id="email" formControlName="email" type="text" placeholder="Email">
+                        <p class="form-error text-white" *ngIf="form?.get('email')?.hasError('required')">Please enter email.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label text-white" for="lastName">
+                           Phone
+                        </label>
+                        <div class="flex gap-2">
+                            <select class="form-control w-1/4" id="contryCode" formControlName="country_code">
+                                <option value="91">91</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <input class="form-control" id="phone" type="text" placeholder="Phone" formControlName="phone">
+                        </div>
+                        <p class="form-error text-white" *ngIf="form?.get('phone')?.hasError('required')">Please enter phone.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="form-group">
+                        <label class="form-label text-white" for="password">
+                            Password
+                        </label>
+                        <input class="form-control " id="password" formControlName="password" type="password" placeholder="Password">
+                        <p class="form-error text-white" *ngIf="form?.get('password')?.hasError('required')">Please enter password</p>
+                    </div>
+                
+                
+                    <div class="form-group">
+                        <label class="form-label text-white" for="confirm password">
+                            Confirm Password
+                        </label>
+                        <input class="form-control" id="confirm_password" type="password" placeholder="Confirm Password" formControlName="confirm_password">
+                        <p class="form-error text-white" *ngIf="form?.get('confirm_password')?.hasError('notSame')">Please enter confirm password.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label text-white" for="address-line1">
+                        Address line 1
+                    </label>
+                    <input class="form-control " id="addresss_line1" formControlName="addressline1" type="text" placeholder="Address Line 1">
+                    <p class="form-error text-white" *ngIf="form?.get('addressline1')?.hasError('required')">Please enter address line 1</p>
+                </div>
+            
+                <div class="form-group">
+                    <label class="form-label text-white" for="address-line2">
+                        Address line 2
+                    </label>
+                    <input class="form-control " id="addresss_line2" formControlName="addressline2" type="text"
+                        placeholder="Address Line 2">
+                    <p class="form-error text-white" *ngIf="form?.get('addressline2')?.hasError('required')">Please enter address line 2</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="form-group">
+                        <label class="form-label text-white" for="state">
+                           Select State
+                        </label>
+                        <select class="form-control" id="state_id" formControlName="state_id">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <p class="form-error text-white" *ngIf="form?.get('state_id')?.hasError('required')">Please enter state</p>
+                    </div>
+                
+                
+                    <div class="form-group">
+                        <label class="form-label text-white" for="city">
+                            Select City
+                        </label>
+                        <select class="form-control" id="city_id" formControlName="city_id">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <p class="form-error text-white" *ngIf="form?.get('city_id')?.hasError('required')">Please enter City.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="form-group">
+                        <label class="form-label text-white" for="country">
+                            Select country
+                        </label>
+                        <select class="form-control" id="country" formControlName="country_id">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <p class="form-error text-white" *ngIf="form?.get('country_id')?.hasError('required')">Please enter country</p>
+                    </div>
+                
+                
+                    <div class="form-group">
+                        <label class="form-label text-white" for="zip">
+                            Zip Code
+                        </label>
+                    <input class="form-control " id="zip_code" formControlName="zip_code" type="text"
+                        placeholder="zip code">
+                        <p class="form-error text-white" *ngIf="form?.get('zip_code')?.hasError('required')">Please enter zip code.</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center justify-between">
+                    <button class="btn bg-green-500 my-2 text-white rounded"> Register </button>
+                </div>
+            </form>
+
+            <p class="text-secondary text-center">
+                Do have an account?
+                <a color="primary" mat-button [routerLink]="['/login']">Click here to Login</a>
+            </p>
+        </div>
+        <div class="social-login-block mt-4">
+            <a mat-flat-button type="button" class="btn-social btn-google p-2 rounded"
+                [href]="environment.apiUrl+'/api/auth/google'">
+                Google
+            </a>
+            <a mat-flat-button class="btn-social btn-facebook p-2 rounded" [href]="environment.apiUrl+'/api/auth/facebook'">
+                Facebook
+            </a>
+        </div>
+    </div>
+</div>

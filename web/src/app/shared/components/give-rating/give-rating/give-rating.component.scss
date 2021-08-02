@@ -1,0 +1,22 @@
+@import "common";
+:host {
+    .contact-price {
+        @include respond(lg) {
+            min-width: 500px;
+        }
+        @include respond(md) {
+            min-width: 400px;
+        }
+        @include respond(sm) {
+            min-width: 330px;
+        }
+        min-width: 540px;
+    }
+    .about-form-box {
+        padding: 0 24px 24px 24px;
+        ::placeholder {
+            color: theme("colors.primary.500");
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "apps": [
+	    {
+            "name": "aslidesi",
+            "script": "npm",
+            "args": "run serve:ssr",
+            "out_file": "/dev/null",
+            "error_file": "/dev/null",
+             "watch": [
+                "web/dist"
+            ],
+            "exp_backoff_restart_delay": 30000,
+            "watch_delay": 1000,
+            "ignore_watch" : [ "node_modules"],
+            "watch_options": {
+                "followSymlinks": false
+            }
+       }
+    ]
+}

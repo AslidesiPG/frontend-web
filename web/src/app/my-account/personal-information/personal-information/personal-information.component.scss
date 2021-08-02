@@ -1,0 +1,128 @@
+@import "common";
+:host {
+  .user-info {
+    .info-item {
+      display: flex;
+      align-items: center;
+      flex-shrink: 1;
+      line-height: 40px;
+      .label {
+        min-width: 140px;
+        flex-shrink: 0;
+        @include respond(md) {
+          min-width: 68px;
+        }
+      }
+      .action {
+        flex-shrink: 0;
+      }
+      .value {
+        flex-shrink: 1;
+        width: 100%;
+      }
+    }
+  }
+  .personal-subtitle {
+    @include respond(md) {
+      font-size: 16px;
+    }
+  }
+  .personal {
+    ::placeholder {
+      color: theme("colors.primary.500");
+      font-weight: 500;
+      opacity: 1;
+    }
+
+    .profile {
+      @apply mx-auto my-4 block;
+      position: relative;
+      display: block;
+      cursor: pointer;
+      height: 200px;
+      width: 200px;
+      border: 2px solid theme("colors.gray.500");
+      border-radius: 50%;
+      .hover-text {
+        position: absolute;
+        display: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+      }
+      .background {
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+        border-radius: 50%;
+        z-index: 1;
+      }
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      &:hover .hover-text {
+        display: block;
+      }
+      &:hover .background {
+        display: block;
+      }
+    }
+    .form {
+      max-width: 505px;
+
+      .phone-code {
+        @apply w-1/4;
+      }
+      .mat-radio {
+        .radio-button {
+          @apply text-primary-500 font-medium  mr-6;
+          font-size: 18px;
+          @include respond(md) {
+            font-size: 16px;
+          }
+        }
+        ::ng-deep {
+          .mat-radio-container {
+            width: 24px;
+            height: 24px;
+            @include respond(md) {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          .mat-radio-outer-circle {
+            height: 24px;
+            width: 24px;
+            border: 1px solid theme("colors.primary.500");
+            @include respond(md) {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          .mat-radio-button.mat-accent .mat-radio-inner-circle {
+            background-color: theme("colors.primary.500");
+          }
+          .mat-radio-inner-circle {
+            height: 36px;
+            left: -6px;
+            top: -6px;
+            width: 36px;
+            @include respond(md) {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

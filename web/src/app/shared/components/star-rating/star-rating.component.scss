@@ -1,0 +1,43 @@
+// :host {
+//     .ratings {
+//         display: flex;
+//         align-items: center;
+//         .readonly {
+//             display: flex;
+//             align-items: center;
+//             &.stars {
+//                 position: relative;
+//             }
+//             .mat-icon {
+//                 font-size: 24px;
+//             }
+//             .fill-star {
+//                 color: #fcb040;
+//             }
+//         }
+//     }
+// }
+
+:host {
+    .ratings {
+        display: flex;
+        align-items: center;
+        .readonly {
+            &.stars {
+                color: theme('colors.primary.500');
+                position: relative;
+            }
+            .mat-icon {
+                font-size: 27px;
+            }
+            .fill-star {
+                color: #fcb040;
+                position: absolute;
+                left: 0;
+                top: 0;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    }
+}

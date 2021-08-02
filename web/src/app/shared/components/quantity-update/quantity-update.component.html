@@ -1,0 +1,6 @@
+<div class="product-quantity">
+  <button [disabled]="disabled" type="submit" mat-icon-button (click)="minus()" class="flex-shrink-0 p-m-btn text-gray-500"><span
+      class="icon-minus"></span></button>
+  <input  class="body-1 m-0" type="number" [(ngModel)]="quantity">
+  <button [disabled]="disabled" type="submit" mat-icon-button (click)="plus()" class="flex-shrink-0 p-m-btn"><span class="icon-plus"></span></button>
+</div>

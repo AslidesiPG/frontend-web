@@ -1,0 +1,153 @@
+<div class="container">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 section">
+        <div *ngIf="page?.content" class="content wp-content" [innerHTML]="page?.content">
+        </div>
+        <div *ngIf="page?.extras?.aboutus_video" class="flex p-4 mt-6" [innerHTML]="page?.extras?.aboutus_video | safe">
+
+            <!-- <video class="video-box" controls [src]="page?.extras?.aboutus_video"></video> -->
+        </div>
+    </div>
+    <div *ngIf="page?.extras?.mission_values" class="mission-content wp-content"
+        [innerHTML]="page?.extras?.mission_values"></div>
+    <div class="slider my-14" *ngIf="page?.extras?.team_slider">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-10">
+            <div>
+                <h1 class="text-primary-500 vendor-title my-2 lg:my-4">{{page?.extras?.team_title}}</h1>
+                <p class=" text-justify" [innerHTML]="page?.extras?.team_text | nl2br"></p>
+            </div>
+            <div class="col-span-2">
+                <owl-carousel-o [options]="customOptions" #owlCar>
+                    <ng-container *ngFor="let item of page?.extras?.team_slider">
+                        <ng-template carouselSlide>
+                            <div class="card flex flex-col lg:flex-row bg-primary-500">
+                                <div class="flex-shrink-0 mx-auto">
+                                    <img class="owner-image " type="user" [src]="item?.image?.image_urls?.sm" [alt]="item?.name || 'Item image'">
+                                    <p class="text-white text-center leading-normal">{{item?.name}}</p>
+                                    <p class="text-white text-center leading-normal">{{item?.position}}</p>
+                                </div>
+                                <div class="text-white flex-shrink w-full lg:ml-10">
+                                    <p class="leading-normal text-justify" [innerHTML]="item?.description | nl2br"></p>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <p class="slider-arrow">
+            <a class="owl-nav-arrow  bg-primary-400" (click)="owlCar.prev()"><span class="icon-left-arrow"></span></a>
+            <a class="owl-nav-arrow ml-6 bg-primary-500" (click)="owlCar.next()"><span class="icon-arrow"></span></a>
+        </p>
+    </div>
+</div>
+<div class="bg-primary-500">
+    <div class="container">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-white py-6 lg:py-10" *ngFor="let item of page?.extras?.step ">
+                <div class="display-3 mb-3 text-center">{{item?.percentage}}</div>
+                <p class="text-center leading-normal">{{item?.step_description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="slider my-14" *ngIf="page?.extras?.vendors">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-10">
+            <div>
+                <h1 class="text-primary-500 my-4 vendor-title leading-normal ">{{page?.extras?.vendor_title}}</h1>
+                <a mat-stroked-button color="primary" routerLink="/vendor-register">Become A Vendor Now <span
+                        class="icon-arrow body-2 ml-2"></span></a>
+            </div>
+            <div class="col-span-2 card  bg-primary-500">
+                <owl-carousel-o [options]="vendorOptions" #owlVendor>
+                    <ng-container *ngFor="let vendor of page?.extras?.vendors">
+                        <ng-template carouselSlide>
+                            <a class="" routerLink="/vendor-profile/{{vendor?.id}}">
+                                <img class="owner-image mx-auto rounded-lg" type="user" [src]="vendor?.photo" [alt]="vendor?.name || 'Vendor logo'">
+                                <p class="text-white text-center leading-normal">{{vendor?.name}}</p>
+                                <p class="text-white text-center leading-normal">
+                                    {{vendor?.vendor_profile?.business_name}}</p>
+                            </a>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <p class="slider-arrow">
+            <a class="owl-nav-arrow bg-primary-400" (click)="owlVendor.prev()"><span class="icon-left-arrow"></span></a>
+            <a class="owl-nav-arrow ml-6 bg-primary-500" (click)="owlVendor.next()"><span class="icon-arrow"></span></a>
+        </p>
+    </div>
+    <div class="section">
+        <h1 class="text-primary-500 mb-4 text-center leading-normal ">{{page?.extras?.contact_main_title}}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <h2 class="title mb-4 text-primary-500">{{page?.extras?.contact_us_title}}</h2>
+                <p [innerHTML]="page?.extras?.contact_us_description |nl2br"></p>
+                <div class="flex mt-9" *ngIf="page?.extras?.address">
+                    <div class="contact_icon ">
+                        <span class="icon-map-pin  text-primary-500"></span>
+                    </div>
+                    <div class="ml-6">
+                        <p [innerHTML]="page?.extras?.address |nl2br"></p>
+                    </div>
+                </div>
+                <div class="flex mt-9" *ngIf="page?.extras?.phone_number">
+                    <div class="contact_icon ">
+                        <span class="icon-phone text-primary-500"></span>
+                    </div>
+                    <div class="ml-6">
+                        <p [innerHTML]="page?.extras?.phone_number |nl2br"></p>
+                    </div>
+                </div>
+                <div class="flex mt-9" *ngIf="page?.extras?.email">
+                    <div class="contact_icon ">
+                        <span class="icon-mail text-primary-500"></span>
+                    </div>
+                    <div class="ml-6">
+                        <p [innerHTML]="page?.extras?.email |nl2br"></p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="about-form-box card">
+                    <h1 class="text-primary-500 mb-8">{{page?.extras?.form_title}}</h1>
+                    <form (ngSubmit)="send()" [formGroup]="form" #f="ngForm">
+                        <http-message [data]="httpError" type="error"></http-message>
+                        <div class="form-group  mb-4">
+                            <input type="text" class="about-form" formControlName="name" placeholder="Full Name" required>
+                            <mat-error class="form-error" *ngIf="f.submitted && form?.get('recaptcha').hasError('required')">Please
+                               enter your name
+                            </mat-error>
+                        </div>
+                        <div class="form-group  mb-4">
+                            <input type="email" class="about-form" placeholder="Email Address" formControlName="email" required>
+                            <mat-error class="form-error" *ngIf="f.submitted && form?.get('recaptcha').hasError('required')">Please enter your email
+                            </mat-error>
+                        </div>
+                        <div class="form-group  mb-4">
+                            <textarea type="text" formControlName="message" placeholder="Send Us a Message..."
+                                class="about-form"></textarea>
+                        </div>
+                        <div class="mt-3">
+                            <http-message [data]="contactMessage"></http-message>
+                        </div>
+                        <div *ngIf="isBrowser">
+                            <ngx-recaptcha2 [siteKey]="siteKey" (success)="handleSuccess($event)"
+                                [useGlobalDomain]="false" formControlName="recaptcha" required>
+                            </ngx-recaptcha2>
+                            <mat-error class="form-error" *ngIf="f.submitted && form?.get('recaptcha').hasError('required')">Please
+                                select recaptch
+                            </mat-error>
+                        </div>
+                        <div class="flex justify-center mt-6">
+                            <button mat-stroked-button color="primary" class="">Send Message <span
+                                    class="icon-arrow body-2 ml-2 "></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

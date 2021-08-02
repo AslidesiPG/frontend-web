@@ -1,0 +1,343 @@
+<div class="container">
+    <div class="highlight grid grid-cols-1 lg:grid-cols-4  lg:gap-4 gap-y-4 section ">
+        <div class="hidden lg:flex flex-col md:flex-row lg:flex-col  col-span-1">
+            <div class="card p-6 flex-grow text-primary-500 mb-4" [innerHTML]="page.extras?.welcome_text">
+                <!-- <p class="text-primary-500 body-2">Welcome,</p>
+                <p class="text-primary-500 body-2">To the Global Desi</p>
+                <p class="text-primary-500 body-2">Marketplace for Exclusively</p>
+                <p class="text-green-500 body-2">Made In India Products</p> -->
+            </div>
+            <div class="card py-6 flex-grow flex items-center  justify-center">
+                <div>
+                    <div class="text-center text-blue-500" [innerHTML]="page.extras?.promotion_text">
+                        <!-- <h3 class="text-blue-500 mb-4 title font-semibold">Newsletter promotion</h3>
+                                        <p class="text-blue-500 mb-8">Signup and get 15% off coupon code for Your Next Order</p> -->
+
+                    </div>
+                    <div class=" mt-4 ">
+                        <a mat-flat-button color="primary" class="btn cursor-pointer mx-auto table"
+                            (click)="scroll()">Subscribe Now </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="banner col-span-3 card overflow-hidden p-0">
+            <owl-carousel-o [options]="bannerOptions">
+                <ng-container *ngFor="let item of page.extras?.banner_slider">
+                    <ng-template carouselSlide>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="relative md:hidden">
+                                <img class="brand-image"
+                                    [src]="item?.vendors?.vendor_profile?.banner || (item?.banner_image ? fileUrl(item?.banner_image) : 'assets/image/haldirams.svg')" [alt]="item?.product?.name || 'Product Name'">
+                            </div>
+                            <div class=" p-4 bg-white">
+                                <a mat-flat-button color="success" routerLink="/product" class="">New Product</a>
+                                <div class="mt-4">
+                                    <p class="text-primary-500 truncate">{{ item?.product?.category?.name }}</p>
+                                    <a [routerLink]="['/product', item?.product?.slug]"
+                                        class="text-blue-500 block truncate">{{ item?.product?.name }}</a>
+                                    <p *ngIf="!item?.product?.contact_for_price" class="text-green-500">{{ item?.product?.old_price | currency}}</p>
+                                </div>
+                                <div class="flex my-3">
+                                    <img class="banner-image mx-auto flex-shrink-0"
+                                        [src]="item?.product?.image?.image_urls?.md" [alt]="item?.product?.name || 'Product image'">
+                                </div>
+                                <div class="flex justify-between">
+                                    <a mat-stroked-button color="primary"
+                                        [routerLink]="['/product', item?.product?.slug]" class="">Details</a>
+                                    <!-- <app-add-to-cart-button [product]="item?.product"></app-add-to-cart-button> -->
+                                    <a mat-flat-button *ngIf="!item?.product?.contact_for_price || item?.product?.contact_price && item?.product?.contact_price.status != 'Pending'; else ContactPrice"
+                                        color="primary" (click)="addToCart(item?.product)">
+                                        Add To Cart
+                                    </a>
+                                    <ng-template #ContactPrice>
+                                        <button mat-flat-button color="primary"
+                                            (click)="contactForPrice(item?.product?.id)" *ngIf="item?.product?.contact_price && item?.product?.contact_price.status == 'Pending'" disabled class="">Awaiting for price</button>
+
+                                            <button mat-flat-button color="primary"
+                                            (click)="contactForPrice(item?.product?.id)" *ngIf="item?.product?.contact_price == null" class="">Contact for
+                                            price</button>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="banner-image-container relative hidden md:block">
+                                <img class="brand-image"
+                                alt="Haldiram logo"
+                                    [src]="item?.vendors?.vendor_profile?.banner || (item?.banner_image ? fileUrl(item?.banner_image) : 'assets/image/haldirams.svg')">
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+    <!-- <div class="banner-slider">
+        <owl-carousel-o [options]="bannerOptions">
+            <ng-container *ngFor="let item of page?.extras?.banner_slider">
+                <ng-template carouselSlide>
+                    <div class="banner-image-container">
+                        <img class="brand-image" [src]="fileUrl(item.image)">
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div> -->
+    <div class="section grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  dsk:grid-cols-5   gap-5">
+        <a [routerLink]="['/product/category', item.slug]" class="card category flex flex-col"
+            *ngFor="let item of page?.extras?.categories">
+            <div class="flex-grow  flex justify-center items-center">
+                <p class="text-center font-semibold  text-primary-500">{{item?.name}}</p>
+            </div>
+            <div class="w-full flex justify-around">
+                <img class="h-8 object-contain" [src]="item?.icon_image" [alt]="item?.name || 'Item Image'">
+                <!--  <span class="icon-egg headline text-green-500"></span>
+                <span class="icon-fruits headline text-green-500"></span>
+                <span class="icon-nuts headline text-green-500"></span>
+                <span class="icon-bread headline text-green-500"></span>
+                <span class="icon-milk headline text-green-500"></span> -->
+            </div>
+        </a>
+    </div>
+
+    <div class="product mb-8">
+        <div class="relative pb-2 border-b border-gray-300 product-header">
+            <span class="section-title"> Trending Products</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="productLoading; else productsTrendingProducts"></app-loading>
+            <ng-template #productsTrendingProducts>
+                <div class="section " *ngIf="page?.extras?.trending_product?.length > 0; else notFoundTrendingProducts">
+                    <owl-carousel-o [options]="occasionOptions" #Trending>
+                        <ng-container *ngFor="let bestSellProduct of page?.extras?.trending_product">
+                            <ng-template carouselSlide>
+                                <app-product-item class="slider-product-item" [product]="bestSellProduct">
+                                </app-product-item>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="Trending.next()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="Trending.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #notFoundTrendingProducts>
+                <div class="text-center py-8">
+                    <h3> No Products found</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="product mb-8">
+        <div class="relative  pb-2 border-b border-gray-300 product-header">
+            <span class="section-title"> New Products</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="productLoading; else productNewProducts"></app-loading>
+            <ng-template #productNewProducts>
+                <div class="section" *ngIf="page?.extras?.new_product?.length > 0; else notFoundNewProducts">
+                    <owl-carousel-o [options]="occasionOptions" #New>
+                        <ng-container *ngFor="let product of page?.extras?.new_product">
+                            <ng-template carouselSlide>
+                                <app-product-item class="slider-product-item" [product]="product"></app-product-item>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="New.next()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="New.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #notFoundNewProducts>
+                <div class="text-center py-8">
+                    <h3> No Products found</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="product mb-8">
+        <div class="relative pb-2 border-b product-header">
+            <span class="section-title"> Featured Products</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="productLoading; else productsFeaturedProducts"></app-loading>
+            <ng-template #productsFeaturedProducts>
+                <div class="section" *ngIf="page?.extras?.feature_product?.length > 0; else notFoundFeaturedProducts">
+                    <owl-carousel-o [options]="occasionOptions" #Featured>
+                        <ng-container *ngFor="let featuredProduct of page?.extras?.feature_product">
+                            <ng-template carouselSlide>
+                                <app-product-item class="slider-product-item" [product]="featuredProduct">
+                                </app-product-item>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="Featured.next()">
+                        <a>
+                            <span class="icon-slider-right text-white"></span>
+                        </a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="Featured.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template #notFoundFeaturedProducts>
+                <div class="text-center py-8">
+                    <h3> No Products found</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <!-- <div class="occasion section">
+        <div class="border-b border-gray-300 mb-8 pb-2">
+            <div class="relative">
+                <span class="section-title">Shop by occasion</span>
+            </div>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="productOccasionLoading; else productsOccasion"></app-loading>
+            <ng-template #productsOccasion>
+                <div class="section" *ngIf="occasionCategories?.length > 0; else notFoundOccasionCategories">
+                    <owl-carousel-o [options]="occasionOptions" #Occasion>
+                        <ng-container *ngFor="let slide of occasionCategories">
+                            <ng-template carouselSlide>
+                                <a [routerLink]="['/product/category/', slide.slug]" class="slider-product-item">
+                                    <div class="card w-full">
+                                        <div class="image-container">
+                                            <img class="occasion-img mx-auto"
+                                                [src]="slide.image || 'assets/image/category-icon.svg'" [alt]="slide?.name || 'Occasion categories'" />
+                                        </div>
+                                        <p class="text-center font-semibold mt-4">
+                                            {{slide?.name || 'Occasion categories' }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="Occasion.next()">
+                        <a>
+                            <span class="icon-slider-right text-white"></span>
+                        </a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="Occasion.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template #notFoundOccasionCategories>
+                <div class="text-center py-8">
+                    <h3> No Products found</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div> -->
+
+    <div class="vendor section">
+        <div class="flex flex-col md:flex-row justify-between border-b border-gray-300 mb-8 pb-2">
+            <div class="relative">
+                <span class="section-title">Become a Seller</span>
+            </div>
+            <div class="flex justify-end md:justify-center items-center">
+                <a class="text-primary-500 font-semibold" routerLink="/vendor-login">Already a Seller Sign In</a>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2  gap-4 mb-8 md:mb-12">
+            <div class=" md:pr-8 ">
+                <div class="mb-12">
+                    <div class="text-blue-500 mb-5 font-semibold title leading-8"
+                        [innerHTML]="page?.extras?.become_a_vendor_title"></div>
+                    <div class="body-2 mb-4 leading-6 text-justify wp-content"
+                        [innerHTML]="page?.extras?.become_a_vendor_description">
+                    </div>
+                    <div class="mt-5 md:mt-12">
+                        <a mat-flat-button color="success" routerLink="/vendor-faq" class="desk:px-12 lg:px-8 ">Learn
+                            More</a>
+                        <a mat-stroked-button color="success" (click)="addPhoneNumber($event)" class="ml-5">Request a
+                            Call
+                            Back</a>
+                    </div>
+                </div>
+                <div class="seller-app">
+                    <div class="text-primary-500 subheading-1 mb-3 " [innerHTML]="page?.extras?.seller_application_title"></div>
+                    <div class="text-blue-500 " [innerHTML]="page?.extras?.seller_application_description"></div>
+                    <div class="flex flex-row dsk:flex-row mt-3">
+                        <div class="mr-4">
+                            <a *ngIf="settings?.aslidesi_app_link?.vendor_play_store"
+                                [href]="settings?.aslidesi_app_link?.vendor_play_store" target="_blank" mat-flat-button
+                                color="black" class="px-4  py-1">
+                                <img class="inline-block mr-1 md:mr-2 h-4 w-4" src="assets/image/play-store.svg" alt="google playstore logo">
+                                <span class="pr-2">Google Playstore</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a *ngIf="settings?.aslidesi_app_link?.vendor_app_store"
+                                [href]="settings?.aslidesi_app_link?.vendor_app_store" target="_blank" mat-flat-button
+                                color="black" class="px-4  py-1">
+                                <img class="inline-block mr-1 md:mr-2 h-4 w-4" src="assets/image/appstore.svg" alt="apple appstore logo"> 
+                                <span class="pr-2">Apple Appstore</span>    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vendor-form-table">
+                <div class=" bg-primary-500 mx-auto p-4 md:p-8">
+                    <p class="text-center mb-4 text-white font-semibold"
+                        [innerHTML]="page?.extras?.become_a_vendor_form_title"></p>
+                    <form action="/vendor-register" method="get">
+                        <div class="form-group vendor-form">
+                            <input class="form-control" type="text" name="phone" placeholder="Phone No.">
+                            <div class="vender-from-icon"><span class="icon-phone"></span></div>
+                        </div>
+                        <div class="form-group vendor-form">
+                            <input class="form-control" type="text" name="name" placeholder="Name">
+                        </div>
+                        <!-- <div class="form-group vendor-form">
+                                            <input class="form-control" type="text" name="city" placeholder="City">
+                                        </div> -->
+                        <div class="form-group vendor-form">
+                            <input class="form-control" type="text" name="business_name" placeholder="Company Name">
+                        </div>
+                        <div class="form-group">
+                            <input class="h-6 w-6 align-middle" type="checkbox" name="term_condition">
+                            <a routerLink="/vendor-agreement" target="_blank" class="button text-white mr-2">
+                                View and Accept Seller Agreement
+                            </a>
+                        </div>
+                        <button mat-flat-button color="success" class="my-2 py-1 md:py-2 w-full">Start Selling<span
+                                class="icon-arrow ml-3 align-middle text-white title"></span></button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <h3 class="text-primary-500 font-semibold title py-4">Meet Our Reputed Sellers</h3>
+        </div>
+        <div class="slider " *ngIf="page?.extras?.vendors">
+            <owl-carousel-o [options]="customOptions">
+                <ng-container *ngFor="let slide of page?.extras?.vendors">
+                    <ng-template carouselSlide>
+                        <a [routerLink]="'/vendor-profile/'+slide.id">
+                            <img class="vender-img mx-auto" type="user" [src]="slide?.photo_urls?.sm" [alt]="slide?.name || 'Slide image'" />
+                            <p class="text-center text-white font-semibold mt-2 truncate">{{slide?.name}}</p>
+                        </a>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+
+    </div>
+</div>

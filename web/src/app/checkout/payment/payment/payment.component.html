@@ -1,0 +1,238 @@
+<div class="abs-loading-container" *ngIf="orderLording">
+    <app-loading></app-loading>
+</div>
+<div class="container">
+    <div class="flex items-center mt-6 ">
+        <a class="flex-auto flex text-primary-500">
+            <span class="icon-left-arrow mr-3 align-middle title"></span>
+            <a routerLink="/shipping" class="font-medium">Go Back</a>
+        </a>
+        <div class="hidden md:block">
+            <app-checkout-step [activeStep]="'payment'"></app-checkout-step>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 dsk:grid-cols-6 gap-y-4 dsk:gap-4">
+        <div class="col-span-4 flex flex-col">
+            <div class="relative mt-10">
+                <span class="section-title-2">Payment</span>
+            </div>
+            <!-- <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-y-4 md:gap-4 section address">
+                <a  class="card flex justify-center items-center">
+                    <div class="">
+                        <div
+                            class="h-24 w-24 rounded-full border border-blue-400 cursor-pointer flex justify-center mx-auto mb-4 items-center">
+                            <span class="icon-money text-primary-500  display-2 "></span>
+                        </div>
+                        <div class="text-primary-500 font-semibold">Cod</div>
+                    </div>
+                </a>
+                <a  class="card flex justify-center items-center">
+                    <div class="">
+                        <div>
+                        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
+                        <div class="text-primary-500 font-semibold">paypal</div>
+                    </div>
+                </a>
+                <a  class="card flex justify-center items-center">
+                    <div class="">
+                        <button mat-flat-button color="primary" (click)="launchBOLT()" [disabled]="orderLording"
+                                type="submit">Proceed to
+                                PayUMony</button>
+                        <div class="text-primary-500 font-semibold">payumoney</div>
+                    </div>
+                </a>
+                
+            </div> -->
+            <div class="section payment-option">
+                <mat-accordion>
+                    <mat-expansion-panel class="card shadow-none mb-6" [expanded]="paymentOption === 'paypal'"
+                        (opened)="paymentType('paypal')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h4 class="mb-0">PayPal</h4>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Credit Card / Debit Card
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <app-loading *ngIf="paymentLoading"></app-loading>
+                        <div *ngIf="!paymentLoading" class="p-4">
+                            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="card shadow-none " (opened)="paymentType('payumoney');">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h4 lass="mb-0">Pay by card/UPI/Wallet/Net banking</h4>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-loading *ngIf="paymentLoading"></app-loading>
+                        <div class="flex justify-center p-4" *ngIf="!paymentLoading">
+
+                            <button mat-flat-button color="primary" (click)="launchBOLT()" [disabled]="paymentLoading"
+                                type="submit">Proceed to
+                                PayUMony</button>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="card shadow-none " (opened)="paymentType('cod')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h4 lass="mb-0">Cash on Delivery</h4>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-loading *ngIf="paymentLoading"></app-loading>
+                        <div class="flex justify-center p-4" *ngIf="!paymentLoading">
+                            <a mat-flat-button color="primary" (click)="sendOrder()" [disabled]="paymentLoading"
+                                class="font-medium">Place Order
+                                <span class="icon-arrow ml-3 align-middle text-white title"></span>
+                            </a>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div *ngIf="!orderLording">
+                <div class="grid grid-cols-5 gap-4 border-b border-gray-300 py-4">
+                    <div class="relative col-span-3">
+                        <span class="section-title-2 flex-shrink-0">Products</span>
+                    </div>
+                    <div class="text-blue-500 font-semibold hidden md:flex justify-center items-center">Quantity</div>
+                    <div class="text-blue-500 font-semibold hidden md:flex justify-center items-center">TOTAL :
+                        {{cart.total |currency}}</div>
+                </div>
+                <div class="border-b border-gray-300">
+                    <div *ngFor="let cart of cartItems" class="grid grid-cols-1 md:grid-cols-5 gap-y-4 md:gap-4 py-3">
+                        <div class="col-span-3 flex items-center">
+                            <a [routerLink]="['/product', cart?.product?.slug]" class="flex-shrink-0">
+                                <img class="cart-image" [src]="cart?.product?.image?.image_urls?.sm" [alt]="cart?.product?.name || 'Product image'">
+                            </a>
+                            <div class="flex-shrink w-full ml-2">
+                                <a [routerLink]="['/product', cart?.product?.slug]">
+                                    <p class="pb-2  font-semibold"> {{cart?.product?.name}} </p>
+                                </a>
+                                <p class=" font-semibold">{{cart?.product?.category?.name}}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between md:justify-center items-center">
+                            <div class=" flex-shrink-0 font-semibold text-primary-500">
+                                <span class="md:hidden">Quantity : </span><span>{{cart?.quantity}}</span><span
+                                    class="pl-2">{{cart?.product?.unit}}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center text-primary-600 font-semibold px-6">
+                            <span class="md:hidden">Price : </span>
+                            {{cart?.price * cart?.quantity| currency}}
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 my-4 mb-8">
+                    <div class="md:col-span-4  font-semibold body-2 ">TOTAL PRODUCT : {{cartItems?.length}}
+                    </div>
+                    <div class="font-semibold body-2  text-blue-500 flex md:justify-center">
+                        <span class="md:hidden">TOTAL PRICE : </span>
+                        {{cart?.total |currency}}
+                    </div>
+                </div>
+            </div>
+            <div class="dsk:hidden" *ngIf="!orderLording">
+                <div class=" my-6">
+                    <div class="card md:px-12 grid-cols-1 md:grid-cols-2 grid gap-y-4 md:gap-10">
+                        <div class="section">
+                            <h2 class="text-primary-500 font-medium mb-3 subheading-1">Address</h2>
+                            <p>
+                                {{address(addressSelected)}}
+                            </p>
+                        </div>
+                        <div class="py-4">
+                            <h2 class="text-primary-500 font-medium mb-2 subheading-1">Expected Delivery Date</h2>
+                            <p class="">{{cart?.delivery_date |date}}</p>
+                        </div>
+                        <div class="section">
+                            <h2 class="text-primary-500 font-medium mb-3 subheading-1">Order Summary</h2>
+                            <div class="border-b border-gray-500 pb-3">
+                                <div class="grid grid-cols-2 gap-4 leading-loose">
+                                    <p class="font-medium">Sub Total</p>
+                                    <p>{{cart.total |currency}}</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 leading-loose">
+                                    <p class="font-medium">Delivery</p>
+                                    <p>{{cart.shipping | currency }}</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <p>
+                                        Discount
+                                        <span class="caption block">
+                                            <span class=" text-primary-500"> {{cart.coupon?.coupon?.code}} </span>
+                                            Applied
+                                        </span>
+                                    </p>
+                                    <p class="flex items-center content-between">
+                                        <span>{{cart.coupon?.discount_amount | currency }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-3 leading-loose  font-medium">
+                                <p>Total</p>
+                                <p>{{ getCartTotal(cart) | currency}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-2 hidden lg:block my-6" *ngIf="!orderLording">
+            <div class="card px-12">
+                <div class="py-4">
+                    <h2 class="text-primary-500 font-medium mb-3 subheading-1">Address</h2>
+                    <p>
+                        {{address(addressSelected)}}
+                    </p>
+                </div>
+                <div class="py-4">
+                    <h2 class="text-primary-500 font-medium mb-2 subheading-1">Expected Delivery Date</h2>
+                    <p class="">{{cart?.delivery_date |date}}</p>
+                </div>
+                <div class="py-4">
+                    <h2 class="text-primary-500 font-medium mb-3 subheading-1">Order Summary</h2>
+                    <div class="border-b border-gray-500 pb-3">
+                        <div class="grid grid-cols-2 gap-4 leading-loose">
+                            <p class="font-medium">Sub Total</p>
+                            <p>{{cart.total |currency}}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 leading-loose">
+                            <p class="font-medium">Delivery</p>
+                            <p>{{cart.shipping | currency }}</p>
+                        </div>
+                        <!-- <div class="grid grid-cols-2 gap-4 leading-loose">
+                                <p class="font-medium">Sub Total</p>
+                                <p>{{cart.total + cart.shipping | currency }}</p>
+                            </div> -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <p class="font-medium">
+                                Discount
+                                <span *ngIf="cart?.coupon" class="input block">
+                                    <span class=" text-primary-500 font-medium"> {{cart?.coupon?.coupon?.code}} </span>
+                                    Applied
+                                </span>
+                            </p>
+                            <p class="flex items-center content-between">
+                                <span>{{cart?.coupon_discount | currency }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-3 leading-loose  font-medium">
+                        <p>Total</p>
+                        <p>{{ getCartTotal(cart) | currency}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class=" flex justify-center mt-4">
+                    <a mat-flat-button color="primary" (click)="sendOrder()" class="font-medium">Proceed to Payment
+                        <span class="icon-arrow ml-3 align-middle text-white title"></span>
+                    </a>
+                </div> -->
+        </div>
+    </div>
+</div>

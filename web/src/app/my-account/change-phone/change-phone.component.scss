@@ -1,0 +1,38 @@
+@import "common";
+:host {
+    min-width: 320px;
+    max-width: 400px;
+    display: block;
+    .heading {
+        @include respond(md) {
+            font-size: 18px;
+        }
+    }
+    ::ng-deep {
+        @include respond(md) {
+            min-width: 230px;
+            .iti.separate-dial-code input {
+                padding-left: 80px;
+            }
+            .mat-dialog-container {
+                padding: 16px;
+            }
+            .mat-dialog-title {
+                margin: 0 0 12px;
+            }
+            .mat-icon-button {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+            }
+            .mat-icon {
+                height: 18px;
+                width: 18px;
+                line-height: 18px;
+            }
+            .material-icons {
+                font-size: 18px;
+            }
+        }
+    }
+}

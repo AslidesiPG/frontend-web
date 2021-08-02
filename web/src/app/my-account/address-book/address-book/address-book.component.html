@@ -1,0 +1,22 @@
+<div>
+    <h1 class="text-center text-primary-500 font-semibold mb-4">Address Book</h1>
+    <h4 class="text-center text-primary-500">Save Your Address for a faster checkout Experiences</h4>
+    <div class="grid grid-cols-1 md:grid-cols-3 dsk:grid-cols-4 gap-4 section">
+        <a (click)="addEditAddress($event)" class="card add-address ">
+            <div class="">
+                <div class="md:h-24 md:w-24 h-16 w-16 rounded-full border border-blue-400 flex justify-center mx-auto mb-4 items-center">
+                    <span class="icon-plus text-gray-500  display-2 "></span>
+                </div>
+                <div class="text-primary-500 font-semibold">Add a New Address</div>
+            </div>
+        </a>
+        <div *ngFor="let address of addresses" (click)="selectAddress(address)"
+            [ngClass]="{'active': addressSelected?.id == address?.id}" class="card add-address">
+            <a mat-icon-button (click)="addEditAddress($event, address)" class="absolute top-0 right-0">
+                <span class="icon-edit"></span>
+            </a>
+            <mat-icon class="delete-icon" (click)="deleteAddress(address)">delete</mat-icon>
+            <p class="address">{{address?.address}}</p>
+        </div>
+    </div>
+</div>

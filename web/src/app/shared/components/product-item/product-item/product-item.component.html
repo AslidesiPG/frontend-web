@@ -1,0 +1,44 @@
+<div class="product-item card  p-3" *ngIf="type == 'vertical'">
+
+    <div *ngIf="product.discount" class="discount-tag">
+        <p class="text-center z-10">
+            {{ product?.discount | discount:product?.discount_type}}
+        </p>
+        <p class="text-center z-10">off</p>
+    </div>
+    <div class=" product-image-container flex justify-center items-center">
+        <a [routerLink]="['/product', product.slug]">
+            <img class=" product-image" [src]="product?.image?.image_urls?.sm" [alt]="product?.name || 'Product image'">
+        </a>
+
+    </div>
+    <div class="mt-2 px-2 relative">
+        <a [routerLink]="['/category', product?.category?.slug ]" class="text-primary-500 caption font-semibold truncate">{{product?.category?.name}}</a>
+        <div class="flex items-center justify-between">
+            <a class="text-blue-500 flex-auto font-semibold truncate block" [routerLink]="['/product', product.slug]">{{product?.name}}</a>
+            <a (click)="wishlist(product)" class="wish-list-button flex-none ml-2">
+                <span [ngClass]="{'icon-wishlist': !product?.is_in_wishlist, 'icon-wishlist-fill': product?.is_in_wishlist}" class="wishlist-icon"></span>
+            </a>
+        </div>
+    </div>
+    <div class="  mt-6  flex items-center">
+        <div class="text-green-500 font-semibold flex-auto items-center" *ngIf="!product?.contact_for_price">
+            <div [class.line-through]="product.discount">{{product?.old_price | currency}}</div>
+            <div *ngIf="product.discount" class="">{{product?.selling_price | currency}}</div>
+        </div>
+        <div class="mx-auto mb-2">
+            <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+        </div>
+        <!-- <div *ngIf="product?.quantity; ">
+            <ng-template [ngIf]="product?.cart_qty" [ngIfElse]="addToCardEl">
+                <app-quantity-update (quantityChange)="updateCart(product?.cart_qty)" [(ngModel)]="product.cart_qty"></app-quantity-update>
+            </ng-template>
+            <ng-template #addToCardEl>
+                <a mat-flat-button color="primary" (click)="addCart(product?.id) " class="caption flex items-center"><span class="icon-basket body-2 mr-1 text-white"></span>Add To Cart</a>
+            </ng-template>
+        </div>
+        <ng-template #empty_quantity>
+            <span class="text-primary-300 button font-semibold mt-2">Out of Stock</span>
+        </ng-template> -->
+    </div>
+</div>

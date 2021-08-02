@@ -1,0 +1,137 @@
+<app-loading *ngIf="loading; else vendorInfo"></app-loading>
+<ng-template #vendorInfo>
+    <div class="back-vendor" [style]="vendorData?.vendor_profile?.banner ? 'background-image: url(\''+ vendorData?.vendor_profile?.banner+'\');' : ''  ">
+    </div>
+    <div class="container flex">
+        <div class="flex flex-col lg:flex-row w-full">
+            <div class="profile-card  flex-shrink-0">
+                <div class="p-4 dsk:p-8">
+                    <div class="vendor-profile py-4">
+                        <img type="user" [src]="vendorData?.photo_urls?.sm" [alt]="vendorData?.name || 'Vendor profile'">
+                    </div>
+                    <h3 class="mb-2 text-center font-semibold ">{{vendorData?.name}}</h3>
+                    <h4 class="mb-2 text-center font-medium ">{{vendorData?.vendor_profile?.business_name}}</h4>
+                    <p *ngIf="vendorData?.vendorAddress" class="mb-2 text-center">
+                        <span class="icon-map-pin mr-1 align-middle"></span>{{vendorData?.vendorAddress}}
+                    </p>
+                </div>
+            </div>
+            <div class="vendor-details md:px-4 lg:px-12 ">
+                <mat-tab-group class="py-8" mat-align-tabs="start">
+                    <mat-tab label="Products">
+                        <div class="pt-4">
+                            <!-- <div class="border-b border-gray-200 mt-4">
+                                <h4 class="text-primary-500 py-3 font-semibold">Vendor Products</h4>
+                            </div> -->
+                            <div>
+                                <ng-template [ngIf]="products?.length > 0" [ngIfElse]="productNotFoundEl">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 dsk:grid-cols-3  my-10">
+                                        <app-product-item class="slider-product-item mb-4" *ngFor="let product of products"
+                                            [product]="product"></app-product-item>
+                                    </div>
+                                    <div [ngClass]="{'md:grid-cols-2':!showFilter}" class="grid grid-cols-1  lg:grid-cols-2 dsk:grid-cols-4 gap-4 my-10 search-results"
+                                    infiniteScroll
+                                    [infiniteScrollDistance]="1"
+                                    [infiniteScrollThrottle]="600"
+                                    (scrolled)="onScroll()"
+                                    [scrollWindow]="true">
+                                        <app-product-item class="product-slider" *ngFor="let product of products" [product]="product"></app-product-item>
+                                    </div>       
+                                    <!-- <div class="load-more text-center pt-3 pb-10">
+                                        <mat-paginator color="primary" (page)="loadeMoreProducts($event)"
+                                            [length]="pageMeta?.total || 1" [pageSize]="pageMeta?.per_page || 12"
+                                            [pageSizeOptions]="[12, 24, 36]">
+                                        </mat-paginator>
+                                    </div> -->
+                                </ng-template>
+                                <ng-template #productNotFoundEl>
+                                    <div class="text-center py-8">
+                                        <h3> No Products found</h3>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab color="primary" label="About">
+                        <div *ngIf="vendorData?.vendor_profile?.about; else NoAbout">
+                            <div class="mt-4 " [innerHTML]="vendorData?.vendor_profile?.about | nl2br">
+                                <!-- <div class="border-b border-gray-200 mt-4">
+                                    <h4 class="text-primary-500 py-3 font-semibold">Vendor Categories</h4>
+                                </div>
+                                <div class="section grid grid-cols-4 gap-6">
+                                    <a [routerLink]="['/category']" class="card category flex flex-col">
+                                        <div class="flex-grow  flex justify-center items-center">
+                                            <p class="text-center font-semibold  text-primary-500">category</p>
+                                        </div>
+                                        <div class="w-full flex gap-2 justify-around">
+                                            <span class="icon-egg  text-green-500"></span>
+                                            <span class="icon-fruits  text-green-500"></span>
+                                            <span class="icon-nuts  text-green-500"></span>
+                                            <span class="icon-bread  text-green-500"></span>
+                                            <span class="icon-milk  text-green-500"></span>
+                                        </div>
+                                    </a>
+                                </div> -->
+                            </div>
+                        </div>
+                        <ng-template #NoAbout>
+                            <div class="text-center py-8">
+                                <h3> -</h3>
+                            </div>
+                        </ng-template>
+    
+                    </mat-tab>
+    
+                    <mat-tab label="Feedback & Reviews">
+                        <div class="mt-6">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-medium">Reviews</h4>
+                                <mat-form-field>
+                                    <mat-label></mat-label>
+                                    <mat-select (selectionChange)="shortvendor()" [(value)]="shortBy">
+                                        <mat-option value="recent">Recent</mat-option>
+                                        <mat-option value="rating_asc">Rating(Low to High)</mat-option>
+                                        <mat-option value="rating_desc">Rating (High to Low)</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="ratings?.length > 0; else rattingNotFoundEl">
+                                <div *ngFor="let rating of ratings" class="flex justify-between border-b pt-4 pb-6">
+                                    <div class="flex mr-8">
+                                        <div class="ml-4 mt-2 md:mt-0 flex-shrink-0">
+                                            <img class="object-cover rounded-full h-6 w-6" type="user"
+                                                [src]="rating?.user?.photo" [alt]="rating?.user?.name || 'User rating image'">
+                                        </div>
+                                        <div class="flex-shrink ml-3 w-full">
+                                            <div *ngIf="rating?.rating" class="flex flex-col md:flex-row">
+                                                <span class="font-semibold pr-3">{{rating?.user?.name}}</span>
+                                                <p>
+                                                    <app-star-rating class="ratting-product" [number]='false'
+                                                        [rating]="rating?.rating"></app-star-rating>
+                                                </p>
+                                            </div>
+                                            <p *ngIf="rating?.comment">{{rating?.comment}} </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 ml-2">
+                                        <a [routerLink]="['/product', rating?.product?.slug]">
+                                            <img class="object-cover h-12 w-12" [src]="rating?.product?.image?.image"
+                                                alt="Rating product image">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #rattingNotFoundEl>
+                                <div class="text-center py-8">
+                                    <h3> No review found</h3>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </mat-tab>
+    
+                </mat-tab-group>
+            </div>
+        </div>
+    
+    </div>
+</ng-template>

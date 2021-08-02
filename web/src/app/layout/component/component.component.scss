@@ -1,0 +1,250 @@
+@import "common";
+:host {
+    .header {
+        color: theme("colors.white");
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 201;
+
+        .icon-btn {
+            @apply bg-white text-blue-500 rounded-full;
+        }
+    }
+    .currency-change {
+        width: 168px;
+        height: 24px;
+        border-radius: 5px;
+        overflow: hidden;
+        color: #fff;
+        display: flex;
+        margin: auto 18px;
+        .currency-btn {
+            width: 84px;
+            margin: auto;
+            text-align: center;
+            background-color: theme("colors.primary.400");
+            &.active {
+                background-color: theme("colors.green.500");
+            }
+        }
+        @include respond(lg) {
+            margin: auto 10px;
+            width: 150px;
+            .currency-btn {
+                width: 75px;
+                font-size: 14px;
+            }
+        }
+    }
+    .side-menu-container {
+        .menu-toggle {
+            height: 100vh;
+            position: fixed !important;
+            box-shadow: 0 0 13px 0px rgba(0, 0, 0, 0.3);
+            padding: 40px 20px;
+            overflow: auto;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            min-width: 260px;
+        }
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        button.close-icon {
+            right: 20px;
+            position: absolute;
+            top: 20px;
+        }
+    }
+    .top-header {
+        border-bottom: 1px solid theme("colors.primary.400");
+
+        .logo-image {
+            img {
+                width: 142px;
+                height: 48px;
+                object-fit: contain;
+            }
+        }
+    }
+    .body {
+        padding-top: 113px;
+        @include respond(md){
+             padding-top: 120px;
+        }
+    }
+    .header-bottom {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        .devider {
+            border-left: 1px solid rgba(#000, 0.12);
+        }
+    }
+    .search-line {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .nav-link {
+        @apply px-2 py-3 flex text-white cursor-pointer;
+    }
+    .categories-dropdown {
+        position: absolute;
+        top: 135px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 9;
+        .categories-dropdown-innder {
+            background: #fff;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            box-shadow: var(--elevation-z12);
+            padding: 16px;
+        }
+        .categories-list {
+            display: grid;
+            grid-gap: 16px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            // grid-template-rows: minmax(150px, auto) minmax(150px, auto);
+            // grid-auto-rows: minmax(100px, auto);
+            @include respond(lg) {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+    }
+
+    .footer {
+        // border: 1px solid rgba(47, 128, 237, 0.24);
+        //  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        .footer-icon {
+            @include respond(lg) {
+                width: 45px;
+                height: 45px;
+            }
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid theme("colors.blue.300");
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            span {
+                font-size: 30px;
+                color: theme("colors.green.500");
+            }
+        }
+        .footer-top {
+            border-bottom: 1px solid rgba(47, 128, 237, 0.12);
+            .step-header {
+                @apply text-primary-500 font-semibold;
+                font-size: 20px;
+                line-height: 1.5;
+                @include respond(lg) {
+                    font-size: 16px;
+                }
+                @include respond(md) {
+                    font-size: 18px;
+                }
+            }
+        }
+        .footer-middle {
+            // border-bottom: 1px solid rgba(47, 128, 237, 0.12);
+            .mail-icon {
+                position: absolute;
+                top: 50%;
+                left: 0px;
+                color: theme("colors.gray.500");
+                transform: translateY(-50%);
+                font-size: 18px;
+                @include respond(sm) {
+                    left: 15px;
+                }
+            }
+        }
+
+        .border-right {
+            @include respond(sm) {
+                border: none;
+            }
+            border-right: 1px solid rgba(47, 128, 237, 0.12);
+        }
+    }
+    .footer-logo {
+        @include respond(lg) {
+            width: 180px;
+            height: auto;
+            object-fit: contain;
+        }
+        @include respond(md) {
+            width: 140px;
+            height: auto;
+            object-fit: contain;
+        }
+        @include respond(sm) {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+    }
+
+    .footer-bottom {
+        .market-details {
+            max-width: 990px;
+            margin: 0 auto;
+        }
+
+        .text-yellow {
+            color: #f9cc3d;
+        }
+        .footer-social {
+            font-size: 20px;
+            margin-right: 18px;
+            color: #fff;
+            @include respond(md) {
+                margin-right: 14px;
+            }
+        }
+        .footer-link {
+            @apply text-white font-medium mb-2 block;
+            @include respond(md) {
+                font-size: 14px;
+                text-align: center;
+                @apply mb-2;
+            }
+        }
+        .footer-link-title {
+            @apply mb-3 font-semibold;
+            font-size: 20px;
+            color: #f9cc3d;
+            @include respond(lg) {
+                font-size: 18px !important;
+                line-height: 1;
+                text-align: center;
+                @apply mb-3;
+            }
+
+            /*  @include respond(md) {
+                font-size: 20px !important;
+                text-align: center;
+                @apply mb-3;
+            } */
+        }
+    }
+    .hidden-text {
+        display: none;
+    }
+
+    .make-india-logo{
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -1,0 +1,45 @@
+@import "common";
+:host {
+    .top-banner {
+        border-radius: 8px;
+        @include respond(lg) {
+            img {
+                width: 180px;
+            }
+        }
+    }
+    .bg-image {
+        @include respond(md) {
+            background-image: none;
+        }
+        background-image: url($assetPath + "/login-bg.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        .login-card {
+            @include respond(lg) {
+                max-width: 280px;
+            }
+            max-width: 425px;
+            overflow: visible;
+        }
+        .login-card {
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            .continue-button {
+                @apply w-full mt-9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+    .social-login {
+        padding: 16px 22px;
+        border-radius: 16px;
+        outline: none;
+    }
+}

@@ -1,0 +1,403 @@
+<div class="container">
+    <nav class="font-medium my-6">
+        <ol class="list-none breadcrumb p-0 inline-flex">
+            <li class="flex text-gray-500 caption items-center">
+                <a routerLink="/"><span class="fill-current w-3 h-3 mx-3 icon-home"></span></a>
+                <span class="w-3 caption">/</span>
+            </li>
+            <li class="flex text-gray-500 caption  items-center" *ngIf="product?.category?.parent">
+                <a [routerLink]="['/category', product?.category?.parent?.slug]"><span
+                        class="fill-current w-3 h-3 mx-1 md:mx-3 caption">{{product?.category?.parent?.name}}</span></a>
+                <span class="w-3 ">/</span>
+            </li>
+            <li class="flex text-gray-500 caption items-center" *ngIf="product?.category">
+                <a [routerLink]="['/product/category', product?.category?.slug]"><span
+                        class="fill-current w-3 h-3 mx-1 md:mx-3 caption">{{product?.category?.name}}</span></a>
+                <span class="w-3 caption">/</span>
+            </li>
+            <li class="flex items-center">
+                <span class="caption">{{product?.name}}</span>
+            </li>
+        </ol>
+    </nav>
+    <app-loading *ngIf="loading; else productInfo"></app-loading>
+    <ng-template #productInfo>
+        <div class="flex flex-col md:flex-row">
+            <div class="flex-shrink-0 mb-10 md:mb-0 md:mr-16">
+                <ngx-gallery class="image-gallery" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div>
+            <div class="flex-shrink w-full">
+                <div class="product-info">
+                    <div class="flex-col-reverse lg:flex-row flex justify-between">
+                        <div class="flex-shrink w-full ">
+                            <div class="table mb-6">
+                                <span class="bg-green-500 block text-white flex-shrink-0 font-semibold p-2 rounded"
+                                    *ngIf="product?.discount > 0">
+                                    <span> {{ product?.discount | discount:product.discount_type}}</span>
+                                    <span class="text-center pl-1">off</span>
+                                </span>
+                            </div>
+
+                            <h3 class="title font-medium ">{{product?.name}}</h3>
+                            <p class="my-2 caption">Sold by: <a routerLink="/vendor-profile/{{product?.user_id}}"
+                                    class="caption text-primary-500">{{product?.user?.name}}</a> </p>
+                            <p>
+                                <app-star-rating [count]="product?.ratings_count" [rating]="product?.avg_rating">
+                                </app-star-rating>
+                            </p>
+                        </div>
+                        <div class="flex flex-shrink-0 mb-4 lg:ml-6">
+                            <div>
+                                <p>ID products:{{product?.product_display_id}}</p>
+                                <a *ngIf="product?.user?.photo || product?.brand?.image" routerLink="/vendor-profile/{{product?.user_id}}"><img
+                                        class="h-24 mx-auto block rounded" [src]="product?.user?.photo_urls?.sm || product?.brand?.image_urls?.sm"
+                                        [alt]="product?.user?.name || 'Product user image'">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="headline mt-4" *ngIf="!product?.contact_for_price; else ContactPrice">
+                        <span *ngIf="product?.discount"
+                            class=" text-green-500 mr-6 font-semibold">{{product?.selling_price | currency}}</span>
+                        <span [ngClass]="{'line-through': product?.discount, 'font-semibold':!product?.discount}"
+                            class=" text-green-500">{{product?.old_price | currency}}</span>
+                        <span *ngIf="product?.unit" class="ml-4 text-green-500 font-semibold">/ {{product?.unit}}</span>
+                        <div>
+                            <p class="text-secondary caption py-2">Taxes are included for inside India, for international tax
+                                and other charges will applicable</p>
+                        </div>
+                    </div>
+                    <div class="headline mt-4" *ngIf="product?.contact_price && product?.contact_price.status != 'Pending'">
+                        <span class=" text-green-500 mr-6 font-semibold">{{product?.contact_calculated_price | currency}}</span>
+                        <span *ngIf="product?.contact_price.unit" class="ml-4 text-green-500 font-semibold">/{{product?.contact_price.unit}}</span>
+                        <div>
+                            <p class="text-secondary caption py-2">Taxes are included for inside India, for international tax
+                                and other charges will applicable</p>
+                        </div>
+                    </div>
+                    <ng-template #ContactPrice>
+                        <button mat-flat-button color="primary" disabled *ngIf="product?.contact_price && product?.contact_price.status == 'Pending'" (click)="contactForPrice(product?.id)"
+                            class="mt-4">Awaiting for price</button>
+                        
+                        <button mat-flat-button color="primary" *ngIf=" product?.contact_price == null"  (click)="contactForPrice(product?.id)"
+                        class="mt-4">Contact for price</button>
+                    </ng-template>
+                    <div class="mt-6" *ngIf=" product?.tier_prices?.length > 0 && !product?.contact_for_price ">
+                        <h4 class="mb-4">Tier Price</h4>
+                        <table class="table-fixed dsk:w-1/2">
+                            <tr>
+                                <th class="border border-blue-300 p-3">Quantity</th>
+                                <th class="border border-blue-300 p-3">Unit Price</th>
+                            </tr>
+                            <tr *ngFor="let tier_price of product?.tier_prices">
+                                <td class="border border-blue-300 p-3">{{tier_price?.quantity}} and above</td>
+                                <td class="border border-blue-300 p-3">{{tier_price?.display_tier_price | currency}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt-6 product-inputs" *ngIf=" product?.product_inputs?.length > 0 ">
+                        <div class="product-input-item py-4" *ngFor="let input of product.product_inputs">
+                            <label class="text-primary-500" *ngIf="input.title">{{input.title}}</label>
+                            <p *ngIf="input.description">{{input.description}}</p>
+                            <div [ngSwitch]="input.input_type">
+                                <div class="input-field" *ngSwitchCase="'textarea'">
+                                    <textarea class="form-control" [(ngModel)]="attributes[input.id]"
+                                        [name]="'attributes_' + input.id"></textarea>
+                                </div>
+                                <div class="input-field" *ngSwitchCase="'select'">
+                                    <input type="text" [name]="input.title">
+                                    <mat-select [(ngModel)]="attributes[input.id]">
+                                        <mat-option *ngFor="let option of getOptions(input.options); let i = index" [value]="option">
+                                            {{option}}</mat-option>
+                                    </mat-select>
+                                </div>
+                                <div class="input-field" *ngSwitchCase="'radio'">
+                                    <mat-radio-group class="flex " [(ngModel)]="attributes[input.id]"
+                                        [name]="'attributes_' +input.id">
+                                        <mat-radio-button *ngFor="let option of getOptions(input.options)" class="mr-6"
+                                            [value]="option"> {{option}}</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="input-field color-select-field" *ngSwitchCase="'color'">
+                                    <mat-radio-group class="flex " [(ngModel)]="attributes[input.id]"
+                                        [name]="'attributes_' +input.id">
+                                        <mat-radio-button *ngFor="let option of getOptions(input.options)" class="mr-6"
+                                            [value]="option">
+                                            <div class="color-label">
+                                                <div class="w-8 h-8 rounded table" [style.backgroundColor]="option">
+                                                </div>
+                                            </div>
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="input-field" *ngSwitchCase="'checkbox'">
+                                    <div class="check-list flex">
+                                        <mat-checkbox [(ngModel)]="attributes[input.id][option]" class="mr-6"
+                                            [name]="'attributes_' +input.id+'_'+option"
+                                            *ngFor="let option of getOptions(input.options)" [value]="option">
+                                            {{option}}
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                                <div *ngSwitchDefault>
+                                    <input class="form-control" type="text" [(ngModel)]="attributes[input.id]"
+                                        [name]="'attributes_' + input.id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-6">
+                        <div *ngIf="(!product?.contact_for_price) || product?.contact_price && product?.contact_price.status != 'Pending'">
+                            <div *ngIf="!shippingFree">
+                                <form (ngSubmit)="postCodeSubmit()" #postForm="ngForm">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Enter Pin Code</mat-label>
+                                        <input matInput  [(ngModel)]="post_code" name="post_code" >
+                                    </mat-form-field>
+                                    <button mat-flat-button color="primary" type="submit" class="ml-4">Check Delivery</button>
+                                    <p class="pb-4" *ngIf="shipping">Shipping charge <strong class="text-primary-500">{{this.shipping?.rate |currency}}</strong> and deliver in <strong class="text-primary-500">{{this.shipping?.estimated_delivery_days}}</strong>  days</p>  
+                                    <http-message [data]="errorMessage" type="error"></http-message>
+                                </form>
+                            </div>
+                            <app-quantity-update *ngIf="shipping" class="flex-shrink-0 quantity-btn" [(ngModel)]="quantity">
+                            </app-quantity-update>
+                        </div>
+                    
+                        <div class="lg:flex  lg:flex-row lg:items-center mt-6">
+                            <div *ngIf="(!product?.contact_for_price) || product?.contact_price && product?.contact_price.status != 'Pending'" class="lg:flex mt-3  lg:flex-row lg:items-center">
+                             
+                                    <div *ngIf="product?.quantity; else empty_quantity" class="lg:mr-6">
+                                        <button [disabled]="!shipping" mat-flat-button color="primary" (click)="updateCart(product?.id)" class="lg:flex items-center"><span
+                                                class="icon-basket body-2 mr-1"></span>Add to
+                                            cart</button>
+                                    </div>
+                                
+                                <ng-template #empty_quantity>
+                                    <div class="mt-3 lg:mr-6">
+                                        <span class="text-primary-400 button font-semibold ">Out of Stock</span>
+                                    </div>
+                                </ng-template>
+                    
+                            </div>
+                            <div class="mt-3 lg:mr-6">
+                                <a mat-stroked-button color="primary" (click)="wishlist(product)" class="lg:flex items-center"><span
+                                        class="icon-wishlist body-2 mr-1"></span>Add To
+                                    Wishlist
+                                </a>
+                            </div>
+                            <div class="mt-3">
+                                <a mat-stroked-button (click)="addToCompares(product)" color="primary" class="lg:flex items-center">
+                                    <span class="icon-compare body-2 mr-1"></span>Compare</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <app-share-buttons class="mt-6 block"></app-share-buttons>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8">
+            <div class="relative pb-2 border-b border-gray-400">
+                <span class="section-title">Description {{ product.metas.length }}</span>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 section">
+                <div class="col-span-2">
+                    <h2 class="title mb-3 font-medium">{{product?.name}}</h2>
+                    <div class="body-2" [innerHTML]="product?.description"></div>
+                </div>
+                <div class="spacifications" *ngIf="product?.product_attributes?.length > 0 || (product?.metas && product?.metas.additional_attributes)">
+                    <h4 class="mb-3">Additional Specification</h4>
+                    <table class="table-fixed w-full">
+                        <tr *ngFor="let attributes of product?.metas.additional_attributes">
+                            <td class="border border-blue-300 p-3">{{attributes?.name}} </td>
+                            <td class="border border-blue-300 p-3">{{attributes?.value}}</td>
+                        </tr>
+                        <tr *ngFor="let attribute of product?.product_attributes">
+                            <td class="border border-blue-300 p-3">{{attribute?.name}} </td>
+                            <td class="border border-blue-300 p-3">{{attribute?.value}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="product">
+            <div class="relative pb-2  border-b border-gray-400">
+                <span class="section-title">Ratings & Reviews</span>
+            </div>
+            <div class="flex flex-col lg:flex-row section ratting">
+                <div class="flex-shrink-0 mb-6 md:mb-10 md:mr-20">
+                    <div class="flex items-center">
+                        <div class="num-star mr-3"><span>5</span>
+                            <mat-icon class="button">star</mat-icon>
+                        </div>
+                        <mat-progress-bar class="mr-3" color="primary" mode="determinate"
+                            [value]="(product['5_star_rating']/product?.ratings_count)*100"></mat-progress-bar>
+                        <span class=" flex-shrink-0 mr-3"> {{product['5_star_rating']}} Ratings</span>
+                    </div>
+                    <div class="flex items-center ">
+                        <div class="num-star mr-3"><span>4</span>
+                            <mat-icon class="button">star</mat-icon>
+                        </div>
+                        <mat-progress-bar class="mr-3" color="primary" mode="determinate"
+                            [value]="(product['4_star_rating']/product?.ratings_count)*100"></mat-progress-bar>
+                        <span class=" flex-shrink-0 mr-3">{{product['4_star_rating']}} Ratings</span>
+                    </div>
+                    <div class="flex items-center ">
+                        <div class="num-star mr-3"><span>3</span>
+                            <mat-icon class="button">star</mat-icon>
+                        </div>
+                        <mat-progress-bar class="mr-3" color="primary" mode="determinate"
+                            [value]="(product['3_star_rating']/product?.ratings_count)*100"></mat-progress-bar>
+                        <span class=" flex-shrink-0 mr-3">{{product['3_star_rating']}} Ratings</span>
+                    </div>
+                    <div class="flex items-center ">
+                        <div class="num-star mr-3"><span>2</span>
+                            <mat-icon class="button">star</mat-icon>
+                        </div>
+                        <mat-progress-bar class=" mr-3" color="primary" mode="determinate"
+                            [value]="(product['2_star_rating']/product?.ratings_count)*100"></mat-progress-bar>
+                        <span class=" flex-shrink-0 mr-3">{{product['2_star_rating']}} Ratings</span>
+                    </div>
+                    <div class="flex items-center ">
+                        <div class="num-star mr-3"><span>1</span>
+                            <mat-icon class="button">star</mat-icon>
+                        </div>
+                        <mat-progress-bar class=" mr-3" color="primary" mode="determinate"
+                            [value]="(product['1_star_rating']/product?.ratings_count)*100"></mat-progress-bar>
+                        <span class=" flex-shrink-0 mr-3">{{product['1_star_rating']}} Ratings</span>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="flex flex-wrap  ratting-btn">
+                        <a mat-stroked-button color="primary" class="mb-4 mr-6" (click)="setRatingByStar(5)"
+                            [ngClass]="{active: request.rating === 5}">5
+                            <mat-icon class="ml-1 button">star</mat-icon>
+                        </a>
+                        <a mat-stroked-button color="primary" class="mb-4 mr-6" (click)="setRatingByStar(4)"
+                            [ngClass]="{active: request.rating === 4}">4
+                            <mat-icon class="ml-1 button">star</mat-icon>
+                        </a>
+                        <a mat-stroked-button color="primary" class="mb-4 mr-6" (click)="setRatingByStar(3)"
+                            [ngClass]="{active: request.rating === 3}">3
+                            <mat-icon class="ml-1 button">star</mat-icon>
+                        </a>
+                        <a mat-stroked-button color="primary" class="mb-4 mr-6" (click)="setRatingByStar(2)"
+                            [ngClass]="{active: request.rating === 2}">2
+                            <mat-icon class="ml-1 button">star</mat-icon>
+                        </a>
+                        <a mat-stroked-button color="primary" class="mb-4 mr-6" (click)="setRatingByStar(1)"
+                            [ngClass]="{active: request.rating === 1}">1
+                            <mat-icon class="ml-1 button">star</mat-icon>
+                        </a>
+                        <!--  <button mat-stroked-button color="primary">
+                            Recommended For you</button>
+                        <button mat-stroked-button color="primary">
+                            Any other filter if you want</button> -->
+                    </div>
+                    <div *ngIf="ratings?.length > 0; else ratingNotFound ">
+                        <div *ngFor="let rating of ratings" class="py-6 border-b">
+                            <div class="flex mb-3">
+                                <div class="flex-shrink-0 mr-6">
+                                    <img class="object-cover rounded-full h-6 w-6" type="user"
+                                        [src]="rating?.user?.photo_urls?.xs" [alt]="rating?.user?.name || 'User rating image'">
+                                </div>
+                                <div *ngIf="rating?.user?.name" class="">
+                                    <span class="font-semibold pr-3">{{rating?.user?.name}}</span>
+                                    <span class="text-gray-500 font-semibold">(Verified Buyer)</span>
+                                </div>
+                            </div>
+                            <p *ngIf="rating?.comment">{{rating?.comment}} </p>
+                        </div>
+                    </div>
+                    <ng-template #ratingNotFound>
+                        <div class="text-center py-8">
+                            <h3>No Rating</h3>
+                        </div>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+        <!--  <div class="mt-8">
+            <div class="relative pb-4 border-b border-gray-400">
+                <span class="section-title">Compare Product</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4 section">
+                <div class="col-span-1 ">
+                    <div class="flex justify-center my-6">
+                        <img class="compare-img" src="assets/image/category-icon.svg" alt="">
+                    </div>
+                    <div class="">Haldiram Namkeen Bhujia</div>
+                </div>
+            </div>
+        </div> -->
+
+    </ng-template>
+    <div class="section" *ngIf="sellerProducts?.length > 0">
+        <div class="relative flex-auto pb-2 border-b border-gray-300">
+            <span class="section-title ">More from the seller</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="sellerProductLoading; else sellerProductEl"></app-loading>
+            <ng-template #sellerProductEl>
+                <div class="section" *ngIf="sellerProducts?.length > 0; else sellerProductNotFoundEl">
+                    <owl-carousel-o [options]="occasionOptions" #seller>
+                        <ng-container *ngFor="let sellerProduct of sellerProducts">
+                            <ng-template carouselSlide>
+                                <app-product-item class="slider-product-item" [product]="sellerProduct">
+                                </app-product-item>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="slider-arrow" (click)="seller.next()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                    <div class="left-slider-arrow" (click)="seller.prev()">
+                        <a><span class="icon-slider-right text-white"></span></a>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #sellerProductNotFoundEl>
+                <div class="text-center py-8">
+                    <h3>No more from the seller</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="section" *ngIf="recentProducts.length > 0">
+        <div class="relative flex-auto pb-2 border-b border-gray-300">
+            <span class="section-title ">Related Items</span>
+        </div>
+        <div class="products-list">
+            <app-loading *ngIf="recentProductLoading; else recentProductEl"></app-loading>
+            <ng-template #recentProductEl>
+                <div class="section" *ngIf="recentProducts.length > 0; else recentProductNotFoundEl">
+                    <div class="section" *ngIf="recentProducts?.length > 0; else recentProductNotFoundEl">
+                        <owl-carousel-o [options]="occasionOptions" #Recent>
+                            <ng-container *ngFor="let recentProduct of recentProducts">
+                                <ng-template carouselSlide>
+                                    <app-product-item class="slider-product-item" [product]="recentProduct">
+                                    </app-product-item>
+                                </ng-template>
+                            </ng-container>
+                        </owl-carousel-o>
+                        <div class="slider-arrow" (click)="Recent.next()">
+                            <a><span class="icon-slider-right text-white"></span>
+                            </a>
+                        </div>
+                        <div class="left-slider-arrow" (click)="Recent.prev()">
+                            <a><span class="icon-slider-right text-white"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #recentProductNotFoundEl>
+                <div class="text-center py-8">
+                    <h3> No Recent Items Found</h3>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

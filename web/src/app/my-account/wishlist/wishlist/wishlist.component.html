@@ -1,0 +1,16 @@
+<div class="relative flex-auto mb-8 pb-2 border-b border-gray-300">
+    <span class="section-title ">Wishlist</span>
+</div>
+<ng-template [ngIf]="wishlists.length > 0" [ngIfElse]="notFund">
+    <div class="grid  grid-cols-1 md:grid-cols-2 dsk:grid-cols-4 gap-4">
+        <app-product-item *ngFor="let product of wishlists" [product]="product"></app-product-item>
+    </div>
+</ng-template>
+<ng-template #notFund>
+    <div class="my-20 text-center">Add products in your wishlist?</div>
+</ng-template>
+<div class="load-more text-center pt-3 pb-10">
+    <mat-paginator color="primary" (page)="loadeMoreProducts($event)" [length]="pageMeta?.total || 1"
+        [pageSize]="pageMeta?.per_page || 12" [pageSizeOptions]="[12, 24, 36]">
+    </mat-paginator>
+</div>

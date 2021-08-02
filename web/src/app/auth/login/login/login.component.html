@@ -1,0 +1,60 @@
+<div class="vendor-bg"></div>
+<div class="container main-container ">
+    <div class="heading">
+        <h1 class="font-semibold mb-4 text-center text-white leading-normal">Dear Seller, Welcome to aslidesi !</h1>
+        <p class="text-white text-center title leading-normal">Sign In To Your Account</p>
+    </div>
+    <div class="">
+        <div class="login-container mx-auto">
+            <div class="card bg-white p-2 md:p-6 mb-6 md:my-8">
+                <div class="w-full">
+                    <form class="md:px-8 md:pt-6 md:pb-8 p-4 w-full form" (ngSubmit)="send()" [formGroup]="form"
+                        #f="ngForm">
+                        <http-message [data]="loginMessage"></http-message>
+
+                        <mat-label class="form-lable">Email</mat-label>
+                        <div class="from-group mb-6">
+                            <input matInput class="from-vendor" placeholder="Email" formControlName="email">
+                            <mat-error class="form-error"
+                                *ngIf="f.submitted && form?.get('email').hasError('required')">Please enter your email
+                            </mat-error>
+                        </div>
+                        <mat-label class="form-lable">Password</mat-label>
+                        <div class="from-group mb-6">
+                            <div class="relative">
+                                <input matInput [type]="fieldTextType ? 'text' : 'password'" class="from-vendor"
+                                    placeholder="password" formControlName="password">
+                                <div (click)="toggleFieldTextType()" class="">
+                                    <mat-icon *ngIf="!fieldTextType" class=" visible-icon">visibility</mat-icon>
+                                    <mat-icon *ngIf="fieldTextType" class=" visible-icon">visibility_off</mat-icon>
+                                </div>
+                            </div>
+
+                            <mat-error class="form-error"
+                                *ngIf="f.submitted && form?.get('password').hasError('required')">Please enter your
+                                password
+                            </mat-error>
+                        </div>
+
+                        <div class="mb-4">
+                            <mat-checkbox class="block" color="primary" formControlName="logged_in"
+                                [(indeterminate)]="indeterminate" [labelPosition]="labelPosition">
+                               <span class="text-primary-500">Keep me logged in</span>
+                            </mat-checkbox>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button mat-flat-button color="success" class="my-2">Sign In</button>
+                            <a class=" font-semibold text-sm text-blue-400 hover:text-blue-600"
+                                [routerLink]="['/forgot-password']">
+                                Forgot Password?
+                            </a>
+                        </div>
+                    </form>
+                    <p class="text-secondary text-center"> Don't have an account?
+                        <a class="text-blue-400" [routerLink]="['/vendor-register']">Click here to create</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

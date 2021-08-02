@@ -1,0 +1,52 @@
+<form class="dialog-from" (ngSubmit)="submit()" [formGroup]="form">
+
+	<h2 mat-dialog-title *ngIf="data?.title">{{data.title || "Confirm"}}</h2>
+	<mat-dialog-content class=" mb-4">
+		<p>{{ data?.message }}</p>
+
+		<div class="form-group">
+
+			<ng-template [ngIf]="data.input_type == 'checkbox' || data.input_type == 'radio'" [ngIfElse]="textInput">
+				<mat-label *ngIf="data?.label">{{ data.label }}</mat-label>
+				<mat-selection-list *ngIf="data.input_type == 'checkbox'" formControlName="input" #filter_pivacy>
+					<mat-list-option *ngFor="let option of data?.options" [value]="option.id"
+						[checkboxPosition]="'before'">
+						{{option.text}} </mat-list-option>
+				</mat-selection-list>
+
+				<mat-radio-group *ngIf="data.input_type == 'radio'" formControlName="input">
+					<mat-radio-button *ngFor="let option of data?.options" [value]="option.id"> {{option.text}}
+					</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-error *ngIf="form?.get('input').hasError('required')">Please enter {{ data.label | lowercase }}
+				</mat-error>
+			</ng-template>
+			<ng-template #textInput>
+				<mat-form-field class="flex-auto" fxFlex="auto">
+					<mat-label *ngIf="data?.label">{{ data.label }}</mat-label>
+					<input class="form-control" placeholder="{{data?.placeholder}}"
+						*ngIf="data.input_type == 'text' || data.input_type == 'password' ||  data.input_type == 'email'"
+						type="{{data.input_type}}" formControlName="input" matInput required>
+
+					<textarea *ngIf="data.input_type == 'textarea'" formControlName="input"
+						placeholder="{{placeholder}}" matInput required></textarea>
+
+					<mat-select class="form-control" *ngIf="data.input_type == 'select'" formControlName="input">
+						<mat-option *ngFor="let option of data?.options" [value]="option.id">{{option.text}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="form?.get('input').hasError('required')">Please enter {{ data.label | lowercase }}
+					</mat-error>
+				</mat-form-field>
+			</ng-template>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<div class="buttons buttons-right">
+			<button mat-flat-button color="primary" class="outline-button">{{data?.ok || 'Ok'}}</button>
+			<button mat-flat-button class="outline-button" type="button" [mat-dialog-close]="false"
+				mat-dialog-close>{{data?.cancel || 'Cancel'}}</button>
+		</div>
+	</mat-dialog-actions>
+</form>

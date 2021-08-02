@@ -1,0 +1,146 @@
+/*!
+ * Copyright (C) 2016 Sergey Akopkokhyants
+ * This project is licensed under the terms of the MIT license.
+ * https://github.com/cadulis/ngx-toasty
+ *
+ * Include MATERIAL theme
+ */
+#toasty {
+  position: fixed;
+  z-index: 999999;
+  /* Positioning */
+}
+#toasty .close-button:focus {
+  outline: 0;
+}
+#toasty.toasty-position-top-left {
+  top: 12px;
+  left: 12px;
+}
+#toasty.toasty-position-top-right {
+  top: 12px;
+  right: 12px;
+}
+#toasty.toasty-position-bottom-right {
+  bottom: 12px;
+  right: 12px;
+}
+#toasty.toasty-position-bottom-left {
+  bottom: 12px;
+  left: 12px;
+}
+#toasty.toasty-position-top-center {
+  top: 12px;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+#toasty.toasty-position-bottom-center {
+  bottom: 12px;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+#toasty.toasty-position-center-center {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+#toasty .toast {
+  cursor: pointer;
+  margin: 0 0 6px;
+  padding: 0;
+  width: 285px;
+  height: 65px;
+  display: table;
+  background-size: 24px 24px;
+  background-position: 15px center;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  position: relative;
+}
+#toasty .toast .close-button {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+#toasty .toast .close-button:hover,
+#toasty .toast .close-button:focus {
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+#toasty .toast .toast-text {
+  padding: 5px 20px 5px 20px;
+  display: table-cell;
+  vertical-align: middle;
+}
+#toasty .toast .toast-text .toast-title {
+  font-weight: bold;
+}
+#toasty .toast .toast-text a:hover,
+#toasty .toast .toast-text label:hover {
+  text-decoration: none;
+}
+
+/***************
+ MATERIAL THEME
+ **************/
+
+#toasty .toast.toasty-theme-material {
+  font-family: "Roboto", sans-serif !important;
+  font-size: 12px;
+  background-color: #323232;
+}
+#toasty .toast.toasty-theme-material .close-button:after {
+  content: "x";
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 100;
+}
+#toasty .toast.toasty-theme-material .toast-text {
+  color: #ffffff;
+}
+#toasty .toast.toasty-theme-material .toast-text .toast-title {
+  text-transform: uppercase;
+  font-size: 13px;
+}
+#toasty .toast.toasty-theme-material .toast-text .toast-msg {
+  /**/
+}
+#toasty .toast.toasty-theme-material .toast-text a,
+#toasty .toast.toasty-theme-material .toast-text label {
+  color: #ffffff;
+}
+#toasty .toast.toasty-theme-material .toast-text a:hover,
+#toasty .toast.toasty-theme-material .toast-text label:hover {
+  color: #f2f2f2;
+}
+#toasty .toast.toasty-theme-material.toasty-type-default {
+  background-color: theme("colors.primary.500");
+}
+#toasty .toast.toasty-theme-material.toasty-type-info {
+  background-color: theme("colors.primary.500");
+}
+#toasty .toast.toasty-theme-material.toasty-type-wait {
+  background-color: theme("colors.gray.500");
+}
+#toasty .toast.toasty-theme-material.toasty-type-error {
+  background-color: theme("colors.red.500");
+}
+#toasty .toast.toasty-theme-material.toasty-type-success {
+  background-color: theme("colors.green.500");
+}
+#toasty .toast.toasty-theme-material.toasty-type-warning {
+  background-color: theme("colors.red.500");
+}

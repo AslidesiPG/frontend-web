@@ -1,0 +1,474 @@
+<div class="vendor-bg">
+</div>
+<div class="container main-container">
+    <div class="heading">
+        <h1 class="font-semibold mb-4 text-center text-white leading-normal">Dear Seller, Welcome to aslidesi !</h1>
+        <p class="text-white text-center title leading-normal">You are just 2 steps away from filling your seller
+            registration form ! Please provide your basic details to proceed.</p>
+    </div>
+    <!--  <div>
+        <button mat-flat-button  (click)="submit()"> otp check</button>
+    </div> -->
+    <div class="card p-0 bg-white my-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+            <div class="col-span-2 lg:border-r lg:pl-10 lg:pr-16">
+                <mat-horizontal-stepper #stepper [linear]="true">
+                    <mat-step [stepControl]="basicForm">
+                        <h4 class="text-primary-500 font-semibold underline my-4">Basic Details</h4>
+                        <form [formGroup]="basicForm" #f="ngForm">
+                            <ng-template matStepLabel>Basic Details</ng-template>
+                            <div class="my-4">
+                                <http-message [data]="registerMessage"></http-message>
+                            </div>
+
+                            <div class="pt-2 md:pt-5 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                                <div>
+                                    <mat-label class="form-lable">First Name</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" placeholder="First Name"
+                                            formControlName="first_name" required>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('first_name').hasError('required')">
+                                            Please enter your first name
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-label class="form-lable">Last Name</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" placeholder="Last Name"
+                                            formControlName="last_name" required>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('last_name').hasError('required')">
+                                            Please enter your last name
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 md:pt-5 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                                <div>
+                                    <mat-label class="form-lable">Display Name</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" placeholder="Display Name"
+                                            formControlName="display_name">
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-label class="form-lable">Seller Type</mat-label>
+                                    <div>
+                                        <div class="from-group multipale">
+                                            
+                                            <mat-select (selectionChange)="changed($event.value)" placeholder="Select Seller Type" formControlName="seller_types" multiple>
+                                                <mat-option *ngFor="let sellerType of sellerTypes" [value]="sellerType?.id">{{sellerType?.type}}</mat-option>
+                                               <!--  <mat-option value="Farmer">Farmer</mat-option>
+                                                <mat-option value="Producer">Producer</mat-option>
+                                                <mat-option value="Wholesaler">Wholesaler</mat-option>
+                                                <mat-option value="Retailer">Retailer</mat-option>
+                                                <mat-option value="Reseller">Reseller</mat-option> -->
+                                            </mat-select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2  ">
+                                <div class="">
+                                    <div class="from-group phone-input phone-number">
+                                        <mat-label class="form-lable">Phone No.</mat-label>
+                                        <ngx-intl-tel-input class="" cssClass=" py-2 " required
+                                            [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                            [enablePlaceholder]="false" [searchCountryFlag]="true"
+                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                            [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.India"
+                                            [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                            [separateDialCode]="separateDialCode" name="phone" formControlName="phone">
+                                        </ngx-intl-tel-input>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('phone').hasError('required')">Please
+                                            enter your phone
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <mat-label class="form-lable">Email Address</mat-label>
+                                    <div class="from-group">
+                                        <input matInput required class="from-vendor" placeholder="Enter Email Address"
+                                            formControlName="email">
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('email').hasError('required')">Please
+                                            enter your email
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2 md:pt-5 ">
+                                <div>
+                                    <mat-label class="form-lable">Password</mat-label>
+                                    <div class="from-group">
+                                        <input matInput required type="password" class="from-vendor"
+                                            placeholder="password" formControlName="password">
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('password').hasError('minLength')">Your
+                                            password
+                                            should be at least 6 characters long
+                                        </mat-error>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('password').hasError('required')">
+                                            Please
+                                            enter your password
+                                        </mat-error>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <mat-label class="form-lable">Confirm Password</mat-label>
+                                    <div class="from-group">
+                                        <input matInput required type="password" class="from-vendor"
+                                            placeholder="Confirm password" formControlName="confirmPassword">
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('confirmPassword').hasError('minLength')">Your
+                                            password
+                                            should be at least 6 characters long
+                                        </mat-error>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('confirmPassword').hasError('required')">
+                                            Please
+                                            enter your confirm password
+                                        </mat-error>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2 md:pt-5 ">
+                                <div class="">
+                                    <mat-label class="form-lable">Company Name</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" type="text" placeholder="Enter company Name"
+                                            formControlName="business_name" required>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('business_name').hasError('required')">
+                                            Please enter your
+                                            company name
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 md:pt-5">
+                                <mat-label class="form-lable">Product Pickup Address</mat-label>
+                                <div class="from-group">
+                                    <input matInput class="from-vendor" placeholder="address" formControlName="address1"
+                                        required>
+                                    <mat-error class="form-error"
+                                        *ngIf="f.submitted && basicForm?.get('address1').hasError('required')">Please
+                                        enter your address
+                                    </mat-error>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2 md:pt-5">
+                                <div class="">
+                                    <mat-label class="form-lable">Country</mat-label>
+                                    <div class="from-group">
+                                        <select class="from-vendor city-field" formControlName="country_id" required>
+                                            <option value="">Select Country</option>
+                                            <!-- <option *ngFor="let country of countries" [value]="country.id">
+                                                {{country.name}}</option> -->
+                                                <option value="101">India</option>
+                                            <mat-error class="form-error"
+                                                *ngIf="f.submitted && basicForm?.get('country_id').hasError('required')">
+                                                Please select your country
+                                            </mat-error>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <mat-label class="form-lable">State</mat-label>
+                                    <div class="from-group">
+                                        <select class="from-vendor city-field" formControlName="state_id" required>
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of states" [value]="state.id">{{state.name}}
+                                            </option>
+                                        </select>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('state_id').hasError('required')">
+                                            Please select your state
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2 md:pt-5">
+                                <div class="">
+                                    <mat-label class="form-lable">City</mat-label>
+                                    <div class="from-group">
+                                        <select class="from-vendor city-field" formControlName="city_id" required>
+                                            <option value="">Select City</option>
+                                            <option *ngFor="let city of cites" [value]="city.id">{{city.name}}</option>
+                                        </select>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('city_id').hasError('required')">Please
+                                            select your city
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <mat-label class="form-lable">PIN Code</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" placeholder="PIN Code"
+                                            formControlName="zip_code" required>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('zip_code').hasError('required')">
+                                            Please enter your PIN number
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-2 md:pt-5">
+                                <div class="">
+                                    <mat-label class="form-lable">Cash on delivery status</mat-label>
+                                    <div class="from-group">
+                                        <select class="from-vendor city-field" formControlName="cod_status" required>
+                                            <option value="">Select cod status</option>
+                                            <option value="Accept" selected>Accept</option>
+                                            <option value="Not Accept">Not Accept</option>
+                                            <mat-error class="form-error"
+                                                *ngIf="f.submitted && basicForm?.get('cod_status').hasError('required')">
+                                                Please select cash on delivery
+                                            </mat-error>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="is_iec_code == true">
+                                    <mat-label class="form-lable">IEC Code</mat-label>
+                                    <div class="from-group">
+                                        <input matInput class="from-vendor" type="text" placeholder="Enter export code"
+                                            formControlName="iec_code" *ngIf="is_iec_code == true" required else>
+                                        <mat-error class="form-error"
+                                            *ngIf="f.submitted && basicForm?.get('iec_code').hasError('required')">
+                                            Please enter export code
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-4">
+                                <mat-checkbox required formControlName="term_condition" class="block"> View and Accept
+                                    <a routerLink="/vendor-agreement" class="text-primary-500" target="_blank"> Seller
+                                        Agreement</a>
+                                </mat-checkbox>
+                                <mat-error class="form-error"
+                                    *ngIf="f.submitted && basicForm?.get('term_condition').hasError('required')">Please
+                                    select accept seller agreement checkbox
+                                </mat-error>
+                            </div>
+                            <!--  <div class="mb-3">
+                                <ngx-recaptcha2 [siteKey]="siteKey" (success)="handleSuccess($event)"  [useGlobalDomain]="false"
+                                    formControlName="recaptcha" required>
+                                </ngx-recaptcha2>
+                                <mat-error class="form-error" *ngIf="f.submitted && basicForm?.get('recaptcha').hasError('required')">Please
+                                    select recaptch
+                                </mat-error>
+                            </div> -->
+
+                            <div>
+                                <button mat-flat-button (click)="basicSubmit($event)" color="primary" type="submit"
+                                    class="px-6">Next step <span
+                                        class="icon-arrow ml-2 text-white body-2"></span></button>
+                                <!-- <button mat-flat-button (click)="submit()" color="primary" type="submit" class="px-6" >Next step <span
+                                        class="icon-arrow ml-2 text-white body-2"></span></button> -->
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="businessForm">
+                        <form [formGroup]="businessForm" (ngSubmit)="basicSubmit($event)" #business="ngForm">
+                            <div class="flex justify-between my-4">
+                                <h4 class="text-primary-500 font-semibold underline">Business & Bank Details</h4>
+                                <button mat-stroked-button color="primary" type="button" matStepperNext>Skip for
+                                    now</button>
+                            </div>
+                            <ng-template matStepLabel>Business & Bank Details</ng-template>
+                            <div class="grid grid-cols-1 md:grid-cols-11 gap-4">
+                                <div class="col-span-5 flex-col">
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">GST Number</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" placeholder="123456789"
+                                                formControlName="gst_number">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('gst_number').hasError('required')">
+                                                Please enter your gst number
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Account Holder Name</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" type="text" name="account_holder_name"
+                                                placeholder="Name" formControlName="account_holder_name">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('account_holder_name').hasError('required')">
+                                                Please enter your account holder name
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Account Number</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" type="password"
+                                                placeholder="0000000000000000000" formControlName="account_number">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('account_number').hasError('required')">
+                                                Please enter your current / saving account number
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">IFSC Code</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" placeholder="BKDN123456"
+                                                formControlName="ifsc_code">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('ifsc_code').hasError('required')">
+                                                Please enter your bank IFSC code
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mx-auto hidden md:block pt-14">
+                                    <span class="text-primary-500 font-medium">Or</span>
+                                </div>
+                                <div class="col-span-5 flex-col">
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Pan Number</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" placeholder="APK1234567"
+                                                formControlName="pan_number">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('pan_number').hasError('required')">
+                                                Please enter your pan number
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Bank Name</mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" placeholder="Dena Bank"
+                                                formControlName="bank_name">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('bank_name').hasError('required')">
+                                                Please enter your bank name
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Confirm Account Number
+                                        </mat-label>
+                                        <div class="from-group">
+                                            <input matInput class="from-vendor" placeholder="0000000000000000000"
+                                                formControlName="confirm_account_number">
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('confirm_account_number').hasError('required')">
+                                                Please enter your confirm current / saving account number
+                                            </mat-error>
+                                            <mat-error class="form-error"
+                                                *ngIf="business.submitted && businessForm?.get('confirm_account_number').hasError('notEqual')">
+                                                your account number not equal
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <button mat-flat-button color="primary" class="px-3 mr-6" type="button"
+                                    matStepperPrevious><span class="icon-left-arrow mr-2 text-white body-2"></span>
+                                    Back</button>
+                                <button mat-flat-button color="primary" class="px-6" matStepperNext>Next step <span
+                                        class="icon-arrow ml-2 text-white body-2"></span></button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="documentsForm">
+                        <form [formGroup]="documentsForm" #d="ngForm">
+                            <div class=" flex justify-between my-4 ">
+                                <h4 class="text-primary-500 font-semibold underline ">Document Verification</h4>
+                                <!--  <button mat-stroked-button color="primary" (click)="businessSubmit($event)"
+                                    matStepperNext>Skip for now</button> -->
+                            </div>
+                            <ng-template matStepLabel>Documents verification</ng-template>
+                            <div class="my-4">
+                                <http-message [data]="registerMessage"></http-message>
+                            </div>
+                            <div class="">
+                                <div class="flex-col ">
+                                    <div class="pt-3 md:pt-5 ">
+                                        <mat-label class="form-lable">Pan Card</mat-label>
+                                        <div class="from-group">
+                                            <input matInput type="file" class="from-vendor"
+                                                (change)="onFileChange($event, 'pan_card')" formControlName="pan_card">
+                                            <!-- <mat-error class="form-error"
+                                                *ngIf="d.submitted && documentsForm?.get('pan_card').hasError('required')">
+                                                Please enter pan card
+                                            </mat-error> -->
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5 ">
+                                        <mat-label class="form-lable">GST</mat-label>
+                                        <div class="from-group">
+                                            <input matInput type="file" class="from-vendor"
+                                                (change)="onFileChange($event, 'gst')" formControlName="gst">
+                                            <!-- <mat-error class="form-error"
+                                                *ngIf="d.submitted && documentsForm?.get('gst').hasError('required')">
+                                                Please enter gst
+                                            </mat-error> -->
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5 ">
+                                        <mat-label class="form-lable">Address Proof</mat-label>
+                                        <div class="from-group">
+                                            <input matInput type="file" class="from-vendor"
+                                                (change)="onFileChange($event, 'address_proof')"
+                                                formControlName="address_proof">
+                                            <!-- <mat-error class="form-error"
+                                                *ngIf="d.submitted && documentsForm?.get('address_proof').hasError('required')">
+                                                Please enter address proof
+                                            </mat-error> -->
+                                        </div>
+                                    </div>
+                                    <div class="pt-3 md:pt-5">
+                                        <mat-label class="form-lable">Cancel Cheque</mat-label>
+                                        <div class="from-group ">
+                                            <input matInput type="file" class="from-vendor"
+                                                (change)="onFileChange($event, 'cancel_cheque')"
+                                                formControlName="cancel_cheque">
+                                            <!-- <mat-error class="form-error"
+                                                *ngIf="d.submitted && documentsForm?.get('cancel_cheque').hasError('required')">
+                                                Please enter cancel cheque
+                                            </mat-error> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-6 flex flex-col md:flex-row">
+                                <button mat-flat-button color="primary" class="px-3 mb-6 md:mb-0 md:mr-6"
+                                    matStepperPrevious><span class="icon-left-arrow mr-2 text-white body-2"></span>
+                                    Back</button>
+                                <button mat-flat-button color="primary" (click)="submit()" class="px-6">Complete
+                                    Verification <span class="icon-arrow ml-2 text-white body-2 "></span></button>
+                            </div>
+                        </form>
+
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+            <div class="p-6 faq">
+                <h3 class="my-6 title text-primary-500 font-medium ">Most Popular FAQs</h3>
+                <app-faq [faqs]="vendorFaqs"></app-faq>
+            </div>
+        </div>
+    </div>
+</div>

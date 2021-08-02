@@ -1,0 +1,7 @@
+{
+  "name": "aslidesi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

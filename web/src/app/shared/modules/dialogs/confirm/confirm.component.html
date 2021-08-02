@@ -1,0 +1,10 @@
+<h2 mat-dialog-title *ngIf="data?.title">{{data.title || "Confirm"}}</h2>
+<mat-dialog-content class=" mb-4">
+  {{ data?.message }}
+</mat-dialog-content>
+<mat-dialog-actions>
+	<div class="buttons buttons-right">
+	  	<button  mat-flat-button color="primary"  class="outline-button mat-info" (click)="callback(true)" [mat-dialog-close]="true" mat-dialog-close>{{data?.yes || 'Yes'}}</button>
+	  	<button  mat-flat-button color="warn"  class="outline-button mat-default" (click)="callback(false)" [mat-dialog-close]="true" mat-dialog-close>{{data?.no || 'No'}}</button>
+   	</div>
+</mat-dialog-actions>

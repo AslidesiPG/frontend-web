@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  ::ng-deep {
+    .mat-checkbox-layout {
+      white-space: normal !important;
+    }
+  }
+}

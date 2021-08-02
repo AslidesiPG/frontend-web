@@ -1,0 +1,276 @@
+@import "common";
+:host {
+  /* brand sidebar css */
+  .product_category_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+
+    .product_category_box {
+      width: 23%;
+      margin: 1%;
+    }
+    .product_category_img {
+      text-align: center;
+      flex-grow: 1;
+    }
+    .product_category_title {
+      background: #f3f3f3;
+      text-align: center;
+      color: #000;
+      height: 50px;
+      line-height: normal;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  .spec-tab-box-conitaner {
+    display: flex;
+    flex-direction: column;
+    clear: both;
+    margin-top: 10px;
+    @include respond(lg) {
+      min-width: 350px;
+      overflow-x: auto;
+    }
+    .heading {
+      width: 206px;
+      flex-shrink: 0;
+      @include respond(lg) {
+        width: 120px;
+        margin: 0px 5px 0 0;
+      }
+      @include respond(md) {
+        width: 90px;
+        margin: 0px 5px 0 0;
+      }
+      /* @include respond(sm) {
+        width: 100%;
+      } */
+    }
+    .product-item {
+      flex: 1 1 auto;
+      width: 100%;
+      margin: 0 7px;
+      @include respond(lg) {
+        margin: 0 0px;
+      }
+      @include respond(sm) {
+        margin: 0 7px 0 0;
+        flex: none;
+      }
+      @include respond(xs) {
+        margin: 0 7px 0 0;
+      }
+    }
+  }
+
+  .spec-tab-box {
+    margin-bottom: 1px;
+    display: flex;
+    flex-direction: row;
+    @include respond(sm) {
+    }
+
+    .spec-tab-head {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 24px;
+      padding: 5px 15px;
+      background: #f5f5f5;
+      text-transform: uppercase;
+
+      color: #d42b31;
+      @include respond(sm) {
+        width: 55%;
+        margin: 0 7px 0 0;
+        font-size: 16px;
+        padding: 5px 5px;
+      }
+    }
+    .spec-tab-item {
+      font-size: 14px;
+      line-height: 28px;
+
+      padding: 5px 15px;
+      color: #2f2f2f;
+      background: #f5f5f5;
+      @include respond(lg) {
+        padding: 5px 10px;
+        margin: 0 5px 0 0;
+        width: 300px;
+        flex-shrink: 0;
+      }
+      @include respond(sm) {
+        padding: 5px 5px;
+        width: 250px;
+        margin: 0 7px 0 0;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+    .sub-heading {
+      @include respond(sm) {
+        width: 55%;
+        margin: 0 7px 0 0;
+      }
+    }
+  }
+  .brand-sidebar {
+    margin-bottom: 10px;
+    @include respond(sm) {
+      margin-bottom: 0px;
+    }
+  }
+  .brand-sidebar-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 38px;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    background: #f5f5f5;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    @include respond(sm) {
+      display: none;
+    }
+  }
+  .brand-sidebar-item {
+    font-size: 16px;
+    line-height: 38px;
+    padding: 0;
+    color: #545454;
+    width: 100%;
+    text-align: center;
+    background: #f5f5f5;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    a {
+      color: #545454;
+    }
+    @include respond(sm) {
+      margin-bottom: 2px;
+      display: none;
+    }
+  }
+
+  /* specification css */
+
+  .spec-tab-item.twoline {
+    min-height: 56px;
+  }
+
+  .compare-product-outer {
+    margin: 0 -11px;
+    .compare-product-item {
+      width: 31.05590062111801%;
+      margin: 0 01.13871635610766%;
+      float: left;
+    }
+  }
+
+  .product-top-box {
+    padding: 0 12px;
+    background: #f9f8f8;
+    margin-bottom: 10px;
+    position: relative;
+    .close-button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: #000;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      border-radius: 26px;
+      vertical-align: middle;
+      @include respond(sm) {
+        right: 3px;
+        top: 34px;
+        width: 18px;
+        height: 18px;
+        line-height: 20px;
+        font-size: 11px;
+      }
+    }
+    .compare-label {
+      font-size: 18px;
+      font-weight: 500;
+      color: #2f2f2f;
+      text-transform: uppercase;
+      line-height: 24px;
+      padding: 20px 0 14px 0;
+      @include respond(sm) {
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+    @include respond(sm) {
+      padding: 0 0px;
+    }
+  }
+
+  .compare-product-item {
+    .product-image {
+      max-width: 140px;
+      margin: 0 auto;
+      width: 100%;
+      max-height: 290px;
+      @include respond(sm) {
+        max-width: 100px;
+        max-height: 135px;
+      }
+    }
+    .product-title {
+      font-size: 26px;
+      font-weight: 500;
+      text-align: center;
+      padding-top: 15px;
+      @include respond(lg) {
+        font-size: 18px;
+      }
+      @include respond(sm) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .horizone-ad-block {
+    margin: 100px 0;
+    text-align: center;
+    @include respond(sm) {
+      margin: 50px 0;
+    }
+  }
+  /*******************************new css************************/
+  .brand-sidebar.heading.mobile {
+    @include respond(sm) {
+      width: 55%;
+      background: white;
+      margin: 0 0 0 7px;
+    }
+  }
+  .spec-tab-box.scroll {
+    @include respond(sm) {
+      display: flex;
+    }
+  }
+  .product-wale-scroll {
+    @include respond(sm) {
+      overflow: scroll;
+    }
+  }
+  .product-item {
+    @include respond(sm) {
+      width: 65%;
+    }
+  }
+}

@@ -1,0 +1,398 @@
+@import "./var";
+
+.section {
+  @include respond(md) {
+    @apply py-4;
+  }
+  @apply py-6;
+}
+.section-title {
+  @include respond(md) {
+    @apply font-semibold ml-6;
+    font-size: 22px;
+  }
+  @apply text-primary-500 font-semibold ml-9 leading-normal;
+  font-size: 28px;
+
+  &::before {
+    @include respond(md) {
+      height: 6px;
+      width: 18px;
+      top: 36%;
+    }
+    content: "";
+    height: 8px;
+    width: 24px;
+    background-color: theme("colors.primary.500");
+    position: absolute;
+    left: 0;
+    top: 36%;
+    border-radius: 5px;
+  }
+}
+.text-style {
+  white-space: pre-wrap;
+}
+
+.section-title-2 {
+  @include respond(md) {
+    @apply font-semibold ml-6;
+    font-size: 20px;
+  }
+  @apply text-primary-500 font-semibold ml-9 leading-normal;
+  font-size: 24px;
+
+  &::before {
+    @include respond(md) {
+      height: 6px;
+      width: 18px;
+      top: 36%;
+    }
+    content: "";
+    height: 8px;
+    width: 24px;
+    background-color: theme("colors.primary.500");
+    position: absolute;
+    left: 0;
+    top: 36%;
+    border-radius: 5px;
+  }
+}
+
+.discount-tag {
+  @apply bg-green-500 px-2  absolute top-0 text-white left-2 rounded-t block font-semibold;
+  min-width: 42px;
+  font-size: 14px;
+  z-index: 6;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 30px;
+    right: 0;
+    z-index: -1;
+    border-top: 35px solid #219653;
+    border-left: 42px solid transparent;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 30px;
+    left: 0;
+    z-index: -1;
+    border-top: 35px solid #219653;
+    border-right: 42px solid transparent;
+  }
+}
+
+.products-list {
+  position: relative;
+  &:hover .slider-arrow,
+  &:hover .left-slider-arrow {
+    display: flex;
+  }
+  @include respond(md) {
+    padding: 0;
+    &:hover .slider-arrow,
+    &:hover .left-slider-arrow {
+      display: none;
+    }
+  }
+  //padding: 0 20px;
+
+  .slider-arrow {
+    background: #f15a27;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 42px;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    top: 50%;
+    z-index: 49;
+    cursor: pointer;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    @include respond(md) {
+      display: none;
+    }
+    a {
+      font-size: 24px;
+      z-index: 50;
+      line-height: 2;
+    }
+  }
+  .left-slider-arrow {
+    //display: none
+    background: theme("colors.primary.500");
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 42px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 49;
+    cursor: pointer;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    @include respond(md) {
+      //height: 140px;
+      display: none;
+    }
+    a {
+      font-size: 24px;
+      z-index: 50;
+      line-height: 2;
+      transform: rotate(180deg);
+    }
+  }
+}
+.slider-product-item {
+  @include respond(lg) {
+    max-width: 300px;
+  }
+  @include respond(md) {
+    max-width: none;
+  }
+  margin: 0 auto;
+  min-height: 310px;
+  display: flex;
+  padding: 0 8px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 254px;
+  .product-item {
+    min-height: 330px;
+    width: 100%;
+  }
+}
+
+.slider-category-item {
+  margin: 0 auto;
+  min-height: 310px;
+  display: flex;
+  padding: 0 8px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 300px;
+  @include respond(lg) {
+    max-width: 260px;
+    min-height: 280px;
+  }
+  @include respond(md) {
+    max-width: none;
+    min-height: 240px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.avatar {
+  @include respond(md) {
+    @apply h-8 w-8;
+  }
+  @apply h-10 w-10 object-cover rounded-full bg-hover;
+}
+
+.hidden-input {
+  @apply border-2 border-solid border-transparent py-1 px-3 rounded;
+
+  &:focus {
+    @apply border-primary-500 outline-none;
+  }
+
+  &.empty {
+    @apply border-primary-500;
+  }
+}
+
+.list-item {
+  @apply rounded h-12 px-4 cursor-pointer;
+}
+
+.list-item:hover {
+  @apply bg-hover;
+}
+
+.bg-pattern {
+  background: linear-gradient(
+      135deg,
+      var(--background-base) 22px,
+      var(--background-hover) 22px,
+      var(--background-hover) 24px,
+      transparent 24px,
+      transparent 67px,
+      var(--background-hover) 67px,
+      var(--background-hover) 69px,
+      transparent 69px
+    ),
+    linear-gradient(
+        225deg,
+        var(--background-base) 22px,
+        var(--background-hover) 22px,
+        var(--background-hover) 24px,
+        transparent 24px,
+        transparent 67px,
+        var(--background-hover) 67px,
+        var(--background-hover) 69px,
+        transparent 69px
+      )
+      0 64px;
+  background-color: var(--background-base);
+  background-size: 64px 128px;
+}
+
+// Transitions
+
+.trans-ease-out {
+  transition: $swift-ease-out;
+}
+
+.trans-shadow {
+  transition: box-shadow $mat-elevation-transition-duration $mat-elevation-transition-timing-function;
+}
+
+// Typography
+
+.display-4 {
+  @include mat-typography-level-to-styles($config, display-4);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, display-4);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, display-4);
+  }
+}
+
+.display-3 {
+  @include mat-typography-level-to-styles($config, display-3);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, display-3);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, display-3);
+  }
+}
+
+.display-2 {
+  @include mat-typography-level-to-styles($config, display-2);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, display-2);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, display-2);
+  }
+}
+
+.display-1,
+h1 {
+  @include mat-typography-level-to-styles($config, display-1);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, display-1);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, display-1);
+  }
+}
+
+.headline,
+h2 {
+  @include mat-typography-level-to-styles($config, headline);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, headline);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, headline);
+  }
+}
+
+.title,
+h3 {
+  @include mat-typography-level-to-styles($config, title);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, title);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, title);
+  }
+}
+
+.subheading-2,
+h5 {
+  @include mat-typography-level-to-styles($config, subheading-2);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, subheading-2);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, subheading-2);
+  }
+}
+
+.subheading-1,
+h4 {
+  @include mat-typography-level-to-styles($config, subheading-1);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, subheading-1);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, subheading-1);
+  }
+}
+
+.body-2,
+h6 {
+  @include mat-typography-level-to-styles($config, body-2);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, body-2);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, body-2);
+  }
+}
+
+.body-1,
+p {
+  @include mat-typography-level-to-styles($config, body-1);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, body-1);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($configMobile, body-1);
+  }
+}
+
+.caption {
+  @include mat-typography-level-to-styles($config, caption);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, caption);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($config, caption);
+  }
+}
+.input {
+  @include mat-typography-level-to-styles($config, input);
+  @include respond(lg) {
+    @include mat-typography-level-to-styles($configLarge, input);
+  }
+  @include respond(sm) {
+    @include mat-typography-level-to-styles($config, input);
+  }
+}
+.text-center {
+  text-align: center;
+}
+.block-center {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,174 @@
+@import "common";
+:host {
+    .breadcrumb {
+        @include respond(sm) {
+            font-size: 12px;
+            a {
+                font-size: 12px;
+            }
+        }
+    }
+    .product-border {
+        border: 1px solid rgba(47, 128, 237, 0.24);
+        .product-image {
+            height: 426px;
+            width: 426px;
+            object-fit: cover;
+        }
+    }
+    .product-quantity {
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input {
+            @apply border border-gray-400 text-center w-10 h-10;
+        }
+    }
+    .product-info {
+        ::ng-deep {
+            .mat-icon {
+                color: theme("colors.primary.500");
+            }
+        }
+    }
+    .ratting {
+        ::ng-deep {
+            .mat-icon {
+                height: 14px;
+                width: 14px;
+            }
+            .material-icons {
+                font-size: 14px;
+            }
+            .mat-progress-bar {
+                width: 120px;
+                height: 8px;
+                border-radius: 10px;
+            }
+        }
+        .num-star {
+            width: 32px;
+            display: flex;
+            justify-content: space-between;
+            flex-shrink: 0;
+            align-items: center;
+        }
+        button {
+            font-weight: 600;
+        }
+        .active {
+            background-color: theme("colors.primary.500");
+            color: #fff;
+        }
+    }
+    .compare-img {
+        height: 250px;
+        width: 250px;
+        object-fit: contain;
+    }
+
+    .quantity-btn {
+        ::ng-deep {
+            .product-quantity {
+                display: flex;
+                align-items: center;
+                @apply gap-2;
+                input {
+                    border-color: theme("colors.blue.200") !important;
+                    color: #000;
+                }
+                .p-m-btn {
+                    border: 1px solid theme("colors.blue.200");
+                    span {
+                        vertical-align: baseline;
+                        font-size: 12px;
+                        font-weight: 600;
+                        color: #000;
+                    }
+                }
+            }
+            .mat-icon-button {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+            }
+        }
+    }
+    .slider-product-item {
+        @include respond(lg) {
+            max-width: 300px;
+        }
+        @include respond(md) {
+            max-width: none;
+        }
+        margin: 0 auto;
+        min-height: 310px;
+        display: flex;
+        padding: 0 8px;
+        align-items: stretch;
+        width: 100%;
+        max-width: 254px;
+        ::ng-deep .product-item {
+            height: auto !important;
+            width: 100%;
+        }
+    }
+}
+
+::ng-deep {
+    .color-select-field {
+        .mat-radio-container {
+            display: none;
+        }
+        .mat-radio-label-content {
+            padding: 0;
+        }
+        .color-label {
+            border-width: 2px;
+            padding: 2px;
+            border-style: solid;
+            border-color: transparent;
+        }
+        .mat-radio-checked {
+            .color-label {
+                border-color: theme("colors.primary.500");
+            }
+        }
+    }
+    .ngx-gallery-image-size-cover .ngx-gallery-image {
+        background-size: contain !important;
+    }
+    .mat-sidenav-container,
+    .mat-sidenav-content,
+    .mat-tab-body-content {
+        transform: none !important;
+    }
+    .image-gallery {
+        ::ng-deep {
+            .ngx-gallery-arrow-wrapper {
+                z-index: 5 !important;
+            }
+            .icon-right-arrow-2:before {
+                color: theme("colors.primary.500");
+            }
+            .icon-left-arrow-2:before {
+                color: theme("colors.primary.500");
+            }
+            @include respond(lg) {
+                height: 450px !important;
+                width: 380px !important;
+            }
+            
+            @include respond(md) {
+                height: 350px !important;
+                width: 280px !important;
+            }
+
+            @include respond(sm) {
+                width: 100% !important;
+            }
+        }
+    }
+}

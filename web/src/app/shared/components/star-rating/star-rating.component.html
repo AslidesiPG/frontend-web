@@ -1,0 +1,32 @@
+<div class="ratings">
+  <div class="stars flex items-center" [ngClass]="{readonly: readonly}">
+    <ng-template class="flex" [ngIf]="readonly" [ngIfElse]="inputRating">
+      <span class="relative">
+        <span class="blank-star">
+          <span *ngFor="let ratingId of ratingArr;">
+            <mat-icon>star_border</mat-icon>
+          </span>
+        </span>
+        <div class="fill-star" [style.width]="(rating*20) + '%'">
+          <span *ngFor="let ratingId of ratingArr;">
+            <mat-icon>star</mat-icon>
+          </span>
+        </div>
+      </span>
+      <span class="count ml-2 text-green-500">
+          {{number ? rating : ''}} <span *ngIf="count != 0">{{'(' + (count || 0) + ' reviews)'}}</span>
+      </span>
+    </ng-template>
+
+    <ng-template #inputRating>
+      <button mat-icon-button color="primary" *ngFor="let ratingId of ratingArr; index as i" (click)="onClick(i+1)">
+        <mat-icon *ngIf="showFillIcon(i)">star</mat-icon>
+        <mat-icon *ngIf="!showFillIcon(i)">star_border</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</div>
+
+<mat-error *ngIf="starCount == null || starCount == 0">
+  Star count is <strong>required</strong> and cannot be zero
+</mat-error>

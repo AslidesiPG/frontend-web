@@ -1,0 +1,15 @@
+.card {
+  @apply relative rounded-lg border border-solid  overflow-hidden p-4;
+  border-color: rgba(47, 128, 237, 0.24);
+ // box-shadow: 0px 4px 16px rgba(138, 149, 158, 0.2);
+  &.card-primary {
+    @apply border-primary-500;
+  }
+  &:hover {
+    border-color: #4c8bf5;
+  }
+}
+
+// .card {
+//   @apply rounded shadow-8 bg-card;
+// }
